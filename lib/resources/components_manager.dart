@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:responsive_sizer/responsive_sizer.dart';
 import 'package:student_care_app/resources/styles_manager.dart';
 import 'package:student_care_app/resources/values_manager.dart';
 
@@ -7,6 +6,8 @@ import 'color_manager.dart';
 import 'font_manager.dart';
 
 class ComponentManager {
+
+
   static Container mainGradientButton(
       {required String text, Function? onPressed}) {
     return Container(
@@ -29,7 +30,7 @@ class ComponentManager {
         child: Text(
           text,
           style: TextStyles.getTextStyle(
-            fontSize: 20.sp,
+            fontSize: AppSize.s20,
             fontWeight: FontWeightManager.medium,
             color: ColorManager.white,
           ),

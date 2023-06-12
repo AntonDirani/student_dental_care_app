@@ -25,14 +25,10 @@ class MyApp extends StatelessWidget {
     return ResponsiveSizer(builder: (buildContext, orientation, screenType) {
       return MaterialApp(
         debugShowCheckedModeBanner: false,
-        theme: ThemeData(
-          colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
-          useMaterial3: true,
-        ),
         home: Scaffold(
           body: Center(
             child: Padding(
-              padding: const EdgeInsets.all(AppMargin.m40),
+              padding: const EdgeInsets.all(AppPadding.p40),
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
