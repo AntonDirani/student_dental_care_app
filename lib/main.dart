@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:student_care_app/resources/assets_manager.dart';
 import 'resources/color_manager.dart';
 import 'resources/font_manager.dart';
 import 'resources/string_manager.dart';
@@ -38,7 +39,7 @@ class MyApp extends StatelessWidget {
                   Padding(
                     padding: EdgeInsets.fromLTRB(0, 5.h, 0, 0),
                     child: SvgPicture.asset(
-                      'assets/images/logo.svg',
+                      ImageAssetsManager.splashLogo,
                       height: AppSize.s38,
                     ),
                   ),
