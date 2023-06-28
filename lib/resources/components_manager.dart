@@ -6,8 +6,6 @@ import 'color_manager.dart';
 import 'font_manager.dart';
 
 class ComponentManager {
-
-
   static Container mainGradientButton(
       {required String text, Function? onPressed}) {
     return Container(
@@ -30,7 +28,7 @@ class ComponentManager {
         child: Text(
           text,
           style: TextStyles.getTextStyle(
-            fontSize: AppSize.s20,
+            fontSize: 22,
             fontWeight: FontWeightManager.medium,
             color: ColorManager.white,
           ),
