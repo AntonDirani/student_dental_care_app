@@ -7,9 +7,9 @@ import 'font_manager.dart';
 
 class ComponentManager {
   static Container mainGradientButton(
-      {required String text, Function? onPressed}) {
+      {required String text, Widget? navigate ,required BuildContext context, IconData? icon}) {
     return Container(
-      height: AppSize.s7_5,
+      height: AppSize.s8,
       width: double.infinity,
       decoration: BoxDecoration(
           borderRadius: BorderRadius.circular(AppSize.s20),
@@ -20,20 +20,120 @@ class ComponentManager {
           ])),
       child: ElevatedButton(
         onPressed: () {
-          onPressed;
+          Navigator.pushReplacement(
+            context,
+            MaterialPageRoute(builder: (context) =>  navigate!),);
         },
         style: ElevatedButton.styleFrom(
             backgroundColor: Colors.transparent,
             shadowColor: Colors.transparent),
-        child: Text(
-          text,
-          style: TextStyles.getTextStyle(
-            fontSize: 22,
-            fontWeight: FontWeightManager.medium,
-            color: ColorManager.white,
-          ),
+        child: Row(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+             Icon(icon,
+            size: 16,),
+            Text(
+              text,
+              style: StylesManager.getTextStyle(
+                fontSize: 22,
+                fontWeight: FontWeightManager.medium,
+                color: ColorManager.white,
+              ),
+            ),
+          ],
         ),
       ),
     );
   }
+
+  static Container secondaryGradientButton(
+      {required String text, Widget? navigate ,required BuildContext context, IconData? icon}) {
+    return Container(
+      height: AppSize.s8,
+      width: double.infinity,
+      decoration: BoxDecoration(
+          borderRadius: BorderRadius.circular(AppSize.s20),
+          gradient: LinearGradient(colors: [
+            ColorManager.darkSecondary,
+
+            ColorManager.lightSecondary
+          ])),
+      child: ElevatedButton(
+        onPressed: () {
+          Navigator.pushReplacement(
+            context,
+            MaterialPageRoute(builder: (context) =>  navigate!),);
+        },
+        style: ElevatedButton.styleFrom(
+            backgroundColor: Colors.transparent,
+            shadowColor: Colors.transparent),
+        child: Row(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            Icon(icon,
+              size: 16,),
+            Text(
+              text,
+              style: StylesManager.getTextStyle(
+                fontSize: 22,
+                fontWeight: FontWeightManager.medium,
+                color: ColorManager.white,
+              ),
+            ),
+          ],
+        ),
+      ),
+    );
+  }
+
+  static Container outlinedButton(
+      {required String text, Widget? navigate ,required BuildContext context, IconData? icon}) {
+    // ignore: sized_box_for_whitespace
+    return Container(
+      height: AppSize.s8,
+      width: double.infinity,
+      child: ElevatedButton(
+        onPressed: () {
+          Navigator.pushReplacement(
+            context,
+            MaterialPageRoute(builder: (context) =>  navigate!),);
+        },
+        style: ElevatedButton.styleFrom(
+            side:  BorderSide(width: 2, color: ColorManager.costumeBlack),
+          shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(30.0)),
+            backgroundColor: Colors.transparent,
+            shadowColor: Colors.transparent),
+        child: Row(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            Icon(icon,
+              size: 16,),
+            Text(
+              text,
+              style: StylesManager.getTextStyle(
+                fontSize: 22,
+                fontWeight: FontWeightManager.medium,
+                color: ColorManager.costumeBlack,
+              ),
+            ),
+          ],
+        ),
+      ),
+    );
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+}
+
+

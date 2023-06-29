@@ -20,7 +20,8 @@ class MyApp extends StatelessWidget {
     ));
     return ResponsiveSizer(builder: (buildContext, orientation, screenType) {
       return const MaterialApp(
-          debugShowCheckedModeBanner: false, home: SplashScreen());
+          debugShowCheckedModeBanner: false,
+          home: SplashScreen());
     });
   }
 }
