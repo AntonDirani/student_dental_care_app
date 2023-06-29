@@ -19,35 +19,39 @@ class SplashScreen extends StatelessWidget {
       body: Center(
         child: Padding(
           padding: const EdgeInsets.all(AppPadding.p40),
-          child: Expanded(
-            child: Column(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                Padding(
-                  padding: EdgeInsets.fromLTRB(0, 5.h, 0, 0),
-                  child: SvgPicture.asset(
-                    ImageAssetsManager.splashLogo,
-                  ),
+          child: Row(
+            children: [
+              Expanded(
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                  children: [
+                    Padding(
+                      padding: EdgeInsets.fromLTRB(0, 1.h, 0, 0),
+                      child: SvgPicture.asset(
+                        ImageAssetsManager.splashLogo,
+                      ),
+                    ),
+                    Padding(
+                      padding: const EdgeInsets.fromLTRB(0, 0, 0, 5),
+                      child: Text(
+                        AppStrings.splashScreenText,
+                        style: TextStyles.getTextStyle(
+                            fontSize: FontSize.s22,
+                            fontWeight: FontWeightManager.medium,
+                            color: ColorManager.costumeBlack,
+                            height: 1.8),
+                        textAlign: TextAlign.center,
+                      ),
+                    ),
+                    Padding(
+                      padding: EdgeInsets.fromLTRB(0, 3.h, 0, 1.h),
+                      child: ComponentManager.mainGradientButton(
+                          text: AppStrings.continueText),
+                    )
+                  ],
                 ),
-                Padding(
-                  padding: EdgeInsets.fromLTRB(0, 3.h, 0, 0),
-                  child: Text(
-                    AppStrings.splashScreenText,
-                    style: TextStyles.getTextStyle(
-                        fontSize: FontSize.s22,
-                        fontWeight: FontWeightManager.medium,
-                        color: ColorManager.costumeBlack,
-                        height: 1.8),
-                    textAlign: TextAlign.center,
-                  ),
-                ),
-                Padding(
-                  padding: EdgeInsets.fromLTRB(0, 3.h, 0, 0),
-                  child: ComponentManager.mainGradientButton(
-                      text: AppStrings.continueText),
-                )
-              ],
-            ),
+              ),
+            ],
           ),
         ),
       ),
