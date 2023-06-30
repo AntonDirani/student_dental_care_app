@@ -29,6 +29,7 @@ class AppSize {
   static double s1 = 1.h;
   static double s2 = 2.h;
   static double s3 = 3.0.h;
+  static double s3_5 = 3.5.h;
   static double s4 = 4.0.h;
   static double s6 = 6.0.h;
   static double s7_5 = 7.5.h;
