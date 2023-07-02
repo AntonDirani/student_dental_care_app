@@ -15,4 +15,10 @@ class AppStrings {
   static const registerAsPatientText = 'حساب لمريض علاج سني';
   static const registerText = '!مرحبا بك في منصتنا'
       '\nرجاءاً قم بتجديد نوع الحساب الذي تريد إنشاءه';
+
+  static const enterInfoText = 'الرجاء إدخال البيانات المطلوبة';
+  static const welcomeStudentText = '!اهلا بك طالبنا';
+
+  static const enterYourFirstNameText = 'أدخل اسمك الأول';
+  static const enterYourSecondNameText = 'أدخل اسمك الثاني';
 }

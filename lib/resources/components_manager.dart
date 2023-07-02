@@ -9,6 +9,7 @@ class ComponentManager {
       {required String text,
       Widget? navigate,
       required BuildContext context,
+      int? option,
       IconData? icon}) {
     return Container(
       height: AppSize.s8,
@@ -22,7 +23,13 @@ class ComponentManager {
           ])),
       child: ElevatedButton(
         onPressed: () {
-          Navigator.pushReplacement(
+          if (option == 0) {
+            Navigator.pushReplacement(
+              context,
+              MaterialPageRoute(builder: (context) => navigate!),
+            );
+          }
+          Navigator.push(
             context,
             MaterialPageRoute(builder: (context) => navigate!),
           );
@@ -37,14 +44,7 @@ class ComponentManager {
               icon,
               size: 16,
             ),
-            Text(
-              text,
-              style: StylesManager.getTextStyle(
-                fontSize: 22,
-                fontWeight: FontWeightManager.medium,
-                color: ColorManager.white,
-              ),
-            ),
+            Text(text, style: StylesManager.medium18White()),
           ],
         ),
       ),
@@ -55,6 +55,7 @@ class ComponentManager {
       {required String text,
       Widget? navigate,
       required BuildContext context,
+      int? option,
       IconData? icon}) {
     return Container(
       height: AppSize.s8,
@@ -67,7 +68,13 @@ class ComponentManager {
           ])),
       child: ElevatedButton(
         onPressed: () {
-          Navigator.pushReplacement(
+          if (option == 0) {
+            Navigator.pushReplacement(
+              context,
+              MaterialPageRoute(builder: (context) => navigate!),
+            );
+          }
+          Navigator.push(
             context,
             MaterialPageRoute(builder: (context) => navigate!),
           );
@@ -100,6 +107,7 @@ class ComponentManager {
       {required String text,
       Widget? navigate,
       required BuildContext context,
+      int? option,
       IconData? icon}) {
     // ignore: sized_box_for_whitespace
     return Container(
@@ -107,7 +115,13 @@ class ComponentManager {
       width: double.infinity,
       child: ElevatedButton(
         onPressed: () {
-          Navigator.pushReplacement(
+          if (option == 0) {
+            Navigator.pushReplacement(
+              context,
+              MaterialPageRoute(builder: (context) => navigate!),
+            );
+          }
+          Navigator.push(
             context,
             MaterialPageRoute(builder: (context) => navigate!),
           );
@@ -125,14 +139,7 @@ class ComponentManager {
               icon,
               size: 16,
             ),
-            Text(
-              text,
-              style: StylesManager.getTextStyle(
-                fontSize: 22,
-                fontWeight: FontWeightManager.medium,
-                color: ColorManager.costumeBlack,
-              ),
-            ),
+            Text(text, style: StylesManager.medium18Black()),
           ],
         ),
       ),
@@ -148,7 +155,7 @@ class ComponentManager {
         child: TextFormField(
           controller: controller,
           decoration: InputDecoration(
-            suffixIconConstraints: BoxConstraints(maxWidth: 35),
+            suffixIconConstraints: const BoxConstraints(maxWidth: 35),
             suffixIcon: Padding(
               padding: const EdgeInsets.fromLTRB(0, 0, 15, 0),
               child: Image.asset(
@@ -160,7 +167,31 @@ class ComponentManager {
                 borderRadius: BorderRadius.circular(AppSize.s3_5)),
             label: Align(
               alignment: Alignment.topRight,
-              child: Text(label, style: StylesManager.medium18()),
+              child: Text(label, style: StylesManager.medium16()),
+            ),
+            filled: true,
+          ),
+        ));
+  }
+
+  static Padding myTextFieldNoSuffix(
+      {required String label, TextEditingController? controller}) {
+    return Padding(
+        padding: const EdgeInsets.fromLTRB(0, 10, 0, 0),
+        child: TextFormField(
+          textDirection: TextDirection.rtl,
+          controller: controller,
+          decoration: InputDecoration(
+            contentPadding: EdgeInsets.zero,
+            enabledBorder: OutlineInputBorder(
+                borderSide: BorderSide(color: ColorManager.lightGrey),
+                borderRadius: BorderRadius.circular(AppSize.s3_5)),
+            label: Align(
+              alignment: Alignment.center,
+              child: Text(
+                label,
+                style: StylesManager.medium16(),
+              ),
             ),
             filled: true,
           ),

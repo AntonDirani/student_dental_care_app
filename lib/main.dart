@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
-import 'package:student_care_app/screens/splash_screen.dart';
+import 'package:student_care_app/screens/login_and_register/splash_screen.dart';
 import 'resources/color_manager.dart';
 
 import 'package:responsive_sizer/responsive_sizer.dart';
@@ -20,8 +20,7 @@ class MyApp extends StatelessWidget {
     ));
     return ResponsiveSizer(builder: (buildContext, orientation, screenType) {
       return const MaterialApp(
-          debugShowCheckedModeBanner: false,
-          home: SplashScreen());
+          debugShowCheckedModeBanner: false, home: SplashScreen());
     });
   }
 }

@@ -8,4 +8,5 @@ class ImageAssetsManager {
   static const String emailIcon = "$imagePath/iconEmail1.png";
   static const String passwordIcon = "$imagePath/passwordIcon.png";
   static const String chooseYourRoleVector = "$imagePath/chooseYouRole.svg";
+  static const String studentRegisterVector = "$imagePath/studentRegister.svg";
 }
