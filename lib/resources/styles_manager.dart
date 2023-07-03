@@ -26,9 +26,9 @@ class StylesManager {
     );
   }
 
-  static TextStyle light20() {
+  static TextStyle light18Black() {
     return StylesManager.getTextStyle(
-      fontSize: FontSize.s20,
+      fontSize: FontSize.s18,
       fontWeight: FontWeightManager.light,
       color: ColorManager.costumeBlack,
     );

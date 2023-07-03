@@ -1,7 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/rendering.dart';
 import 'package:flutter_svg/svg.dart';
-
 import 'package:student_care_app/resources/components_manager.dart';
 import 'package:student_care_app/resources/values_manager.dart';
 import 'package:student_care_app/screens/login_and_register/signup_choose_role.dart';
@@ -20,7 +18,7 @@ class LoginScreen extends StatelessWidget {
           child: ConstrainedBox(
               constraints: BoxConstraints(
                   maxHeight:
-                      MediaQuery.of(context).size.height - AppPadding.p33),
+                      MediaQuery.of(context).size.height - AppPadding.p24),
               child: Padding(
                 padding: const EdgeInsets.all(AppPadding.p33),
                 child: Column(
@@ -41,7 +39,7 @@ class LoginScreen extends StatelessWidget {
                     ),
                     Text(
                       AppStrings.logInSecondaryText,
-                      style: StylesManager.light20(),
+                      style: StylesManager.light18Black(),
                     ),
                     ComponentManager.myTextField(
                         label: AppStrings.emailText,

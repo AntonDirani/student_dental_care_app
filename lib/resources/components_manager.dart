@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:student_care_app/resources/styles_manager.dart';
 import 'package:student_care_app/resources/values_manager.dart';
 import 'color_manager.dart';
-import 'font_manager.dart';
 
 class ComponentManager {
   static Container mainGradientButton(
@@ -89,14 +88,7 @@ class ComponentManager {
               icon,
               size: 16,
             ),
-            Text(
-              text,
-              style: StylesManager.getTextStyle(
-                fontSize: 22,
-                fontWeight: FontWeightManager.medium,
-                color: ColorManager.white,
-              ),
-            ),
+            Text(text, style: StylesManager.medium18White()),
           ],
         ),
       ),
@@ -149,27 +141,33 @@ class ComponentManager {
   static Padding myTextField(
       {required String label,
       String? suffixIcon,
-      TextEditingController? controller}) {
+      TextEditingController? controller,
+      TextInputType? inputType}) {
     return Padding(
         padding: const EdgeInsets.fromLTRB(0, 10, 0, 0),
-        child: TextFormField(
-          controller: controller,
-          decoration: InputDecoration(
-            suffixIconConstraints: const BoxConstraints(maxWidth: 35),
-            suffixIcon: Padding(
-              padding: const EdgeInsets.fromLTRB(0, 0, 15, 0),
-              child: Image.asset(
-                suffixIcon!,
+        child: SizedBox(
+          height: AppSize.s7_5,
+          child: TextFormField(
+            keyboardType: inputType,
+            controller: controller,
+            decoration: InputDecoration(
+              suffixIconConstraints:
+                  const BoxConstraints(maxWidth: 35, maxHeight: 20),
+              suffixIcon: Padding(
+                padding: const EdgeInsets.fromLTRB(0, 0, 15, 0),
+                child: Image.asset(
+                  suffixIcon!,
+                ),
               ),
+              enabledBorder: OutlineInputBorder(
+                  borderSide: BorderSide(color: ColorManager.lightGrey),
+                  borderRadius: BorderRadius.circular(AppSize.s3_5)),
+              label: Align(
+                alignment: Alignment.centerRight,
+                child: Text(label, style: StylesManager.medium16()),
+              ),
+              filled: true,
             ),
-            enabledBorder: OutlineInputBorder(
-                borderSide: BorderSide(color: ColorManager.lightGrey),
-                borderRadius: BorderRadius.circular(AppSize.s3_5)),
-            label: Align(
-              alignment: Alignment.topRight,
-              child: Text(label, style: StylesManager.medium16()),
-            ),
-            filled: true,
           ),
         ));
   }
@@ -178,22 +176,21 @@ class ComponentManager {
       {required String label, TextEditingController? controller}) {
     return Padding(
         padding: const EdgeInsets.fromLTRB(0, 10, 0, 0),
-        child: TextFormField(
-          textDirection: TextDirection.rtl,
-          controller: controller,
-          decoration: InputDecoration(
-            contentPadding: EdgeInsets.zero,
-            enabledBorder: OutlineInputBorder(
-                borderSide: BorderSide(color: ColorManager.lightGrey),
-                borderRadius: BorderRadius.circular(AppSize.s3_5)),
-            label: Align(
-              alignment: Alignment.center,
-              child: Text(
-                label,
-                style: StylesManager.medium16(),
+        child: SizedBox(
+          height: AppSize.s7_5,
+          child: TextFormField(
+            textDirection: TextDirection.rtl,
+            controller: controller,
+            decoration: InputDecoration(
+              enabledBorder: OutlineInputBorder(
+                  borderSide: BorderSide(color: ColorManager.lightGrey),
+                  borderRadius: BorderRadius.circular(AppSize.s3_5)),
+              label: Align(
+                alignment: Alignment.center,
+                child: Text(label, style: StylesManager.medium16()),
               ),
+              filled: true,
             ),
-            filled: true,
           ),
         ));
   }

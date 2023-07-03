@@ -21,4 +21,5 @@ class AppStrings {
 
   static const enterYourFirstNameText = 'أدخل اسمك الأول';
   static const enterYourSecondNameText = 'أدخل اسمك الثاني';
+  static const enterYourPhoneText = 'أدخل رقم الهاتف المحمول الخاص بك';
 }

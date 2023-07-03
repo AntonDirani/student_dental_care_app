@@ -1,35 +1,44 @@
-import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
-import 'package:responsive_sizer/responsive_sizer.dart';
-
 import '../../resources/assets_manager.dart';
+import '../../resources/color_manager.dart';
 import '../../resources/components_manager.dart';
 import '../../resources/string_manager.dart';
 import '../../resources/styles_manager.dart';
 import '../../resources/values_manager.dart';
 import 'login.dart';
 
-class StudentRegisterScreen extends StatelessWidget {
+class StudentRegisterScreen extends StatefulWidget {
   const StudentRegisterScreen({super.key});
+
+  @override
+  State<StudentRegisterScreen> createState() => _StudentRegisterScreenState();
+}
+
+class _StudentRegisterScreenState extends State<StudentRegisterScreen> {
+  bool isPasswordVisible = true;
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
         body: SafeArea(
-      child: SingleChildScrollView(
+            child: SingleChildScrollView(
+      child: ConstrainedBox(
+        constraints: BoxConstraints(
+            maxHeight: MediaQuery.of(context).size.height - AppPadding.p24),
         child: Padding(
           padding: const EdgeInsets.all(AppPadding.p33),
           child: Column(
               crossAxisAlignment: CrossAxisAlignment.end,
               mainAxisAlignment: MainAxisAlignment.center,
-              mainAxisSize: MainAxisSize.min,
               children: [
-                Padding(
-                  padding: const EdgeInsets.fromLTRB(0, 0, 0, 0),
-                  child: SvgPicture.asset(
-                    ImageAssetsManager.studentRegisterVector,
-                    alignment: Alignment.topRight,
+                Flexible(
+                  child: Padding(
+                    padding: const EdgeInsets.fromLTRB(0, 0, 0, 0),
+                    child: SvgPicture.asset(
+                      ImageAssetsManager.studentRegisterVector,
+                      alignment: Alignment.topRight,
+                    ),
                   ),
                 ),
                 Text(
@@ -38,39 +47,106 @@ class StudentRegisterScreen extends StatelessWidget {
                 ),
                 Text(
                   AppStrings.enterInfoText,
-                  style: StylesManager.light20(),
+                  style: StylesManager.light18Black(),
                 ),
                 Row(
                   children: [
                     Expanded(
                       child: Padding(
-                        padding: EdgeInsets.fromLTRB(0, 0, 10, 0),
+                        padding: const EdgeInsets.fromLTRB(0, 0, 6, 0),
                         child: ComponentManager.myTextFieldNoSuffix(
-                          label: AppStrings.enterYourFirstNameText,
+                          label: AppStrings.enterYourSecondNameText,
                         ),
                       ),
                     ),
                     Expanded(
                       child: Padding(
-                        padding: EdgeInsets.fromLTRB(10, 0, 0, 0),
+                        padding: const EdgeInsets.fromLTRB(6, 0, 0, 0),
                         child: ComponentManager.myTextFieldNoSuffix(
-                          label: AppStrings.enterYourSecondNameText,
+                          label: AppStrings.enterYourFirstNameText,
                         ),
                       ),
                     ),
                   ],
                 ),
                 ComponentManager.myTextField(
-                    label: AppStrings.emailText,
-                    suffixIcon: ImageAssetsManager.emailIcon),
-                ComponentManager.myTextField(
-                    label: AppStrings.emailText,
-                    suffixIcon: ImageAssetsManager.emailIcon),
-                ComponentManager.myTextField(
+                    inputType: TextInputType.emailAddress,
                     label: AppStrings.emailText,
                     suffixIcon: ImageAssetsManager.emailIcon),
                 Padding(
-                  padding: EdgeInsets.fromLTRB(0, 10, 0, 1.h),
+                    padding: const EdgeInsets.fromLTRB(0, 10, 0, 0),
+                    child: SizedBox(
+                      height: AppSize.s7_5,
+                      child: TextFormField(
+                        decoration: InputDecoration(
+                          suffixIconConstraints:
+                              const BoxConstraints(maxWidth: 35, maxHeight: 20),
+                          prefixIcon: IconButton(
+                            icon: isPasswordVisible
+                                ? const Icon(
+                                    Icons.visibility_off,
+                                    color: Colors.grey,
+                                  )
+                                : const Icon(
+                                    Icons.visibility,
+                                    color: Colors.grey,
+                                  ),
+                            onPressed: () => setState(
+                                () => isPasswordVisible = !isPasswordVisible),
+                          ),
+                          suffixIcon: Padding(
+                            padding: const EdgeInsets.fromLTRB(0, 0, 15, 0),
+                            child: Image.asset(ImageAssetsManager.passwordIcon),
+                          ),
+                          enabledBorder: OutlineInputBorder(
+                              borderSide:
+                                  BorderSide(color: ColorManager.lightGrey),
+                              borderRadius:
+                                  BorderRadius.circular(AppSize.s3_5)),
+                          label: Align(
+                            alignment: Alignment.centerRight,
+                            child: Text(AppStrings.passwordText,
+                                style: StylesManager.medium16()),
+                          ),
+                          filled: true,
+                        ),
+                        textInputAction: TextInputAction.done,
+                        obscureText: isPasswordVisible,
+                      ),
+                    )),
+                Padding(
+                    padding: const EdgeInsets.fromLTRB(0, 10, 0, 0),
+                    child: SizedBox(
+                      height: AppSize.s7_5,
+                      child: TextFormField(
+                        decoration: InputDecoration(
+                          suffixIconConstraints:
+                              const BoxConstraints(maxWidth: 35, maxHeight: 20),
+                          suffixIcon: Padding(
+                            padding: const EdgeInsets.fromLTRB(0, 0, 15, 0),
+                            child: Image.asset(ImageAssetsManager.passwordIcon),
+                          ),
+                          enabledBorder: OutlineInputBorder(
+                              borderSide:
+                                  BorderSide(color: ColorManager.lightGrey),
+                              borderRadius:
+                                  BorderRadius.circular(AppSize.s3_5)),
+                          label: Align(
+                            alignment: Alignment.centerRight,
+                            child: Text(AppStrings.passwordText,
+                                style: StylesManager.medium16()),
+                          ),
+                          filled: true,
+                        ),
+                      ),
+                    )),
+                ComponentManager.myTextField(
+                  label: AppStrings.enterYourPhoneText,
+                  suffixIcon: ImageAssetsManager.phoneIcon,
+                  inputType: TextInputType.emailAddress,
+                ),
+                Padding(
+                  padding: const EdgeInsets.fromLTRB(0, 10, 0, 0),
                   child: ComponentManager.mainGradientButton(
                       text: AppStrings.registerAsStudentText,
                       navigate: const LoginScreen(),
@@ -79,6 +155,6 @@ class StudentRegisterScreen extends StatelessWidget {
               ]),
         ),
       ),
-    ));
+    )));
   }
 }
