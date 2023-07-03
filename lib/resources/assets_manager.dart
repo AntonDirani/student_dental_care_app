@@ -10,4 +10,7 @@ class ImageAssetsManager {
   static const String chooseYourRoleVector = "$imagePath/chooseYouRole.svg";
   static const String studentRegisterVector = "$imagePath/studentRegister.svg";
   static const String phoneIcon = "$imagePath/phoneIcon.png";
+  static const String idVector = "$imagePath/idVector.svg";
+  static const String uploadImage = "$imagePath/upload.png";
+  static const String patientRegisterVector = "$imagePath/registerPatient.svg";
 }

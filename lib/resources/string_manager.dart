@@ -22,4 +22,10 @@ class AppStrings {
   static const enterYourFirstNameText = 'أدخل اسمك الأول';
   static const enterYourSecondNameText = 'أدخل اسمك الثاني';
   static const enterYourPhoneText = 'أدخل رقم الهاتف المحمول الخاص بك';
+  static const verifyText = '!حتى نستطيع التحقق من هويتك';
+
+  static const welcomePatientText = '!اهلا بك';
+
+  static const clickToUploadText =
+      'إضغط لإختيار بطاقة الأعمال أو البطاقة الجامعية الخاصة بك';
 }

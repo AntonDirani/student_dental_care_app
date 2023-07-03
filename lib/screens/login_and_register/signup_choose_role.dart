@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:responsive_sizer/responsive_sizer.dart';
+import 'package:student_care_app/screens/login_and_register/register_patient.dart';
 import 'package:student_care_app/screens/login_and_register/register_student.dart';
 
 import '../../resources/assets_manager.dart';
@@ -48,7 +49,7 @@ class SignUpChooseScreen extends StatelessWidget {
                     padding: EdgeInsets.fromLTRB(0, 1.h, 0, 4.h),
                     child: ComponentManager.secondaryGradientButton(
                         text: AppStrings.registerAsPatientText,
-                        navigate: const SignUpChooseScreen(),
+                        navigate: const PatientRegisterScreen(),
                         context: context),
                   ),
                 ]),

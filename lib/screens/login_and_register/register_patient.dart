@@ -7,16 +7,15 @@ import '../../resources/components_manager.dart';
 import '../../resources/string_manager.dart';
 import '../../resources/styles_manager.dart';
 import '../../resources/values_manager.dart';
-import 'login.dart';
 
-class StudentRegisterScreen extends StatefulWidget {
-  const StudentRegisterScreen({super.key});
+class PatientRegisterScreen extends StatefulWidget {
+  const PatientRegisterScreen({super.key});
 
   @override
-  State<StudentRegisterScreen> createState() => _StudentRegisterScreenState();
+  State<PatientRegisterScreen> createState() => _PatientRegisterScreenState();
 }
 
-class _StudentRegisterScreenState extends State<StudentRegisterScreen> {
+class _PatientRegisterScreenState extends State<PatientRegisterScreen> {
   bool isPasswordVisible = true;
 
   @override
@@ -37,13 +36,13 @@ class _StudentRegisterScreenState extends State<StudentRegisterScreen> {
                   child: Padding(
                     padding: const EdgeInsets.fromLTRB(0, 0, 0, 0),
                     child: SvgPicture.asset(
-                      ImageAssetsManager.studentRegisterVector,
+                      ImageAssetsManager.patientRegisterVector,
                       alignment: Alignment.topRight,
                     ),
                   ),
                 ),
                 Text(
-                  AppStrings.welcomeStudentText,
+                  AppStrings.welcomePatientText,
                   style: StylesManager.medium20(),
                 ),
                 Text(
