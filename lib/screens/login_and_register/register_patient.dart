@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
+import 'package:provider/provider.dart';
+import 'package:student_care_app/providers/validation_manager.dart';
 import 'package:student_care_app/screens/login_and_register/register_student_followup1.dart';
 import '../../resources/assets_manager.dart';
 import '../../resources/color_manager.dart';
@@ -20,6 +22,8 @@ class _PatientRegisterScreenState extends State<PatientRegisterScreen> {
 
   @override
   Widget build(BuildContext context) {
+    var _provider = Provider.of<ValidationManager>(context, listen: false);
+
     return Scaffold(
         body: SafeArea(
             child: SingleChildScrollView(
@@ -156,6 +160,7 @@ class _PatientRegisterScreenState extends State<PatientRegisterScreen> {
                       ),
                     )),
                 ComponentManager.myTextField(
+                  //validatorFunction: 'mobile',
                   label: AppStrings.enterYourPhoneText,
                   suffixIcon: ImageAssetsManager.phoneIcon,
                   inputType: TextInputType.emailAddress,
@@ -163,10 +168,10 @@ class _PatientRegisterScreenState extends State<PatientRegisterScreen> {
                 Padding(
                   padding: const EdgeInsets.fromLTRB(0, 10, 0, 0),
                   child: ComponentManager.mainGradientButton(
-                      text: AppStrings.continueText,
-                      icon: Icons.arrow_back_ios,
-                      navigate: const StudentRegisterFirstFollowupScreen(),
-                      context: context),
+                    onPressed: () {},
+                    text: AppStrings.continueText,
+                    icon: Icons.arrow_back_ios,
+                  ),
                 ),
               ]),
         ),

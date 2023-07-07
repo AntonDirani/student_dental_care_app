@@ -38,6 +38,7 @@ dependencies:
   responsive_sizer: 
   flutter_svg:
   image_picker:
+  provider: ^6.0.5
 
 dev_dependencies:
   flutter_test:

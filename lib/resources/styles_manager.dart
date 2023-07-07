@@ -8,8 +8,10 @@ class StylesManager {
       {required double fontSize,
       required FontWeight fontWeight,
       required Color color,
-      double? height}) {
+      double? height,
+      TextDecoration? tDec}) {
     return TextStyle(
+        decoration: tDec,
         height: height,
         fontSize: fontSize,
         fontFamily: FontConstants.fontFamily,
@@ -42,6 +44,22 @@ class StylesManager {
     );
   }
 
+  static TextStyle regular14() {
+    return StylesManager.getTextStyle(
+      fontSize: FontSize.s14,
+      fontWeight: FontWeightManager.regular,
+      color: ColorManager.red,
+    );
+  }
+
+  static TextStyle bold16() {
+    return StylesManager.getTextStyle(
+      fontSize: FontSize.s16,
+      fontWeight: FontWeightManager.medium,
+      color: ColorManager.primary,
+    );
+  }
+
   static TextStyle medium18Black() {
     return StylesManager.getTextStyle(
       fontSize: FontSize.s18,
@@ -64,6 +82,22 @@ class StylesManager {
       fontWeight: FontWeightManager.light,
       color: ColorManager.costumeBlack,
     );
+  }
+
+  static TextStyle light16() {
+    return StylesManager.getTextStyle(
+      fontSize: FontSize.s16,
+      fontWeight: FontWeightManager.light,
+      color: ColorManager.costumeBlack,
+    );
+  }
+
+  static TextStyle semibold16Underlined() {
+    return StylesManager.getTextStyle(
+        fontSize: FontSize.s16,
+        fontWeight: FontWeightManager.semiBold,
+        color: ColorManager.costumeBlack,
+        tDec: TextDecoration.underline);
   }
 
   static TextStyle semibold18Primary() {

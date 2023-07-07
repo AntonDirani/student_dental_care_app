@@ -7,7 +7,6 @@ import '../../resources/components_manager.dart';
 import '../../resources/string_manager.dart';
 import '../../resources/styles_manager.dart';
 import '../../resources/values_manager.dart';
-import 'login.dart';
 
 class StudentRegisterScreen extends StatefulWidget {
   const StudentRegisterScreen({super.key});
@@ -164,10 +163,17 @@ class _StudentRegisterScreenState extends State<StudentRegisterScreen> {
                 Padding(
                   padding: const EdgeInsets.fromLTRB(0, 10, 0, 0),
                   child: ComponentManager.mainGradientButton(
-                      text: AppStrings.continueText,
-                      icon: Icons.arrow_back_ios,
-                      navigate: const StudentRegisterFirstFollowupScreen(),
-                      context: context),
+                    text: AppStrings.continueText,
+                    icon: Icons.arrow_back_ios,
+                    onPressed: () {
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                            builder: (context) =>
+                                StudentRegisterFirstFollowupScreen()),
+                      );
+                    },
+                  ),
                 ),
               ]),
         ),

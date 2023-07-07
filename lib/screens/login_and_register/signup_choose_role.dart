@@ -41,16 +41,28 @@ class SignUpChooseScreen extends StatelessWidget {
                   Padding(
                     padding: EdgeInsets.fromLTRB(0, 1.h, 0, 1.h),
                     child: ComponentManager.mainGradientButton(
-                        text: AppStrings.registerAsStudentText,
-                        navigate: const StudentRegisterScreen(),
-                        context: context),
+                      text: AppStrings.registerAsStudentText,
+                      onPressed: () {
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                              builder: (context) => StudentRegisterScreen()),
+                        );
+                      },
+                    ),
                   ),
                   Padding(
                     padding: EdgeInsets.fromLTRB(0, 1.h, 0, 4.h),
                     child: ComponentManager.secondaryGradientButton(
-                        text: AppStrings.registerAsPatientText,
-                        navigate: const PatientRegisterScreen(),
-                        context: context),
+                      text: AppStrings.registerAsPatientText,
+                      onPressed: () {
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                              builder: (context) => PatientRegisterScreen()),
+                        );
+                      },
+                    ),
                   ),
                 ]),
           ),

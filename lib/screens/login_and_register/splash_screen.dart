@@ -42,10 +42,14 @@ class SplashScreen extends StatelessWidget {
                     Padding(
                       padding: EdgeInsets.fromLTRB(0, 3.h, 0, 1.h),
                       child: ComponentManager.mainGradientButton(
-                          option: 0,
+                          onPressed: () {
+                            Navigator.pushReplacement(
+                              context,
+                              MaterialPageRoute(
+                                  builder: (context) => DoYouHaveAnAccount()),
+                            );
+                          },
                           text: AppStrings.continueText,
-                          navigate: const DoYouHaveAnAccount(),
-                          context: context,
                           icon: Icons.arrow_back_ios),
                     )
                   ],

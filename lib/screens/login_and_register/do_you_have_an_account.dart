@@ -40,16 +40,28 @@ class DoYouHaveAnAccount extends StatelessWidget {
                   Padding(
                     padding: EdgeInsets.fromLTRB(0, 1.h, 0, 1.h),
                     child: ComponentManager.mainGradientButton(
-                        text: AppStrings.logInText,
-                        navigate: const LoginScreen(),
-                        context: context),
+                      onPressed: () {
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                              builder: (context) => LoginScreen()),
+                        );
+                      },
+                      text: AppStrings.logInText,
+                    ),
                   ),
                   Padding(
                     padding: EdgeInsets.fromLTRB(0, 1.h, 0, 4.h),
                     child: ComponentManager.outlinedButton(
-                        text: AppStrings.signUpText,
-                        navigate: const SignUpChooseScreen(),
-                        context: context),
+                      text: AppStrings.signUpText,
+                      onPressed: () {
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                              builder: (context) => SignUpChooseScreen()),
+                        );
+                      },
+                    ),
                   ),
                 ]),
           ),
