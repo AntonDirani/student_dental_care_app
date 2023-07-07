@@ -1,7 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
+import 'package:provider/provider.dart';
+import 'package:student_care_app/controllers/login_controller.dart';
 import 'package:student_care_app/providers/validation_manager.dart';
 import 'package:student_care_app/resources/components_manager.dart';
+import 'package:student_care_app/resources/home_screen.dart';
 import 'package:student_care_app/resources/values_manager.dart';
 import 'package:student_care_app/screens/login_and_register/signup_choose_role.dart';
 import '../../resources/assets_manager.dart';
@@ -35,10 +38,13 @@ class _LoginScreenState extends State<LoginScreen> {
     super.dispose();
   }
 
+  bool _isLoading = false;
   bool _isPasswordHidden = true;
 
   @override
   Widget build(BuildContext context) {
+    var _provider = Provider.of<LoginController>(context, listen: false);
+
     return Scaffold(
         body: SafeArea(
       child: SingleChildScrollView(
@@ -129,20 +135,42 @@ class _LoginScreenState extends State<LoginScreen> {
                             textInputAction: TextInputAction.done,
                             obscureText: _isPasswordHidden,
                           )),
-                      Padding(
-                        padding: const EdgeInsets.fromLTRB(0, 10, 0, 0),
-                        child: ComponentManager.mainGradientButton(
-                          onPressed: ValidationManager.validateEmail(
-                                          _emailController.value.text) ==
-                                      null &&
-                                  ValidationManager.validatePassword(
-                                          _passwordController.value.text) ==
-                                      null
-                              ? _submit
-                              : null,
-                          text: AppStrings.logInText,
-                        ),
-                      ),
+                      _isLoading
+                          ? const Center(
+                              child: Padding(
+                              padding: EdgeInsets.fromLTRB(0, 15, 0, 0),
+                              child: CircularProgressIndicator(),
+                            ))
+                          : Padding(
+                              padding: const EdgeInsets.fromLTRB(0, 10, 0, 0),
+                              child: ComponentManager.mainGradientButton(
+                                onPressed: ValidationManager.validateEmail(
+                                                _emailController.value.text) ==
+                                            null &&
+                                        ValidationManager.validatePassword(
+                                                _passwordController
+                                                    .value.text) ==
+                                            null
+                                    ? () async {
+                                        setState(() {
+                                          _isLoading = true;
+                                        });
+
+                                        await _provider.logIn(
+                                            _emailController.value.text,
+                                            _passwordController.value.text);
+
+                                        Navigator.push(
+                                          context,
+                                          MaterialPageRoute(
+                                              builder: (context) =>
+                                                  HomeScreen()),
+                                        );
+                                      }
+                                    : null,
+                                text: AppStrings.logInText,
+                              ),
+                            ),
                       Padding(
                         padding: const EdgeInsets.fromLTRB(0, 15, 0, 10),
                         child: Center(
@@ -181,10 +209,9 @@ class _LoginScreenState extends State<LoginScreen> {
     ));
   }
 
-  void _submit() {
-    Navigator.push(
-      context,
-      MaterialPageRoute(builder: (context) => SignUpChooseScreen()),
-    );
-  }
+/*
+  void _submit(Future<void> func) {
+    func;
+}
+*/
 }

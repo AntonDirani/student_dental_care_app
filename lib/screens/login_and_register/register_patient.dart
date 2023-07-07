@@ -22,8 +22,6 @@ class _PatientRegisterScreenState extends State<PatientRegisterScreen> {
 
   @override
   Widget build(BuildContext context) {
-    var _provider = Provider.of<ValidationManager>(context, listen: false);
-
     return Scaffold(
         body: SafeArea(
             child: SingleChildScrollView(
