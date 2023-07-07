@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:student_care_app/providers/validation_manager.dart';
 import 'package:student_care_app/resources/styles_manager.dart';
 
 import 'package:student_care_app/resources/values_manager.dart';

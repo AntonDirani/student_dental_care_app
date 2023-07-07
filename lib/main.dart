@@ -1,11 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:provider/provider.dart';
-import 'package:student_care_app/providers/validation_manager.dart';
-
 import 'package:student_care_app/screens/login_and_register/splash_screen.dart';
 import 'resources/color_manager.dart';
-
 import 'package:responsive_sizer/responsive_sizer.dart';
 
 void main() {

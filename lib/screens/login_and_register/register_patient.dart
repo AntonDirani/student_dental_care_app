@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:provider/provider.dart';
 import 'package:student_care_app/providers/validation_manager.dart';
-import 'package:student_care_app/screens/login_and_register/register_student_followup1.dart';
+
 import '../../resources/assets_manager.dart';
 import '../../resources/color_manager.dart';
 import '../../resources/components_manager.dart';
@@ -18,7 +18,7 @@ class PatientRegisterScreen extends StatefulWidget {
 }
 
 class _PatientRegisterScreenState extends State<PatientRegisterScreen> {
-  bool isPasswordVisible = true;
+  bool _isPasswordHidden = false;
 
   @override
   Widget build(BuildContext context) {
@@ -79,44 +79,40 @@ class _PatientRegisterScreenState extends State<PatientRegisterScreen> {
                     suffixIcon: ImageAssetsManager.emailIcon),
                 Padding(
                     padding: const EdgeInsets.fromLTRB(0, 10, 0, 0),
-                    child: SizedBox(
-                      height: AppSize.s7_5,
-                      child: TextFormField(
-                        decoration: InputDecoration(
-                          suffixIconConstraints:
-                              const BoxConstraints(maxWidth: 35, maxHeight: 20),
-                          prefixIcon: IconButton(
-                            icon: isPasswordVisible
-                                ? const Icon(
-                                    Icons.visibility_off,
-                                    color: Colors.grey,
-                                  )
-                                : const Icon(
-                                    Icons.visibility,
-                                    color: Colors.grey,
-                                  ),
-                            onPressed: () => setState(
-                                () => isPasswordVisible = !isPasswordVisible),
-                          ),
-                          suffixIcon: Padding(
-                            padding: const EdgeInsets.fromLTRB(0, 0, 15, 0),
-                            child: Image.asset(ImageAssetsManager.passwordIcon),
-                          ),
-                          enabledBorder: OutlineInputBorder(
-                              borderSide:
-                                  BorderSide(color: ColorManager.lightGrey),
-                              borderRadius:
-                                  BorderRadius.circular(AppSize.s3_5)),
-                          label: Align(
-                            alignment: Alignment.centerRight,
-                            child: Text(AppStrings.passwordText,
-                                style: StylesManager.medium16()),
-                          ),
-                          filled: true,
+                    child: TextFormField(
+                      decoration: InputDecoration(
+                        suffixIconConstraints:
+                            const BoxConstraints(maxWidth: 35, maxHeight: 20),
+                        prefixIcon: IconButton(
+                          icon: _isPasswordHidden
+                              ? const Icon(
+                                  Icons.visibility_off,
+                                  color: Colors.grey,
+                                )
+                              : const Icon(
+                                  Icons.visibility,
+                                  color: Colors.grey,
+                                ),
+                          onPressed: () => setState(
+                              () => _isPasswordHidden = !_isPasswordHidden),
                         ),
-                        textInputAction: TextInputAction.done,
-                        obscureText: isPasswordVisible,
+                        suffixIcon: Padding(
+                          padding: const EdgeInsets.fromLTRB(0, 0, 15, 0),
+                          child: Image.asset(ImageAssetsManager.passwordIcon),
+                        ),
+                        enabledBorder: OutlineInputBorder(
+                            borderSide:
+                                BorderSide(color: ColorManager.lightGrey),
+                            borderRadius: BorderRadius.circular(AppSize.s3_5)),
+                        label: Align(
+                          alignment: Alignment.centerRight,
+                          child: Text(AppStrings.passwordText,
+                              style: StylesManager.medium16()),
+                        ),
+                        filled: true,
                       ),
+                      textInputAction: TextInputAction.done,
+                      obscureText: _isPasswordHidden,
                     )),
                 Padding(
                     padding: const EdgeInsets.fromLTRB(0, 10, 0, 0),
@@ -127,7 +123,7 @@ class _PatientRegisterScreenState extends State<PatientRegisterScreen> {
                           suffixIconConstraints:
                               const BoxConstraints(maxWidth: 35, maxHeight: 20),
                           prefixIcon: IconButton(
-                            icon: isPasswordVisible
+                            icon: _isPasswordHidden
                                 ? const Icon(
                                     Icons.visibility_off,
                                     color: Colors.grey,
@@ -137,7 +133,7 @@ class _PatientRegisterScreenState extends State<PatientRegisterScreen> {
                                     color: Colors.grey,
                                   ),
                             onPressed: () => setState(
-                                () => isPasswordVisible = !isPasswordVisible),
+                                () => _isPasswordHidden = !_isPasswordHidden),
                           ),
                           suffixIcon: Padding(
                             padding: const EdgeInsets.fromLTRB(0, 0, 15, 0),
@@ -156,7 +152,7 @@ class _PatientRegisterScreenState extends State<PatientRegisterScreen> {
                           filled: true,
                         ),
                         textInputAction: TextInputAction.done,
-                        obscureText: isPasswordVisible,
+                        obscureText: _isPasswordHidden,
                       ),
                     )),
                 ComponentManager.myTextField(

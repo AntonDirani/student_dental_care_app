@@ -5,6 +5,7 @@ import 'package:student_care_app/resources/components_manager.dart';
 import 'package:student_care_app/resources/values_manager.dart';
 import 'package:student_care_app/screens/login_and_register/signup_choose_role.dart';
 import '../../resources/assets_manager.dart';
+import '../../resources/color_manager.dart';
 import '../../resources/string_manager.dart';
 import '../../resources/styles_manager.dart';
 
@@ -18,14 +19,23 @@ class LoginScreen extends StatefulWidget {
 }
 
 class _LoginScreenState extends State<LoginScreen> {
-  final _controller = TextEditingController();
-  bool _submitted = false;
+  final _emailController = TextEditingController();
+  final _passwordController = TextEditingController();
+  bool _emailSubmitted = false;
+  bool _passwordSubmitted = false;
+
+  @override
+  void initState() {
+    super.initState();
+  }
 
   @override
   void dispose() {
-    _controller.dispose();
+    _emailController.dispose();
     super.dispose();
   }
+
+  bool _isPasswordHidden = true;
 
   @override
   Widget build(BuildContext context) {
@@ -62,24 +72,74 @@ class _LoginScreenState extends State<LoginScreen> {
                       ),
                       ComponentManager.myTextField(
                           onChanged: (_) => setState(() {
-                                _submitted = true;
+                                _emailSubmitted = true;
                               }),
-                          errorText: _submitted
-                              ? ValidationManager.validateMobile(
-                                  _controller.value.text)
+                          errorText: _emailSubmitted
+                              ? ValidationManager.validateEmail(
+                                  _emailController.value.text)
                               : null,
-                          controller: _controller,
+                          controller: _emailController,
                           label: AppStrings.emailText,
                           suffixIcon: ImageAssetsManager.emailIcon),
-                      ComponentManager.myTextField(
-                          label: AppStrings.passwordText,
-                          suffixIcon: ImageAssetsManager.passwordIcon),
+                      Padding(
+                          padding: const EdgeInsets.fromLTRB(0, 10, 0, 0),
+                          child: TextFormField(
+                            onChanged: (_) => setState(() {
+                              _passwordSubmitted = true;
+                            }),
+                            controller: _passwordController,
+                            decoration: InputDecoration(
+                              errorStyle: StylesManager.regular14(),
+                              errorText: _passwordSubmitted
+                                  ? ValidationManager.validatePassword(
+                                      _passwordController.value.text)
+                                  : null,
+                              suffixIconConstraints: const BoxConstraints(
+                                  maxWidth: 35, maxHeight: 20),
+                              prefixIcon: IconButton(
+                                icon: _isPasswordHidden
+                                    ? const Icon(
+                                        Icons.visibility_off,
+                                        color: Colors.grey,
+                                      )
+                                    : const Icon(
+                                        Icons.visibility,
+                                        color: Colors.grey,
+                                      ),
+                                onPressed: () => setState(() =>
+                                    _isPasswordHidden = !_isPasswordHidden),
+                              ),
+                              suffixIcon: Padding(
+                                padding: const EdgeInsets.fromLTRB(0, 0, 15, 0),
+                                child: Image.asset(
+                                    ImageAssetsManager.passwordIcon),
+                              ),
+                              enabledBorder: OutlineInputBorder(
+                                  borderSide:
+                                      BorderSide(color: ColorManager.lightGrey),
+                                  borderRadius:
+                                      BorderRadius.circular(AppSize.s3_5)),
+                              label: Align(
+                                alignment: Alignment.centerRight,
+                                child: Text(AppStrings.passwordText,
+                                    style: StylesManager.medium16()),
+                              ),
+                              filled: true,
+                            ),
+                            textInputAction: TextInputAction.done,
+                            obscureText: _isPasswordHidden,
+                          )),
                       Padding(
                         padding: const EdgeInsets.fromLTRB(0, 10, 0, 0),
                         child: ComponentManager.mainGradientButton(
-                          onPressed: () {
-                            _controller.value.text.isNotEmpty ? _submit : null;
-                          },
+                          onPressed: ValidationManager.validateEmail(
+                                          _emailController.value.text) ==
+                                      null &&
+                                  ValidationManager.validatePassword(
+                                          _passwordController.value.text) ==
+                                      null
+                              ? _submit
+                              : null,
                           text: AppStrings.logInText,
                         ),
                       ),
