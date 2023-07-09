@@ -26,6 +26,12 @@ class AppStrings {
 
   static const welcomePatientText = '!اهلا بك';
 
+  static const oneLastInfoText = '!بعض المعلومات الاخيرة';
+  static const weAreCloseToFinishText = 'إقتربنا من الإنتهاء';
+
   static const clickToUploadText =
       'إضغط لإختيار بطاقة الأعمال أو البطاقة الجامعية الخاصة بك';
+  static const clickToUploadProfilePhotoText =
+      'اضغط لإختيار الصورة الخاصة بحسابك الشخصي';
+  static const doneSelectText = '!تم الاختيار بنجاح';
 }

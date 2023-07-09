@@ -2,49 +2,51 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:provider/provider.dart';
 import 'package:student_care_app/controllers/login_controller.dart';
-import 'package:student_care_app/resources/validation_manager.dart';
-import 'package:student_care_app/resources/components_manager.dart';
-import 'package:student_care_app/resources/home_screen.dart';
-import 'package:student_care_app/resources/values_manager.dart';
 import 'package:student_care_app/screens/login_and_register/signup_choose_role.dart';
+import 'package:intl/intl.dart';
+import '../../controllers/patient_controller.dart';
 import '../../resources/assets_manager.dart';
 import '../../resources/color_manager.dart';
+import '../../resources/components_manager.dart';
+import '../../resources/home_screen.dart';
 import '../../resources/string_manager.dart';
 import '../../resources/styles_manager.dart';
+import '../../resources/validation_manager.dart';
+import '../../resources/values_manager.dart';
 
-class LoginScreen extends StatefulWidget {
-  const LoginScreen({
-    super.key,
-  });
-
+class PatientRegisterScreenFollowUp extends StatefulWidget {
+  List<String> dropDownList1 = <String>[
+    'اختر الجامعة الخاصة بك...',
+    'Two',
+    'Three',
+    'Four'
+  ];
   @override
-  State<LoginScreen> createState() => _LoginScreenState();
+  State<PatientRegisterScreenFollowUp> createState() =>
+      _PatientRegisterScreenFollowUpState();
 }
 
-class _LoginScreenState extends State<LoginScreen> {
+List<String> dropDownList1 = <String>[
+  'اختر الجامعة الخاصة بك...',
+  'Two',
+  'Three',
+  'Four'
+];
+
+class _PatientRegisterScreenFollowUpState
+    extends State<PatientRegisterScreenFollowUp> {
   final _emailController = TextEditingController();
   final _passwordController = TextEditingController();
+  final _dateController = TextEditingController();
   bool _emailSubmitted = false;
   bool _passwordSubmitted = false;
   bool _success = false;
   bool _isLoading = false;
   bool _isPasswordHidden = true;
-
-  @override
-  void initState() {
-    super.initState();
-  }
-
-  @override
-  void dispose() {
-    _emailController.dispose();
-    super.dispose();
-  }
-
+  String dropDownValue1 = dropDownList1.first;
   @override
   Widget build(BuildContext context) {
     var _provider = Provider.of<LoginController>(context, listen: false);
-
     return Scaffold(
         body: SafeArea(
       child: SingleChildScrollView(
@@ -57,84 +59,56 @@ class _LoginScreenState extends State<LoginScreen> {
                 child: Form(
                   autovalidateMode: AutovalidateMode.onUserInteraction,
                   child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.end,
+                    crossAxisAlignment: CrossAxisAlignment.center,
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
                       Flexible(
                         child: Padding(
                           padding: const EdgeInsets.fromLTRB(0, 0, 0, 10),
                           child: SvgPicture.asset(
-                            ImageAssetsManager.loginVector,
+                            ImageAssetsManager.informationVector,
                           ),
                         ),
                       ),
                       Text(
-                        AppStrings.logInText,
-                        style: StylesManager.medium20(),
+                        AppStrings.oneLastInfoText,
+                        style: StylesManager.medium22(),
                       ),
                       Text(
-                        AppStrings.logInSecondaryText,
+                        AppStrings.weAreCloseToFinishText,
                         style: StylesManager.light18Black(),
                       ),
+                      ComponentManager.myDropDown(
+                          dropDownList: dropDownList1,
+                          dropDownValue: dropDownValue1,
+                          onChanged: (String? value) {
+                            // This is called when the user selects an item.
+                            setState(() {
+                              dropDownValue1 = value!;
+                              print(value);
+                            });
+                          }),
                       ComponentManager.myTextField(
-                          onChanged: (_) => setState(() {
-                                _emailSubmitted = true;
-                              }),
-                          errorText: _emailSubmitted
-                              ? ValidationManager.validateEmail(
-                                  _emailController.value.text)
-                              : null,
-                          controller: _emailController,
-                          label: AppStrings.emailText,
-                          suffixIcon: ImageAssetsManager.emailIcon),
-                      Padding(
-                          padding: const EdgeInsets.fromLTRB(0, 10, 0, 0),
-                          child: TextFormField(
-                            onChanged: (_) => setState(() {
-                              _passwordSubmitted = true;
-                            }),
-                            controller: _passwordController,
-                            decoration: InputDecoration(
-                              errorStyle: StylesManager.regular14(),
-                              errorText: _passwordSubmitted
-                                  ? ValidationManager.validatePassword(
-                                      _passwordController.value.text)
-                                  : null,
-                              suffixIconConstraints: const BoxConstraints(
-                                  maxWidth: 35, maxHeight: 20),
-                              prefixIcon: IconButton(
-                                icon: _isPasswordHidden
-                                    ? const Icon(
-                                        Icons.visibility_off,
-                                        color: Colors.grey,
-                                      )
-                                    : const Icon(
-                                        Icons.visibility,
-                                        color: Colors.grey,
-                                      ),
-                                onPressed: () => setState(() =>
-                                    _isPasswordHidden = !_isPasswordHidden),
-                              ),
-                              suffixIcon: Padding(
-                                padding: const EdgeInsets.fromLTRB(0, 0, 15, 0),
-                                child: Image.asset(
-                                    ImageAssetsManager.passwordIcon),
-                              ),
-                              enabledBorder: OutlineInputBorder(
-                                  borderSide:
-                                      BorderSide(color: ColorManager.lightGrey),
-                                  borderRadius:
-                                      BorderRadius.circular(AppSize.s3_5)),
-                              label: Align(
-                                alignment: Alignment.centerRight,
-                                child: Text(AppStrings.passwordText,
-                                    style: StylesManager.medium16()),
-                              ),
-                              filled: true,
-                            ),
-                            textInputAction: TextInputAction.done,
-                            obscureText: _isPasswordHidden,
-                          )),
+                        suffixIcon: ImageAssetsManager.calendarImage,
+                        controller: _dateController,
+                        onChanged: (value) {},
+                        readOnly: true,
+                        onTap: () async {
+                          DateTime? pickedDate = await showDatePicker(
+                              context: context,
+                              initialDate: DateTime(2008),
+                              firstDate: DateTime(1940),
+                              lastDate: DateTime(2008));
+                          if (pickedDate != null) {
+                            String formattedDate =
+                                DateFormat('yyyy/MM/dd').format(pickedDate);
+                            setState(() {
+                              _dateController.text = formattedDate;
+                            });
+                          }
+                        },
+                        label: '..الرجاء إدخال تاريخ الولادة الخاصة بك',
+                      ),
                       _isLoading
                           ? const Center(
                               child: Padding(
@@ -258,10 +232,4 @@ class _LoginScreenState extends State<LoginScreen> {
               ))),
     ));
   }
-
-/*
-  void _submit(Future<void> func) {
-    func;
-}
-*/
 }

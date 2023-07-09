@@ -22,6 +22,17 @@ class ValidationManager {
     return null;
   }
 
+  static String? validateName(String? value) {
+    String pattern = r"[\u0600-\u06FF]";
+    RegExp regExp = RegExp(pattern);
+    if (value!.isEmpty) {
+      return 'الرجاء إدخال اسم';
+    } else if (!regExp.hasMatch(value)) {
+      return 'الرجاء إدخال اسم صحيح';
+    }
+    return null;
+  }
+
   static String? validatePassword(String? value) {
     RegExp regex = RegExp(r'^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9]).{8,}$');
     var passNonNullValue = value ?? "";
@@ -31,6 +42,13 @@ class ValidationManager {
       return ("كلمة المرور يجب ان تكون 8 محارف أو اكثر");
     } else if (!regex.hasMatch(passNonNullValue)) {
       return ("كلمة المرور يجب ان تحتوي على حرف كبير و حرف صغير و أرقام");
+    }
+    return null;
+  }
+
+  static String? validatePasswordMatch(String? value, String? value2) {
+    if (value != value2) {
+      return ("كلمتا المرور غير متطابقان");
     }
     return null;
   }

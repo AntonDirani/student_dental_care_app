@@ -1,11 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
+import 'package:provider/provider.dart';
+import 'package:student_care_app/controllers/register_controller.dart';
 import 'package:student_care_app/screens/login_and_register/register_student_followup1.dart';
 import '../../resources/assets_manager.dart';
 import '../../resources/color_manager.dart';
 import '../../resources/components_manager.dart';
 import '../../resources/string_manager.dart';
 import '../../resources/styles_manager.dart';
+import '../../resources/validation_manager.dart';
 import '../../resources/values_manager.dart';
 
 class StudentRegisterScreen extends StatefulWidget {
@@ -17,9 +20,25 @@ class StudentRegisterScreen extends StatefulWidget {
 
 class _StudentRegisterScreenState extends State<StudentRegisterScreen> {
   bool isPasswordVisible = true;
+  final _emailController = TextEditingController();
+  final _password1Controller = TextEditingController();
+  final _password2Controller = TextEditingController();
+  final _phoneController = TextEditingController();
+  final _firstNameController = TextEditingController();
+  final _secondNameController = TextEditingController();
+  bool _emailSubmitted = false;
+  bool _password1Submitted = false;
+  bool _password2Submitted = false;
+  bool _firstNameSubmitted = false;
+  bool _secondNameSubmitted = false;
+  bool _phoneSubmitted = false;
+  bool _success = false;
+  bool _isLoading = false;
 
   @override
   Widget build(BuildContext context) {
+    var _provider = Provider.of<RegisterController>(context, listen: false);
+
     return Scaffold(
         body: SafeArea(
             child: SingleChildScrollView(
@@ -55,6 +74,14 @@ class _StudentRegisterScreenState extends State<StudentRegisterScreen> {
                       child: Padding(
                         padding: const EdgeInsets.fromLTRB(0, 0, 6, 0),
                         child: ComponentManager.myTextFieldNoSuffix(
+                          onChanged: (_) => setState(() {
+                            _secondNameSubmitted = true;
+                          }),
+                          errorText: _secondNameSubmitted
+                              ? ValidationManager.validateName(
+                                  _secondNameController.value.text)
+                              : null,
+                          controller: _secondNameController,
                           label: AppStrings.enterYourSecondNameText,
                         ),
                       ),
@@ -63,6 +90,14 @@ class _StudentRegisterScreenState extends State<StudentRegisterScreen> {
                       child: Padding(
                         padding: const EdgeInsets.fromLTRB(6, 0, 0, 0),
                         child: ComponentManager.myTextFieldNoSuffix(
+                          onChanged: (_) => setState(() {
+                            _firstNameSubmitted = true;
+                          }),
+                          errorText: _firstNameSubmitted
+                              ? ValidationManager.validateName(
+                                  _firstNameController.value.text)
+                              : null,
+                          controller: _firstNameController,
                           label: AppStrings.enterYourFirstNameText,
                         ),
                       ),
@@ -70,6 +105,14 @@ class _StudentRegisterScreenState extends State<StudentRegisterScreen> {
                   ],
                 ),
                 ComponentManager.myTextField(
+                    onChanged: (_) => setState(() {
+                          _emailSubmitted = true;
+                        }),
+                    errorText: _emailSubmitted
+                        ? ValidationManager.validateEmail(
+                            _emailController.value.text)
+                        : null,
+                    controller: _emailController,
                     inputType: TextInputType.emailAddress,
                     label: AppStrings.emailText,
                     suffixIcon: ImageAssetsManager.emailIcon),
@@ -78,7 +121,16 @@ class _StudentRegisterScreenState extends State<StudentRegisterScreen> {
                     child: SizedBox(
                       height: AppSize.s7_5,
                       child: TextFormField(
+                        onChanged: (_) => setState(() {
+                          _password1Submitted = true;
+                        }),
+                        controller: _password1Controller,
                         decoration: InputDecoration(
+                          errorStyle: StylesManager.regular14(),
+                          errorText: _password1Submitted
+                              ? ValidationManager.validatePassword(
+                                  _password1Controller.value.text)
+                              : null,
                           suffixIconConstraints:
                               const BoxConstraints(maxWidth: 35, maxHeight: 20),
                           prefixIcon: IconButton(
@@ -119,7 +171,17 @@ class _StudentRegisterScreenState extends State<StudentRegisterScreen> {
                     child: SizedBox(
                       height: AppSize.s7_5,
                       child: TextFormField(
+                        onChanged: (_) => setState(() {
+                          _password2Submitted = true;
+                        }),
+                        controller: _password2Controller,
                         decoration: InputDecoration(
+                          errorStyle: StylesManager.regular14(),
+                          errorText: _password2Submitted
+                              ? ValidationManager.validatePasswordMatch(
+                                  _password2Controller.value.text,
+                                  _password1Controller.value.text)
+                              : null,
                           suffixIconConstraints:
                               const BoxConstraints(maxWidth: 35, maxHeight: 20),
                           prefixIcon: IconButton(
@@ -156,25 +218,114 @@ class _StudentRegisterScreenState extends State<StudentRegisterScreen> {
                       ),
                     )),
                 ComponentManager.myTextField(
+                  onChanged: (_) => setState(() {
+                    _phoneSubmitted = true;
+                  }),
+                  errorText: _phoneSubmitted
+                      ? ValidationManager.validateMobile(
+                          _phoneController.value.text)
+                      : null,
+                  controller: _phoneController,
                   label: AppStrings.enterYourPhoneText,
                   suffixIcon: ImageAssetsManager.phoneIcon,
-                  inputType: TextInputType.emailAddress,
+                  inputType: TextInputType.phone,
                 ),
-                Padding(
-                  padding: const EdgeInsets.fromLTRB(0, 10, 0, 0),
-                  child: ComponentManager.mainGradientButton(
-                    text: AppStrings.continueText,
-                    icon: Icons.arrow_back_ios,
-                    onPressed: () {
-                      Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                            builder: (context) =>
-                                StudentRegisterFirstFollowupScreen()),
-                      );
-                    },
-                  ),
-                ),
+                _isLoading
+                    ? const Center(
+                        child: Padding(
+                        padding: EdgeInsets.fromLTRB(0, 15, 0, 0),
+                        child: CircularProgressIndicator(),
+                      ))
+                    : Padding(
+                        padding: const EdgeInsets.fromLTRB(0, 15, 0, 0),
+                        child: ComponentManager.mainGradientButton(
+                          onPressed: ValidationManager.validateEmail(
+                                          _emailController.value.text) ==
+                                      null &&
+                                  ValidationManager.validatePassword(
+                                          _password1Controller.value.text) ==
+                                      null &&
+                                  ValidationManager.validateName(
+                                          _firstNameController.value.text) ==
+                                      null &&
+                                  ValidationManager.validateName(
+                                          _secondNameController.value.text) ==
+                                      null &&
+                                  ValidationManager.validateMobile(
+                                          _phoneController.value.text) ==
+                                      null
+                              ? () async {
+                                  setState(() {
+                                    _isLoading = true;
+                                  });
+
+                                  _success = await _provider.register(
+                                    pass: _password1Controller.value.text,
+                                    email: _emailController.value.text,
+                                    firstName: _firstNameController.value.text,
+                                    secondName:
+                                        _secondNameController.value.text,
+                                    phoneNumber: _phoneController.value.text,
+                                    role: 'Student',
+                                  );
+                                  print(_success.toString());
+                                  if (_success == true) {
+                                    _isLoading = false;
+                                    Navigator.pushReplacement(
+                                      context,
+                                      MaterialPageRoute(
+                                          builder: (context) =>
+                                              StudentRegisterFirstFollowupScreen()),
+                                    );
+                                  } else {
+                                    Future.delayed(const Duration(seconds: 4),
+                                        () {
+                                      // <-- Delay here
+                                      setState(() {
+                                        _isLoading =
+                                            false; // <-- Code run after delay
+                                      });
+                                      AlertDialog alert = AlertDialog(
+                                        title: Text(
+                                          "!انتباه",
+                                          style: StylesManager.bold18Black(),
+                                          textAlign: TextAlign.right,
+                                        ),
+                                        content: Text(
+                                          "عذرا حدث خطأ ما, يرجى إعادة المحاولة",
+                                          style: StylesManager.medium18Grey(),
+                                          textAlign: TextAlign.right,
+                                        ),
+                                        actions: [
+                                          Align(
+                                            alignment: Alignment.centerLeft,
+                                            child: TextButton(
+                                              child: Text(
+                                                "رجوع",
+                                                style: StylesManager.bold16(),
+                                              ),
+                                              onPressed: () {
+                                                Navigator.pop(context);
+                                              },
+                                            ),
+                                          ),
+                                        ],
+                                      );
+
+                                      // show the dialog
+                                      showDialog(
+                                        context: context,
+                                        builder: (BuildContext context) {
+                                          return alert;
+                                        },
+                                      );
+                                    });
+                                  }
+                                }
+                              : null,
+                          text: AppStrings.continueText,
+                        ),
+                      ),
               ]),
         ),
       ),
