@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:student_care_app/models/university_model.dart';
 import 'package:student_care_app/resources/styles_manager.dart';
 
 import 'package:student_care_app/resources/values_manager.dart';
@@ -171,9 +172,11 @@ class ComponentManager {
   }
 
   static Padding myDropDown({
-    String? dropDownValue,
-    List<String>? dropDownList,
-    void Function(String?)? onChanged,
+    University? value,
+    String? hint,
+    int? dropDownValue,
+    List<University>? dropDownList,
+    void Function(University?)? onChanged,
   }) {
     return Padding(
       padding: const EdgeInsets.fromLTRB(0, 10, 0, 0),
@@ -189,23 +192,22 @@ class ComponentManager {
           ),
           child: Padding(
             padding: const EdgeInsets.symmetric(horizontal: 10.0),
-            child: DropdownButton(
-                style: StylesManager.medium16(),
-                value: dropDownValue,
+            child: DropdownButton<University>(
+                value: value,
+                hint: Text(
+                  hint!,
+                  style: StylesManager.regular16Grey(),
+                ),
+                style: StylesManager.medium16Black(),
                 underline: const SizedBox(),
                 dropdownColor: ColorManager.lightGrey,
                 iconEnabledColor: ColorManager.costumeBlack,
                 isExpanded: true,
-                items:
-                    dropDownList?.map<DropdownMenuItem<String>>((String value) {
-                  return DropdownMenuItem<String>(
-                    value: value,
-                    child: Align(
-                      alignment: Alignment.centerRight,
-                      child: Text(
-                        value,
-                      ),
-                    ),
+                items: dropDownList
+                    ?.map<DropdownMenuItem<University>>((University uni) {
+                  return DropdownMenuItem<University>(
+                    value: uni,
+                    child: Text(uni.uniName.toString()),
                   );
                 }).toList(),
                 onChanged: onChanged),

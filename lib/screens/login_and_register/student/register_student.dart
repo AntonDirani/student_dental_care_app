@@ -1,15 +1,18 @@
+// ignore_for_file: avoid_print
+
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:provider/provider.dart';
 import 'package:student_care_app/controllers/register_controller.dart';
-import 'package:student_care_app/screens/login_and_register/register_student_followup1.dart';
-import '../../resources/assets_manager.dart';
-import '../../resources/color_manager.dart';
-import '../../resources/components_manager.dart';
-import '../../resources/string_manager.dart';
-import '../../resources/styles_manager.dart';
-import '../../resources/validation_manager.dart';
-import '../../resources/values_manager.dart';
+import 'package:student_care_app/screens/login_and_register/student/register_student_followup1.dart';
+
+import '../../../resources/assets_manager.dart';
+import '../../../resources/color_manager.dart';
+import '../../../resources/components_manager.dart';
+import '../../../resources/string_manager.dart';
+import '../../../resources/styles_manager.dart';
+import '../../../resources/validation_manager.dart';
+import '../../../resources/values_manager.dart';
 
 class StudentRegisterScreen extends StatefulWidget {
   const StudentRegisterScreen({super.key});
@@ -37,7 +40,7 @@ class _StudentRegisterScreenState extends State<StudentRegisterScreen> {
 
   @override
   Widget build(BuildContext context) {
-    var _provider = Provider.of<RegisterController>(context, listen: false);
+    var provider = Provider.of<RegisterController>(context, listen: false);
 
     return Scaffold(
         body: SafeArea(
@@ -259,7 +262,7 @@ class _StudentRegisterScreenState extends State<StudentRegisterScreen> {
                                     _isLoading = true;
                                   });
 
-                                  _success = await _provider.register(
+                                  _success = await provider.register(
                                     pass: _password1Controller.value.text,
                                     email: _emailController.value.text,
                                     firstName: _firstNameController.value.text,
@@ -268,14 +271,16 @@ class _StudentRegisterScreenState extends State<StudentRegisterScreen> {
                                     phoneNumber: _phoneController.value.text,
                                     role: 'Student',
                                   );
+
                                   print(_success.toString());
                                   if (_success == true) {
                                     _isLoading = false;
+                                    if (!mounted) return;
                                     Navigator.pushReplacement(
                                       context,
                                       MaterialPageRoute(
                                           builder: (context) =>
-                                              StudentRegisterFirstFollowupScreen()),
+                                              const StudentRegisterFirstFollowupScreen()),
                                     );
                                   } else {
                                     Future.delayed(const Duration(seconds: 4),

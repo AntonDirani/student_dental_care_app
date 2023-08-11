@@ -1,9 +1,14 @@
+// ignore_for_file: avoid_print, depend_on_referenced_packages
+
 import 'dart:convert';
 import 'package:flutter/cupertino.dart';
 import 'package:http/http.dart' as http;
+import 'package:shared_preferences/shared_preferences.dart';
 import 'package:student_care_app/resources/constants_manager.dart';
 
 class RegisterController extends ChangeNotifier {
+  String? _token;
+
   Future<bool> register({
     required String email,
     required String pass,
@@ -28,6 +33,10 @@ class RegisterController extends ChangeNotifier {
 
       final body = jsonDecode(response.body);
       print(body);
+      _token = await body['The Token'];
+      SharedPreferences prefs = await SharedPreferences.getInstance();
+      await prefs.setString('token', _token!);
+      print(prefs.getString('token'));
 
       return true;
     } catch (e) {
@@ -35,4 +44,6 @@ class RegisterController extends ChangeNotifier {
       return false;
     }
   }
+
+  String? get token => _token;
 }

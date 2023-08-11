@@ -1,7 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
+import 'package:provider/provider.dart';
 import 'package:responsive_sizer/responsive_sizer.dart';
-import 'package:student_care_app/screens/login_and_register/do_you_have_an_account.dart';
+import 'package:student_care_app/controllers/location_controller.dart';
+
+import '../../controllers/university_controller.dart';
+import '../../home_screen.dart';
 import '../../resources/assets_manager.dart';
 import '../../resources/components_manager.dart';
 import '../../resources/string_manager.dart';
@@ -13,6 +17,9 @@ class SplashScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    Provider.of<UniveristyController>(context, listen: false).getUnis();
+    Provider.of<LocationController>(context, listen: false).fetchLocations();
+
     return Scaffold(
       body: Center(
         child: Padding(
@@ -46,7 +53,7 @@ class SplashScreen extends StatelessWidget {
                             Navigator.pushReplacement(
                               context,
                               MaterialPageRoute(
-                                  builder: (context) => DoYouHaveAnAccount()),
+                                  builder: (context) => HomeScreen()),
                             );
                           },
                           text: AppStrings.continueText,

@@ -53,6 +53,14 @@ class StylesManager {
     );
   }
 
+  static TextStyle medium16Black() {
+    return StylesManager.getTextStyle(
+      fontSize: FontSize.s16,
+      fontWeight: FontWeightManager.medium,
+      color: ColorManager.costumeBlack,
+    );
+  }
+
   static TextStyle regular14() {
     return StylesManager.getTextStyle(
       fontSize: FontSize.s14,
@@ -89,6 +97,14 @@ class StylesManager {
     return StylesManager.getTextStyle(
       fontSize: FontSize.s18,
       fontWeight: FontWeightManager.medium,
+      color: ColorManager.grey,
+    );
+  }
+
+  static TextStyle regular16Grey() {
+    return StylesManager.getTextStyle(
+      fontSize: FontSize.s16,
+      fontWeight: FontWeightManager.regular,
       color: ColorManager.grey,
     );
   }

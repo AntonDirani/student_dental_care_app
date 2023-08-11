@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:responsive_sizer/responsive_sizer.dart';
-import 'package:student_care_app/screens/login_and_register/register_patient.dart';
-import 'package:student_care_app/screens/login_and_register/register_student.dart';
+import 'package:student_care_app/screens/login_and_register/patient/register_patient.dart';
+import 'package:student_care_app/screens/login_and_register/student/register_student.dart';
 
 import '../../resources/assets_manager.dart';
 import '../../resources/components_manager.dart';
@@ -46,7 +46,8 @@ class SignUpChooseScreen extends StatelessWidget {
                         Navigator.push(
                           context,
                           MaterialPageRoute(
-                              builder: (context) => StudentRegisterScreen()),
+                              builder: (context) =>
+                                  const StudentRegisterScreen()),
                         );
                       },
                     ),
@@ -59,7 +60,8 @@ class SignUpChooseScreen extends StatelessWidget {
                         Navigator.push(
                           context,
                           MaterialPageRoute(
-                              builder: (context) => PatientRegisterScreen()),
+                              builder: (context) =>
+                                  const PatientRegisterScreen()),
                         );
                       },
                     ),

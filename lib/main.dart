@@ -1,10 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:provider/provider.dart';
+import 'package:student_care_app/controllers/location_controller.dart';
 import 'package:student_care_app/controllers/login_controller.dart';
+import 'package:student_care_app/controllers/patient_controller.dart';
 import 'package:student_care_app/controllers/register_controller.dart';
 import 'package:student_care_app/controllers/student_controller.dart';
 import 'package:student_care_app/screens/login_and_register/splash_screen.dart';
+import 'controllers/university_controller.dart';
 import 'resources/color_manager.dart';
 import 'package:responsive_sizer/responsive_sizer.dart';
 
@@ -30,6 +33,15 @@ class MyApp extends StatelessWidget {
         ),
         ChangeNotifierProvider<StudentController>(
           create: (context) => StudentController(),
+        ),
+        ChangeNotifierProvider<UniveristyController>(
+          create: (context) => UniveristyController(),
+        ),
+        ChangeNotifierProvider<PatientController>(
+          create: (context) => PatientController(),
+        ),
+        ChangeNotifierProvider<LocationController>(
+          create: (context) => LocationController(),
         )
       ],
       child: ResponsiveSizer(builder: (buildContext, orientation, screenType) {

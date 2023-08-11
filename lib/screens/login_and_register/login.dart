@@ -1,10 +1,12 @@
+// ignore_for_file: avoid_print
+
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:provider/provider.dart';
 import 'package:student_care_app/controllers/login_controller.dart';
 import 'package:student_care_app/resources/validation_manager.dart';
 import 'package:student_care_app/resources/components_manager.dart';
-import 'package:student_care_app/resources/home_screen.dart';
+import 'package:student_care_app/home_screen.dart';
 import 'package:student_care_app/resources/values_manager.dart';
 import 'package:student_care_app/screens/login_and_register/signup_choose_role.dart';
 import '../../resources/assets_manager.dart';
@@ -43,7 +45,7 @@ class _LoginScreenState extends State<LoginScreen> {
 
   @override
   Widget build(BuildContext context) {
-    var _provider = Provider.of<LoginController>(context, listen: false);
+    var provider = Provider.of<LoginController>(context, listen: false);
 
     return Scaffold(
         body: SafeArea(
@@ -156,12 +158,13 @@ class _LoginScreenState extends State<LoginScreen> {
                                           _isLoading = true;
                                         });
 
-                                        _success = await _provider.logIn(
+                                        _success = await provider.logIn(
                                             _emailController.value.text,
                                             _passwordController.value.text);
                                         print(_success.toString());
                                         if (_success == true) {
                                           _isLoading = false;
+                                          if (!mounted) return;
                                           Navigator.pushReplacement(
                                             context,
                                             MaterialPageRoute(
@@ -169,8 +172,8 @@ class _LoginScreenState extends State<LoginScreen> {
                                                     HomeScreen()),
                                           );
                                         } else {
-                                          Future.delayed(Duration(seconds: 4),
-                                              () {
+                                          Future.delayed(
+                                              const Duration(seconds: 4), () {
                                             // <-- Delay here
                                             setState(() {
                                               _isLoading =

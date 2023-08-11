@@ -1,7 +1,8 @@
-import 'dart:convert';
-import 'dart:math';
+// ignore_for_file: avoid_print, depend_on_referenced_packages
 
-import 'package:flutter/cupertino.dart';
+import 'dart:convert';
+
+import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 import 'package:student_care_app/resources/constants_manager.dart';
 
@@ -11,6 +12,7 @@ class LoginController extends ChangeNotifier {
   Future<bool> logIn(String email, String pass) async {
     try {
       var url = '${AppConstants.mainUrl}/login';
+
       final response = await http.post(Uri.parse(url),
           headers: {
             'Content-Type': 'application/json; charset=UTF-8',
@@ -23,7 +25,7 @@ class LoginController extends ChangeNotifier {
       final body = jsonDecode(response.body);
 
       _token = await body['The Token'];
-      print(_token);
+      //print(_token);
       return true;
     } catch (e) {
       print(e);

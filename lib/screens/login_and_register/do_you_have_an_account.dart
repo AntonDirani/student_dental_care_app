@@ -44,7 +44,7 @@ class DoYouHaveAnAccount extends StatelessWidget {
                         Navigator.push(
                           context,
                           MaterialPageRoute(
-                              builder: (context) => LoginScreen()),
+                              builder: (context) => const LoginScreen()),
                         );
                       },
                       text: AppStrings.logInText,
@@ -58,7 +58,7 @@ class DoYouHaveAnAccount extends StatelessWidget {
                         Navigator.push(
                           context,
                           MaterialPageRoute(
-                              builder: (context) => SignUpChooseScreen()),
+                              builder: (context) => const SignUpChooseScreen()),
                         );
                       },
                     ),

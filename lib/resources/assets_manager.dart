@@ -17,4 +17,5 @@ class ImageAssetsManager {
   static const String checkImage = "$imagePath/check.png";
   static const String calendarImage = "$imagePath/calendar.png";
   static const String informationVector = "$imagePath/information.svg";
+  static const String profileImage = "$imagePath/profile.png";
 }
