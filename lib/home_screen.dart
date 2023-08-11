@@ -16,7 +16,7 @@ class HomeScreen extends StatefulWidget {
 }
 
 List<Governorate> _dropDownLocations = [
-  Governorate(governorateId: 4, governorateName: 'دمشق')
+  Governorate(governorateId: 4, governorateName: 'ريف دمشق')
 ];
 
 class _HomeScreenState extends State<HomeScreen> {
