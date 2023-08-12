@@ -18,4 +18,18 @@ class ImageAssetsManager {
   static const String calendarImage = "$imagePath/calendar.png";
   static const String informationVector = "$imagePath/information.svg";
   static const String profileImage = "$imagePath/profile.png";
+
+  static const String postImage = "$imagePath/post.jpg";
+
+  static const String cavityVector = "$imagePath/cavity.svg";
+  static const String dentureImage = "$imagePath/denture.svg";
+  static const String crownsVector = "$imagePath/crowns.svg";
+  static const String neuroImage = "$imagePath/neuro.svg";
+  static const String fillImage = "$imagePath/fill.svg";
+  static const String rootsImage = "$imagePath/roots.svg";
+  static const String kidsImage = "$imagePath/kids.svg";
+  static const String extractImage = "$imagePath/extract.svg";
+  static const String bridgesImage = "$imagePath/bridges.svg";
+
+  static const String approveVector = "$imagePath/approve.svg";
 }

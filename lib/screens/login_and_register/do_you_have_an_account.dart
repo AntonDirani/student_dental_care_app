@@ -41,7 +41,7 @@ class DoYouHaveAnAccount extends StatelessWidget {
                     padding: EdgeInsets.fromLTRB(0, 1.h, 0, 1.h),
                     child: ComponentManager.mainGradientButton(
                       onPressed: () {
-                        Navigator.push(
+                        Navigator.pushReplacement(
                           context,
                           MaterialPageRoute(
                               builder: (context) => const LoginScreen()),
@@ -55,7 +55,7 @@ class DoYouHaveAnAccount extends StatelessWidget {
                     child: ComponentManager.outlinedButton(
                       text: AppStrings.signUpText,
                       onPressed: () {
-                        Navigator.push(
+                        Navigator.pushReplacement(
                           context,
                           MaterialPageRoute(
                               builder: (context) => const SignUpChooseScreen()),

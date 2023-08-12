@@ -43,7 +43,7 @@ class SignUpChooseScreen extends StatelessWidget {
                     child: ComponentManager.mainGradientButton(
                       text: AppStrings.registerAsStudentText,
                       onPressed: () {
-                        Navigator.push(
+                        Navigator.pushReplacement(
                           context,
                           MaterialPageRoute(
                               builder: (context) =>
@@ -57,7 +57,7 @@ class SignUpChooseScreen extends StatelessWidget {
                     child: ComponentManager.secondaryGradientButton(
                       text: AppStrings.registerAsPatientText,
                       onPressed: () {
-                        Navigator.push(
+                        Navigator.pushReplacement(
                           context,
                           MaterialPageRoute(
                               builder: (context) =>

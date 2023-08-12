@@ -4,6 +4,9 @@ class AppStrings {
 
   static const continueText = 'المتابعة';
   static const doYouHaveAnAccountText = 'هل تملك حساب مسبق على المنصة؟';
+  static const successStudentUploadText = '!تم بنجاح إرسال بياناتك المدخلة';
+  static const notifyStudentUploadText =
+      'سيصلك إشعار من داخل التطبيق عندما يتم التحقق من صحة البيانات ';
   static const logInText = 'تسجيل الدخول';
   static const signUpText = 'إنشاء حساب جديد';
   static const logInSecondaryText = 'أدخل البيانات الخاصة بك';
@@ -34,4 +37,8 @@ class AppStrings {
   static const clickToUploadProfilePhotoText =
       'اضغط لإختيار الصورة الخاصة بحسابك الشخصي';
   static const doneSelectText = '!تم الاختيار بنجاح';
+
+  static const attentionText = '!إنتباه';
+  static const attentionSecondText =
+      'لن تستطيع الإستفادة من جميع الميزات الخاصة بالطالب حتى تتم عملية التحقق بنجاحإضغط لإختيار بطاقة الأعمال أو البطاقة الجامعية الخاصة بك';
 }

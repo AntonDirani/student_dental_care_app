@@ -53,6 +53,22 @@ class StylesManager {
     );
   }
 
+  static TextStyle bold16Red() {
+    return StylesManager.getTextStyle(
+      fontSize: FontSize.s16,
+      fontWeight: FontWeightManager.bold,
+      color: ColorManager.red,
+    );
+  }
+
+  static TextStyle medium18White() {
+    return StylesManager.getTextStyle(
+      fontSize: FontSize.s18,
+      fontWeight: FontWeightManager.medium,
+      color: ColorManager.white,
+    );
+  }
+
   static TextStyle medium16Black() {
     return StylesManager.getTextStyle(
       fontSize: FontSize.s16,
@@ -61,11 +77,51 @@ class StylesManager {
     );
   }
 
-  static TextStyle regular14() {
+  static TextStyle semiBold17Black() {
     return StylesManager.getTextStyle(
-      fontSize: FontSize.s14,
+      fontSize: FontSize.s17,
+      fontWeight: FontWeightManager.semiBold,
+      color: ColorManager.costumeBlack,
+    );
+  }
+
+  static TextStyle bold18Black() {
+    return StylesManager.getTextStyle(
+      fontSize: FontSize.s18,
+      fontWeight: FontWeightManager.bold,
+      color: ColorManager.costumeBlack,
+    );
+  }
+
+  static TextStyle regular13() {
+    return StylesManager.getTextStyle(
+      fontSize: FontSize.s13,
       fontWeight: FontWeightManager.regular,
-      color: ColorManager.red,
+      color: ColorManager.grey,
+    );
+  }
+
+  static TextStyle regular14Black() {
+    return StylesManager.getTextStyle(
+      fontSize: FontSize.s15,
+      fontWeight: FontWeightManager.regular,
+      color: ColorManager.costumeBlack,
+    );
+  }
+
+  static TextStyle regular16Black() {
+    return StylesManager.getTextStyle(
+      fontSize: FontSize.s16,
+      fontWeight: FontWeightManager.regular,
+      color: ColorManager.costumeBlack,
+    );
+  }
+
+  static TextStyle regular18() {
+    return StylesManager.getTextStyle(
+      fontSize: FontSize.s18,
+      fontWeight: FontWeightManager.regular,
+      color: ColorManager.grey,
     );
   }
 
@@ -77,9 +133,9 @@ class StylesManager {
     );
   }
 
-  static TextStyle bold18Black() {
+  static TextStyle bold17Black() {
     return StylesManager.getTextStyle(
-      fontSize: FontSize.s18,
+      fontSize: FontSize.s17,
       fontWeight: FontWeightManager.bold,
       color: ColorManager.costumeBlack,
     );
@@ -101,19 +157,19 @@ class StylesManager {
     );
   }
 
+  static TextStyle regular14() {
+    return StylesManager.getTextStyle(
+      fontSize: FontSize.s14,
+      fontWeight: FontWeightManager.regular,
+      color: ColorManager.costumeBlack,
+    );
+  }
+
   static TextStyle regular16Grey() {
     return StylesManager.getTextStyle(
       fontSize: FontSize.s16,
       fontWeight: FontWeightManager.regular,
       color: ColorManager.grey,
-    );
-  }
-
-  static TextStyle medium18White() {
-    return StylesManager.getTextStyle(
-      fontSize: FontSize.s18,
-      fontWeight: FontWeightManager.medium,
-      color: ColorManager.white,
     );
   }
 
