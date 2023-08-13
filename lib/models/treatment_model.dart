@@ -1,5 +1,3 @@
-import 'dart:io';
-
 class Treatment {
   String? treatmentImage;
   String? treatmentName;

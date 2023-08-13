@@ -6,10 +6,10 @@ import 'package:student_care_app/components/home_screen_drawer.dart';
 import 'package:student_care_app/controllers/posts_controller.dart';
 import 'package:student_care_app/controllers/treatment_controller.dart';
 import 'package:student_care_app/models/treatment_model.dart';
-import 'package:student_care_app/resources/assets_manager.dart';
+
 import 'package:student_care_app/resources/color_manager.dart';
 import 'package:student_care_app/resources/styles_manager.dart';
-import 'package:student_care_app/screens/profiles/patient_profile.dart';
+import 'components/post_list_home_screen.dart';
 import 'components/search_bar.dart';
 import 'controllers/location_controller.dart';
 import 'models/location_model.dart';
@@ -91,7 +91,7 @@ class _HomeScreenState extends State<HomeScreen> {
           elevation: 0,
         ),
         endDrawer: HomeScreenDrawer(),
-        body: HomeScreenBody(),
+        body: SingleChildScrollView(child: HomeScreenBody()),
       ),
     );
   }
@@ -168,6 +168,7 @@ class _HomeScreenBodyState extends State<HomeScreenBody> {
                       return SizedBox(
                         height: 150,
                         child: ListView.separated(
+                          reverse: true,
                           padding: EdgeInsets.all(8.0),
                           scrollDirection: Axis.horizontal,
                           itemCount: values.length,
@@ -222,67 +223,7 @@ class _HomeScreenBodyState extends State<HomeScreenBody> {
                     style: StylesManager.medium18Black(),
                   ),
                 ),
-                FutureBuilder<List>(
-                  future: _posts, // your async method that returns a future
-                  builder: (BuildContext context, AsyncSnapshot snapshot) {
-                    if (snapshot.hasData) {
-                      List<Post> values = snapshot.data;
-                      print(values);
-                      // if data is loaded
-                      return SizedBox(
-                        height: 300,
-                        child: ListView.separated(
-                          padding: EdgeInsets.fromLTRB(15, 10, 10, 10),
-                          scrollDirection: Axis.horizontal,
-                          itemCount: values.length,
-                          itemBuilder: (BuildContext context, int index) {
-                            return Container(
-                              width: 270,
-                              decoration: BoxDecoration(
-                                  color: ColorManager.lightGrey,
-                                  //border: Border.all(color: ColorManager.grey),
-                                  borderRadius: const BorderRadius.all(
-                                    Radius.circular(10),
-                                  )),
-                              child: Column(
-                                crossAxisAlignment: CrossAxisAlignment.end,
-                                mainAxisAlignment: MainAxisAlignment.start,
-                                children: [
-                                  ClipRRect(
-                                    borderRadius: BorderRadius.only(
-                                      topLeft: Radius.circular(16),
-                                      topRight: Radius.circular(16),
-                                    ),
-                                    child: Image.asset(
-                                        ImageAssetsManager.postImage),
-                                  ),
-                                  Padding(
-                                    padding: const EdgeInsets.all(8.0),
-                                    child: Text(
-                                      values[index].postStudentName!,
-                                      style: StylesManager.semiBold17Black(),
-                                      //textAlign: TextAlign.right,
-                                      //  textDirection: TextDirection.rtl,
-                                    ),
-                                  ),
-                                ],
-                              ),
-                            );
-                          },
-                          separatorBuilder: (BuildContext context, int index) {
-                            return const SizedBox(width: 10);
-                          },
-                        ).build(context),
-                      );
-                    } else if (snapshot.hasError) {
-                      print(snapshot.error);
-                      return CircularProgressIndicator();
-                    } else {
-                      // if data not loaded yet
-                      return CircularProgressIndicator();
-                    }
-                  },
-                ),
+                PostList(posts: _posts),
               ],
             ),
           ),

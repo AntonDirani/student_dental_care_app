@@ -7,6 +7,7 @@ class ColorManager {
   static Color costumeBlack = const Color(0xff242837);
   static Color grey = const Color(0xffB5B6BA);
 
+  static Color star = const Color(0xffFEBF00);
   static Color darkPrimary = const Color(0xff3C7DF3);
   static Color lightPrimary = const Color(0xff31BAF7);
   static Color darkSecondary = const Color(0xff5313C1);

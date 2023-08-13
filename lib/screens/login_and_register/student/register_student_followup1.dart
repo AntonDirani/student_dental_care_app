@@ -275,7 +275,7 @@ class _StudentRegisterFirstFollowupScreenState
                                 style: StylesManager.light16()),
                             TextSpan(
                                 text: 'الشروط و الأحكام ',
-                                style: StylesManager.semibold16Underlined())
+                                style: StylesManager.semiBold16Underlined())
                           ])),
                     ),
                     Expanded(

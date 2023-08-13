@@ -32,4 +32,5 @@ class ImageAssetsManager {
   static const String bridgesImage = "$imagePath/bridges.svg";
 
   static const String approveVector = "$imagePath/approve.svg";
+  static const String chooseTreatmentVector = "$imagePath/choose.svg";
 }

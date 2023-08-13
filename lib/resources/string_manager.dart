@@ -4,6 +4,7 @@ class AppStrings {
 
   static const continueText = 'المتابعة';
   static const doYouHaveAnAccountText = 'هل تملك حساب مسبق على المنصة؟';
+  static const chooseTreatmentText = 'ما هي الحالة المراد علاجها؟';
   static const successStudentUploadText = '!تم بنجاح إرسال بياناتك المدخلة';
   static const notifyStudentUploadText =
       'سيصلك إشعار من داخل التطبيق عندما يتم التحقق من صحة البيانات ';

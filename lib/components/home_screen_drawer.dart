@@ -3,8 +3,7 @@ import 'package:responsive_sizer/responsive_sizer.dart';
 import 'package:student_care_app/resources/assets_manager.dart';
 import 'package:student_care_app/resources/color_manager.dart';
 import 'package:student_care_app/resources/styles_manager.dart';
-
-import '../screens/login_and_register/student/register_student_reply.dart';
+import 'package:student_care_app/screens/login_and_register/patient/choose_treatment.dart';
 import '../screens/profiles/patient_profile.dart';
 
 class HomeScreenDrawer extends StatelessWidget {
@@ -14,7 +13,7 @@ class HomeScreenDrawer extends StatelessWidget {
         child: ListView(
       children: [
         DrawerHeader(
-            padding: EdgeInsets.all(0),
+            padding: const EdgeInsets.all(0),
             child: Container(
               color: ColorManager.primary,
               child: Padding(
@@ -27,7 +26,7 @@ class HomeScreenDrawer extends StatelessWidget {
                         Navigator.push(
                           context,
                           MaterialPageRoute(
-                              builder: (context) => const PatientProfile()),
+                              builder: (context) => const ChooseTreatment()),
                         );
                       },
                       child: CircleAvatar(

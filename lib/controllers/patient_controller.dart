@@ -7,8 +7,11 @@ import 'package:http/http.dart' as http;
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:student_care_app/resources/constants_manager.dart';
 
+import '../models/patient_model.dart';
+
 class PatientController extends ChangeNotifier {
   String? _token;
+  Patient? _patientinfo;
 
   Future<bool> patientDataEntry({
     required int locationId,
@@ -31,6 +34,31 @@ class PatientController extends ChangeNotifier {
       final body = jsonDecode(response.body);
       print(body);
 
+      return true;
+    } catch (e) {
+      print(e);
+      return false;
+    }
+  }
+
+  Future<bool> patientShowProfile({
+    required int patientId,
+  }) async {
+    try {
+      var url = '${AppConstants.mainUrl}/patient_data_entry';
+      final response = await http.get(
+        Uri.parse(url),
+        headers: {
+          'Content-Type': 'application/json; charset=UTF-8',
+        },
+      );
+
+      final body = jsonDecode(response.body);
+      _patientinfo?.patientLocationId = body[1]['location_id'];
+      _patientinfo?.patientPhoneNumber = body[0]['phone_number'];
+      _patientinfo?.patientDateOfBirth = body[1]['date_of_birth'];
+
+      print(body);
       return true;
     } catch (e) {
       print(e);

@@ -24,7 +24,7 @@ class PostController extends ChangeNotifier {
         loadedPosts.add(Post(
             postDescription: data[j]['description'],
             postStudentName: data[j]['student_name'],
-            treatmentName: data[j]['treatment_name']));
+            postTreatmentName: data[j]['treatment_name']));
       }
 
       _posts = loadedPosts;

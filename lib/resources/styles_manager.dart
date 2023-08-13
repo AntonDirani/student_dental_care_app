@@ -165,6 +165,22 @@ class StylesManager {
     );
   }
 
+  static TextStyle regular14Grey() {
+    return StylesManager.getTextStyle(
+      fontSize: FontSize.s14,
+      fontWeight: FontWeightManager.regular,
+      color: ColorManager.grey,
+    );
+  }
+
+  static TextStyle medium14Primary() {
+    return StylesManager.getTextStyle(
+      fontSize: FontSize.s14,
+      fontWeight: FontWeightManager.medium,
+      color: ColorManager.costumeBlack,
+    );
+  }
+
   static TextStyle regular16Grey() {
     return StylesManager.getTextStyle(
       fontSize: FontSize.s16,
@@ -189,7 +205,7 @@ class StylesManager {
     );
   }
 
-  static TextStyle semibold16Underlined() {
+  static TextStyle semiBold16Underlined() {
     return StylesManager.getTextStyle(
         fontSize: FontSize.s16,
         fontWeight: FontWeightManager.semiBold,
@@ -197,7 +213,7 @@ class StylesManager {
         tDec: TextDecoration.underline);
   }
 
-  static TextStyle semibold18Primary() {
+  static TextStyle semiBold18Primary() {
     return StylesManager.getTextStyle(
       fontSize: FontSize.s18,
       fontWeight: FontWeightManager.semiBold,

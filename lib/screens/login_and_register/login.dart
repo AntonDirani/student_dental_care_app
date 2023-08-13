@@ -235,7 +235,7 @@ class _LoginScreenState extends State<LoginScreen> {
                                   padding: const EdgeInsets.all(8.0),
                                   child: Text(
                                     AppStrings.registerNowText,
-                                    style: StylesManager.semibold18Primary(),
+                                    style: StylesManager.semiBold18Primary(),
                                   ),
                                 ),
                                 onTap: () {

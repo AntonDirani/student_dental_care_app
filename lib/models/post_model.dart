@@ -4,15 +4,17 @@ class Post {
   int? postId;
   String? postDescription;
   String? postStudentName;
-  int? treatmentId;
+  int? postTreatmentId;
   File? postImage;
-  String? treatmentName;
+  String? postTreatmentName;
+  String? postUniName;
 
   Post(
       {this.postId,
       this.postDescription,
       this.postStudentName,
-      this.treatmentId,
+      this.postTreatmentId,
       this.postImage,
-      this.treatmentName});
+      this.postTreatmentName,
+      this.postUniName});
 }

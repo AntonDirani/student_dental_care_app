@@ -4,6 +4,7 @@ import 'package:provider/provider.dart';
 import 'package:responsive_sizer/responsive_sizer.dart';
 import 'package:student_care_app/controllers/location_controller.dart';
 import 'package:student_care_app/screens/login_and_register/do_you_have_an_account.dart';
+import 'package:student_care_app/screens/login_and_register/patient/choose_treatment.dart';
 
 import '../../controllers/posts_controller.dart';
 import '../../controllers/university_controller.dart';
