@@ -1,77 +1,52 @@
+import 'dart:convert';
+
 import 'package:flutter/cupertino.dart';
 import 'package:http/http.dart' as http;
 import 'package:student_care_app/resources/assets_manager.dart';
 import '../models/treatment_model.dart';
+import '../resources/constants_manager.dart';
 
 class TreatmentController extends ChangeNotifier {
-  List<Treatment> _treatments = [
-    Treatment(
-        treatmentName: 'نخور',
-        treatmentIcon: '',
-        treatmentImage: ImageAssetsManager.cavityVector),
-    Treatment(
-        treatmentName: 'تقليح و تسوية جذور',
-        treatmentIcon: '',
-        treatmentImage: ImageAssetsManager.rootsImage),
-    Treatment(
-        treatmentName: 'تيجان',
-        treatmentIcon: '',
-        treatmentImage: ImageAssetsManager.crownsVector),
-    Treatment(
-        treatmentName: 'أطفال',
-        treatmentIcon: '',
-        treatmentImage: ImageAssetsManager.kidsImage),
-    Treatment(
-        treatmentName: 'بدلات',
-        treatmentIcon: '',
-        treatmentImage: ImageAssetsManager.dentureImage),
-    Treatment(
-        treatmentName: 'سحب عصب',
-        treatmentIcon: '',
-        treatmentImage: ImageAssetsManager.neuroImage),
-    Treatment(
-        treatmentName: 'حشوات',
-        treatmentIcon: '',
-        treatmentImage: ImageAssetsManager.fillImage),
-    Treatment(
-        treatmentName: 'جسور ثابتة',
-        treatmentIcon: '',
-        treatmentImage: ImageAssetsManager.bridgesImage),
-    Treatment(
-        treatmentName: 'قلع عادي',
-        treatmentIcon: '',
-        treatmentImage: ImageAssetsManager.extractImage),
+  List<Treatment> _treatments = [];
+  List<String> images = [
+    ImageAssetsManager.crownsVector,
+    ImageAssetsManager.crownsVector,
+    ImageAssetsManager.crownsVector,
+    ImageAssetsManager.crownsVector,
+    ImageAssetsManager.crownsVector,
+    ImageAssetsManager.crownsVector,
+    ImageAssetsManager.crownsVector,
+    ImageAssetsManager.crownsVector,
+    ImageAssetsManager.crownsVector,
   ];
 
-/*  Future<bool> getTreatments() async {
+  Future<bool> fetchTreatments() async {
     try {
-      var url = '${AppConstants.mainUrl}/list_of_universities';
+      var url = '${AppConstants.mainUrl}/show_treatments';
       final response = await http.get(
         Uri.parse(url),
         headers: {
           'Content-Type': 'application/json; charset=UTF-8',
         },
       );
-
       final data = jsonDecode(response.body) as List<dynamic>;
       print(data);
-      final List<University> loadedUnis = [];
-      for (int j = 0; j < data.length; j++) {
-        loadedUnis
-            .add(University(uniId: data[j]['id'], uniName: data[j]['name']));
+      final List<Treatment> loadedTreatments = [];
+      for (int j = 0; j < 9; j++) {
+        loadedTreatments.add(Treatment(
+            treatmentId: data[j]['id'],
+            treatmentName: data[j]['name'],
+            treatmentDescription: data[j]['description'],
+            treatmentImage: images[j]));
       }
-
-      _unis = loadedUnis;
-      print(_unis);
-      */ /*unPackUnisNames(_unis);
-      unPackUnisIds(_unis);*/ /*
-      // print(_unisNames);
+      _treatments = loadedTreatments;
       return true;
     } catch (e) {
       print(e);
       return false;
     }
-  }*/
+  }
+
   Future<List<Treatment>> getTreatmentsList() async {
     return _treatments;
   }

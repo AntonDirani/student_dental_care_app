@@ -11,21 +11,22 @@ import 'package:student_care_app/models/treatment_model.dart';
 import 'package:student_care_app/resources/color_manager.dart';
 import 'package:student_care_app/resources/font_manager.dart';
 import 'package:student_care_app/resources/styles_manager.dart';
-import 'components/post_list_home_screen.dart';
-import 'components/search_bar.dart';
-import 'components/treatment_category.dart';
-import 'controllers/location_controller.dart';
-import 'models/location_model.dart';
-import 'models/post_model.dart';
+import 'package:student_care_app/screens/posts/add_post_screen.dart';
 
-class HomeScreen extends StatefulWidget {
+import '../components/post_list_home_screen.dart';
+import '../components/search_bar.dart';
+import '../controllers/location_controller.dart';
+import '../models/location_model.dart';
+import '../models/post_model.dart';
+
+class HomeScreenStudent extends StatefulWidget {
   @override
-  State<HomeScreen> createState() => _HomeScreenState();
+  State<HomeScreenStudent> createState() => _HomeScreenStudentState();
 }
 
 late Future<List<Governorate>> _dropDownLocations;
 
-class _HomeScreenState extends State<HomeScreen> {
+class _HomeScreenStudentState extends State<HomeScreenStudent> {
   late final int index;
   late List<Treatment> treatments;
   late final Treatment treatment;
@@ -43,6 +44,15 @@ class _HomeScreenState extends State<HomeScreen> {
   Widget build(BuildContext context) {
     return SafeArea(
       child: Scaffold(
+        floatingActionButton: FloatingActionButton(
+          child: Icon(Icons.add),
+          onPressed: () {
+            Navigator.push(
+              context,
+              MaterialPageRoute(builder: (context) => const AddPostScreen()),
+            );
+          },
+        ),
         appBar: AppBar(
           /* leading: Padding(
             padding: const EdgeInsets.all(8.0),

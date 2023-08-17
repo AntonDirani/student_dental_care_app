@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:responsive_sizer/responsive_sizer.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import 'package:student_care_app/resources/assets_manager.dart';
 import 'package:student_care_app/resources/color_manager.dart';
 import 'package:student_care_app/resources/styles_manager.dart';
+import 'package:student_care_app/screens/login_and_register/login.dart';
 import 'package:student_care_app/screens/login_and_register/patient/choose_treatment.dart';
 import '../screens/profiles/patient_profile.dart';
 
@@ -61,8 +63,14 @@ class HomeScreenDrawer extends StatelessWidget {
             textAlign: TextAlign.end,
             style: StylesManager.bold17Black(),
           ),
-          onTap: () {
-            //Navigator.pushReplacementNamed(context, Trips.id);
+          onTap: () async {
+            SharedPreferences preferences =
+                await SharedPreferences.getInstance();
+            await preferences.clear();
+            Navigator.pushReplacement(
+              context,
+              MaterialPageRoute(builder: (context) => LoginScreen()),
+            );
           },
         ),
       ],

@@ -41,5 +41,9 @@ class LocationController extends ChangeNotifier {
     }
   }
 
+  Future<List<Governorate>> getLocationsList() async {
+    return _locations;
+  }
+
   List<Governorate> get locations => _locations;
 }

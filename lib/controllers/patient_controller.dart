@@ -11,7 +11,7 @@ import '../models/patient_model.dart';
 
 class PatientController extends ChangeNotifier {
   String? _token;
-  Patient? _patientinfo;
+  Patient? _patientInfo;
 
   Future<bool> patientDataEntry({
     required int locationId,
@@ -34,6 +34,8 @@ class PatientController extends ChangeNotifier {
       final body = jsonDecode(response.body);
       print(body);
 
+      //_patientInfo?.patientLocationGovernorate = locationId;
+
       return true;
     } catch (e) {
       print(e);
@@ -54,9 +56,9 @@ class PatientController extends ChangeNotifier {
       );
 
       final body = jsonDecode(response.body);
-      _patientinfo?.patientLocationId = body[1]['location_id'];
-      _patientinfo?.patientPhoneNumber = body[0]['phone_number'];
-      _patientinfo?.patientDateOfBirth = body[1]['date_of_birth'];
+      _patientInfo?.patientLocationGovernorate = body[1]['location_id'];
+      _patientInfo?.patientPhoneNumber = body[0]['phone_number'];
+      _patientInfo?.patientDateOfBirth = body[1]['date_of_birth'];
 
       print(body);
       return true;

@@ -55,7 +55,7 @@ class DoYouHaveAnAccount extends StatelessWidget {
                     child: ComponentManager.outlinedButton(
                       text: AppStrings.signUpText,
                       onPressed: () {
-                        Navigator.pushReplacement(
+                        Navigator.push(
                           context,
                           MaterialPageRoute(
                               builder: (context) => const SignUpChooseScreen()),

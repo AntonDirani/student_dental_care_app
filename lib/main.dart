@@ -9,6 +9,7 @@ import 'package:student_care_app/controllers/register_controller.dart';
 import 'package:student_care_app/controllers/student_controller.dart';
 import 'package:student_care_app/screens/login_and_register/splash_screen.dart';
 import 'controllers/treatment_controller.dart';
+import 'controllers/treatment_provider.dart';
 import 'controllers/university_controller.dart';
 import 'resources/color_manager.dart';
 import 'package:responsive_sizer/responsive_sizer.dart';
@@ -49,6 +50,8 @@ class MyApp extends StatelessWidget {
             create: (context) => TreatmentController()),
         ChangeNotifierProvider<PostController>(
             create: (context) => PostController()),
+        ChangeNotifierProvider<TreatmentSelectionState>(
+            create: (context) => TreatmentSelectionState()),
       ],
       child: ResponsiveSizer(builder: (buildContext, orientation, screenType) {
         return const MaterialApp(

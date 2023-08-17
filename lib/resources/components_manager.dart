@@ -142,6 +142,42 @@ class ComponentManager {
         ));
   }
 
+  static SizedBox descriptionTextField({
+    required String label,
+    TextEditingController? controller,
+    Function(String)? onChanged,
+    String? errorText,
+  }) {
+    return SizedBox(
+      height: 140,
+      child: Column(
+        children: [
+          Expanded(
+            child: TextField(
+              controller: controller,
+              onChanged: onChanged,
+              textDirection: TextDirection.rtl,
+              decoration: InputDecoration(
+                errorText: errorText,
+                enabledBorder: OutlineInputBorder(
+                    borderSide: BorderSide(color: ColorManager.lightGrey),
+                    borderRadius: BorderRadius.circular(AppSize.s3_5)),
+                label: Align(
+                  alignment: Alignment.center,
+                  child: Text(label, style: StylesManager.medium16()),
+                ),
+                filled: true,
+              ),
+              keyboardType: TextInputType.multiline,
+              maxLines: null,
+              expands: true,
+            ),
+          ),
+        ],
+      ),
+    );
+  }
+
   static Padding myTextFieldNoSuffix({
     required String label,
     TextEditingController? controller,
@@ -154,6 +190,7 @@ class ComponentManager {
           height: AppSize.s7_5,
           child: TextFormField(
             onChanged: onChanged,
+            keyboardType: TextInputType.multiline,
             textDirection: TextDirection.rtl,
             controller: controller,
             decoration: InputDecoration(

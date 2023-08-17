@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:responsive_sizer/responsive_sizer.dart';
 import 'package:student_care_app/home_screen.dart';
+import 'package:student_care_app/screens/home_screen_student.dart';
 import 'package:student_care_app/screens/login_and_register/signup_choose_role.dart';
 
 import '../../../resources/assets_manager.dart';
@@ -71,10 +72,11 @@ class RegisterStudentReply extends StatelessWidget {
             padding: EdgeInsets.fromLTRB(0, 3.h, 0, 1.h),
             child: ComponentManager.mainGradientButton(
               onPressed: () {
-                Navigator.pushReplacement(
-                  context,
-                  MaterialPageRoute(builder: (context) => HomeScreen()),
-                );
+                Navigator.pushAndRemoveUntil(
+                    context,
+                    MaterialPageRoute(
+                        builder: (context) => HomeScreenStudent()),
+                    (Route<dynamic> route) => false);
               },
               text: AppStrings.continueText,
             ),

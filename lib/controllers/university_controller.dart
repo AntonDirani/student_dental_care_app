@@ -8,12 +8,7 @@ import 'package:student_care_app/resources/constants_manager.dart';
 import 'package:student_care_app/models/university_model.dart';
 
 class UniveristyController extends ChangeNotifier {
-  List<University> _unis =
-      []; /*
-  final List<String> _unisNames = [
-    'اختر الجامعة الخاصة بك...',
-  ];
-  final List<int> _unisIds = [0];*/
+  List<University> _unis = [];
   Future<bool> getUnis() async {
     try {
       var url = '${AppConstants.mainUrl}/list_of_universities';
@@ -44,19 +39,5 @@ class UniveristyController extends ChangeNotifier {
     }
   }
 
-  /*void unPackUnisNames(List<University> unis) {
-    for (int i = 0; i < unis.length; i++) {
-      _unisIds.add(unis[i].uniId!);
-    }
-  }
-
-  void unPackUnisIds(List<University> unis) {
-    for (int i = 0; i < unis.length; i++) {
-      _unisNames.add(unis[i].uniName.toString());
-    }
-  }*/
-
   List<University> get unis => _unis;
-
-  //List<String> get unisNames => _unisNames;
 }

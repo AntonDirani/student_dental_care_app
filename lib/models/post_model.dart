@@ -1,20 +1,20 @@
-import 'dart:io';
-
 class Post {
   int? postId;
   String? postDescription;
   String? postStudentName;
   int? postTreatmentId;
-  File? postImage;
+  List<String>? postImages;
   String? postTreatmentName;
   String? postUniName;
+  int? postAvgRate;
 
   Post(
-      {this.postId,
+      {this.postAvgRate,
+      this.postId,
       this.postDescription,
       this.postStudentName,
       this.postTreatmentId,
-      this.postImage,
+      this.postImages,
       this.postTreatmentName,
       this.postUniName});
 }

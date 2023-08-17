@@ -8,6 +8,7 @@ import 'package:student_care_app/resources/validation_manager.dart';
 import 'package:student_care_app/resources/components_manager.dart';
 import 'package:student_care_app/home_screen.dart';
 import 'package:student_care_app/resources/values_manager.dart';
+import 'package:student_care_app/screens/home_screen_student.dart';
 import 'package:student_care_app/screens/login_and_register/signup_choose_role.dart';
 import '../../resources/assets_manager.dart';
 import '../../resources/color_manager.dart';
@@ -29,6 +30,7 @@ class _LoginScreenState extends State<LoginScreen> {
   bool _emailSubmitted = false;
   bool _passwordSubmitted = false;
   bool _success = false;
+  bool _isStudent = false;
   bool _isLoading = false;
   bool _isPasswordHidden = true;
 
@@ -161,16 +163,26 @@ class _LoginScreenState extends State<LoginScreen> {
                                         _success = await provider.logIn(
                                             _emailController.value.text,
                                             _passwordController.value.text);
+                                        _isStudent = await provider.isStudent();
                                         print(_success.toString());
                                         if (_success == true) {
                                           _isLoading = false;
                                           if (!mounted) return;
-                                          Navigator.pushReplacement(
-                                            context,
-                                            MaterialPageRoute(
-                                                builder: (context) =>
-                                                    HomeScreen()),
-                                          );
+                                          if (_isStudent) {
+                                            Navigator.pushReplacement(
+                                              context,
+                                              MaterialPageRoute(
+                                                  builder: (context) =>
+                                                      HomeScreenStudent()),
+                                            );
+                                          } else {
+                                            Navigator.pushReplacement(
+                                              context,
+                                              MaterialPageRoute(
+                                                  builder: (context) =>
+                                                      HomeScreen()),
+                                            );
+                                          }
                                         } else {
                                           Future.delayed(
                                               const Duration(seconds: 4), () {
