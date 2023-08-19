@@ -1,11 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:provider/provider.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import 'package:student_care_app/controllers/location_controller.dart';
 import 'package:student_care_app/controllers/login_controller.dart';
 import 'package:student_care_app/controllers/patient_controller.dart';
 import 'package:student_care_app/controllers/posts_controller.dart';
 import 'package:student_care_app/controllers/register_controller.dart';
+import 'package:student_care_app/controllers/report_controller.dart';
 import 'package:student_care_app/controllers/student_controller.dart';
 import 'package:student_care_app/screens/login_and_register/splash_screen.dart';
 import 'controllers/treatment_controller.dart';
@@ -14,14 +16,17 @@ import 'controllers/university_controller.dart';
 import 'resources/color_manager.dart';
 import 'package:responsive_sizer/responsive_sizer.dart';
 
-void main() {
-  runApp(const MyApp());
+Future<void> main() async {
+  /*SharedPreferences prefs = await SharedPreferences.getInstance();
+  auth = await prefs.getString('token');
+  print(prefs.getString('token'));*/
+
+  runApp(MyApp());
 }
 
 class MyApp extends StatelessWidget {
   const MyApp({super.key});
 
-  @override
   Widget build(BuildContext context) {
     SystemChrome.setSystemUIOverlayStyle(SystemUiOverlayStyle(
       statusBarColor: ColorManager.primary,
@@ -37,8 +42,8 @@ class MyApp extends StatelessWidget {
         ChangeNotifierProvider<StudentController>(
           create: (context) => StudentController(),
         ),
-        ChangeNotifierProvider<UniveristyController>(
-          create: (context) => UniveristyController(),
+        ChangeNotifierProvider<UniversityController>(
+          create: (context) => UniversityController(),
         ),
         ChangeNotifierProvider<PatientController>(
           create: (context) => PatientController(),
@@ -52,10 +57,13 @@ class MyApp extends StatelessWidget {
             create: (context) => PostController()),
         ChangeNotifierProvider<TreatmentSelectionState>(
             create: (context) => TreatmentSelectionState()),
+        ChangeNotifierProvider<ReportController>(
+            create: (context) => ReportController()),
       ],
       child: ResponsiveSizer(builder: (buildContext, orientation, screenType) {
         return const MaterialApp(
-            debugShowCheckedModeBanner: false, home: SplashScreen());
+            debugShowCheckedModeBanner: false,
+            home: /*jwt == null ? Home */ SplashScreen());
       }),
     );
   }

@@ -43,9 +43,34 @@ class PostController extends ChangeNotifier {
           loadedImages.add('${AppConstants.mainUrl}/show_image/$imageUrl');
         }
 
+        String firstDateTimeString = data[j]['first_date'];
+        String secondDateTimeString = data[j]['last_date'];
+        // Parse the string into a DateTime object
+        DateTime firstDateTime = DateTime.parse(firstDateTimeString);
+        DateTime lastDateTime = DateTime.parse(secondDateTimeString);
+        // Extract the date in 'yyyy-MM-dd' format
+        String date1 =
+            "${firstDateTime.year}-${firstDateTime.month.toString().padLeft(2, '0')}-${firstDateTime.day.toString().padLeft(2, '0')}";
+
+        // Extract the time in 'HH:mm' format
+        String time1 =
+            "${firstDateTime.hour.toString().padLeft(2, '0')}:${firstDateTime.minute.toString().padLeft(2, '0')}";
+
+        String date2 =
+            "${lastDateTime.year}-${lastDateTime.month.toString().padLeft(2, '0')}-${lastDateTime.day.toString().padLeft(2, '0')}";
+
+        print(data[j]['post_id']);
+        // Extract the time in 'HH:mm' format
+        String time2 =
+            "${lastDateTime.hour.toString().padLeft(2, '0')}:${lastDateTime.minute.toString().padLeft(2, '0')}";
         loadedPosts.add(Post(
+            postId: data[j]['post_id'],
             postDescription: data[j]['description'],
             postImages: loadedImages,
+            postFirstDate: date1,
+            postFirstTime: time1,
+            postLastDate: date2,
+            postLastTime: time2,
             postStudentName: data[j]['student_name'],
             postAvgRate: data[j]['\$avg_rate'],
             postUniName: 'جامعة البعث',

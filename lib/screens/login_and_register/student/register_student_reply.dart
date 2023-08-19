@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
+import 'package:provider/provider.dart';
 import 'package:responsive_sizer/responsive_sizer.dart';
+import 'package:student_care_app/controllers/register_controller.dart';
 import 'package:student_care_app/home_screen.dart';
 import 'package:student_care_app/screens/home_screen_student.dart';
 import 'package:student_care_app/screens/login_and_register/signup_choose_role.dart';
@@ -13,10 +15,13 @@ import '../../../resources/styles_manager.dart';
 import '../../../resources/values_manager.dart';
 
 class RegisterStudentReply extends StatelessWidget {
-  const RegisterStudentReply({super.key});
+  RegisterStudentReply({super.key});
+
+  bool _isStudent = false;
 
   @override
   Widget build(BuildContext context) {
+    var provider = Provider.of<RegisterController>(context, listen: false);
     return Scaffold(
         body: SafeArea(
       child: Padding(
@@ -71,12 +76,21 @@ class RegisterStudentReply extends StatelessWidget {
           Padding(
             padding: EdgeInsets.fromLTRB(0, 3.h, 0, 1.h),
             child: ComponentManager.mainGradientButton(
-              onPressed: () {
-                Navigator.pushAndRemoveUntil(
+              onPressed: () async {
+                _isStudent = await provider.isStudent();
+
+                if (_isStudent) {
+                  Navigator.pushReplacement(
                     context,
                     MaterialPageRoute(
                         builder: (context) => HomeScreenStudent()),
-                    (Route<dynamic> route) => false);
+                  );
+                } else {
+                  Navigator.pushReplacement(
+                    context,
+                    MaterialPageRoute(builder: (context) => HomeScreen()),
+                  );
+                }
               },
               text: AppStrings.continueText,
             ),

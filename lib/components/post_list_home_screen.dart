@@ -207,8 +207,8 @@ class PostCard extends StatelessWidget {
                   children: [
                     Text(
                       //  values[index].postUniName!,
-                      'الاثنين - الخميس',
-                      style: StylesManager.medium14Primary(),
+                      '${post.postFirstDate}  /  ${post.postLastDate} ',
+                      style: StylesManager.semiBold16Primary(),
                       //textAlign: TextAlign.right,
                       //  textDirection: TextDirection.rtl,
                     ),

@@ -6,10 +6,18 @@ class Post {
   List<String>? postImages;
   String? postTreatmentName;
   String? postUniName;
+  String? postFirstTime;
+  String? postLastTime;
+  String? postFirstDate;
+  String? postLastDate;
   int? postAvgRate;
 
   Post(
-      {this.postAvgRate,
+      {this.postFirstDate,
+      this.postFirstTime,
+      this.postLastDate,
+      this.postLastTime,
+      this.postAvgRate,
       this.postId,
       this.postDescription,
       this.postStudentName,

@@ -215,7 +215,7 @@ class _HomeScreenBodyState extends State<HomeScreenBody> {
                           } else {
                             List<Treatment> treatments = snapshot.data!;
                             return SizedBox(
-                              height: 150,
+                              height: 120,
                               child: ListView.separated(
                                 reverse: true,
                                 padding: EdgeInsets.all(8.0),
@@ -241,57 +241,7 @@ class _HomeScreenBodyState extends State<HomeScreenBody> {
                                         treatment.isSelected = true;
                                       });
                                     },
-                                    child: Container(
-                                      width: 70,
-                                      decoration: BoxDecoration(
-                                        color: treatment.isSelected ?? false
-                                            ? Colors.blue
-                                            : ColorManager.lightGrey,
-                                        borderRadius: BorderRadius.all(
-                                          Radius.circular(10),
-                                        ),
-                                      ),
-                                      child: Column(
-                                        mainAxisAlignment:
-                                            MainAxisAlignment.center,
-                                        children: [
-                                          Padding(
-                                            padding: const EdgeInsets.all(8.0),
-                                            child: SvgPicture.asset(
-                                              treatment.treatmentImage!,
-                                              width: 40,
-                                              color:
-                                                  treatment.isSelected ?? false
-                                                      ? Colors.white
-                                                      : null,
-                                            ),
-                                          ),
-                                          SizedBox(
-                                            height: MediaQuery.of(context)
-                                                    .size
-                                                    .height /
-                                                90,
-                                          ),
-                                          Padding(
-                                            padding: const EdgeInsets.symmetric(
-                                                horizontal: 2),
-                                            child: Text(
-                                              treatment.treatmentName!,
-                                              style: TextStyle(
-                                                fontFamily:
-                                                    FontConstants.fontFamily,
-                                                fontSize: 14,
-                                                color: treatment.isSelected ??
-                                                        false
-                                                    ? Colors.white
-                                                    : Colors.black,
-                                              ),
-                                              textAlign: TextAlign.center,
-                                            ),
-                                          ),
-                                        ],
-                                      ),
-                                    ),
+                                    child: TreatmentCard(treatment: treatment),
                                   );
                                 },
                                 separatorBuilder:
@@ -321,5 +271,56 @@ class _HomeScreenBodyState extends State<HomeScreenBody> {
         ),
       );
     });
+  }
+}
+
+class TreatmentCard extends StatelessWidget {
+  const TreatmentCard({
+    super.key,
+    required this.treatment,
+  });
+
+  final Treatment treatment;
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      width: 70,
+      decoration: BoxDecoration(
+        color: treatment.isSelected ?? false
+            ? Colors.blue
+            : ColorManager.lightGrey,
+        borderRadius: BorderRadius.all(
+          Radius.circular(10),
+        ),
+      ),
+      child: Column(
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: [
+          Expanded(
+            child: Padding(
+              padding: const EdgeInsets.all(10.0),
+              child: SvgPicture.asset(
+                treatment.treatmentImage!,
+                color: treatment.isSelected ?? false ? Colors.white : null,
+              ),
+            ),
+          ),
+          Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 2),
+            child: Text(
+              treatment.treatmentName!,
+              style: TextStyle(
+                fontFamily: FontConstants.fontFamily,
+                fontSize: 13,
+                color:
+                    treatment.isSelected ?? false ? Colors.white : Colors.black,
+              ),
+              textAlign: TextAlign.center,
+            ),
+          ),
+        ],
+      ),
+    );
   }
 }

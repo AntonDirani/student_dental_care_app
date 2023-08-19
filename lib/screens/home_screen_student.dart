@@ -44,7 +44,8 @@ class _HomeScreenStudentState extends State<HomeScreenStudent> {
   Widget build(BuildContext context) {
     return SafeArea(
       child: Scaffold(
-        floatingActionButton: FloatingActionButton(
+        floatingActionButtonLocation: FloatingActionButtonLocation.startFloat,
+        floatingActionButton: FloatingActionButton.small(
           child: Icon(Icons.add),
           onPressed: () {
             Navigator.push(

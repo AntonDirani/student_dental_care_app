@@ -168,6 +168,14 @@ packages:
     description: flutter
     source: sdk
     version: "0.0.0"
+  fluttertoast:
+    dependency: "direct main"
+    description:
+      name: fluttertoast
+      sha256: "474f7d506230897a3cd28c965ec21c5328ae5605fc9c400cd330e9e9d6ac175c"
+      url: "https://pub.dev"
+    source: hosted
+    version: "8.2.2"
   http:
     dependency: transitive
     description:
@@ -388,10 +396,10 @@ packages:
     dependency: transitive
     description:
       name: platform
-      sha256: "4a451831508d7d6ca779f7ac6e212b4023dd5a7d08a27a63da33756410e32b76"
+      sha256: "57c07bf82207aee366dfaa3867b3164e4f03a238a461a11b0e8a3a510d51203d"
       url: "https://pub.dev"
     source: hosted
-    version: "3.1.0"
+    version: "3.1.1"
   plugin_platform_interface:
     dependency: transitive
     description:
@@ -525,6 +533,14 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "0.5.1"
+  time_range_picker:
+    dependency: "direct main"
+    description:
+      name: time_range_picker
+      sha256: "63c3e0beba3c261f7d95e9a2ecef3a3e0bc88d4874edbbef4471c1a60c228526"
+      url: "https://pub.dev"
+    source: hosted
+    version: "2.2.0"
   typed_data:
     dependency: transitive
     description:

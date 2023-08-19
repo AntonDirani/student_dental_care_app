@@ -43,7 +43,7 @@ class _StudentRegisterFirstFollowupScreenState
   @override
   void initState() {
     _dropDownUnis =
-        Provider.of<UniveristyController>(context, listen: false).unis;
+        Provider.of<UniversityController>(context, listen: false).unis;
     super.initState();
   }
 
@@ -324,7 +324,7 @@ class _StudentRegisterFirstFollowupScreenState
                                       context,
                                       MaterialPageRoute(
                                           builder: (context) =>
-                                              const RegisterStudentReply()),
+                                              RegisterStudentReply()),
                                     );
                                   } else {
                                     Future.delayed(const Duration(seconds: 4),

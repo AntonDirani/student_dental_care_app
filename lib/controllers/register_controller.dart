@@ -10,6 +10,9 @@ import 'package:student_care_app/resources/constants_manager.dart';
 class RegisterController extends ChangeNotifier {
   String? _token;
   User? _user;
+
+  String? get token => _token;
+
   Future<bool> register({
     required String email,
     required String pass,
@@ -57,5 +60,13 @@ class RegisterController extends ChangeNotifier {
     }
   }
 
-  String? get token => _token;
+  Future<bool> isStudent() async {
+    String? theRole = _user?.userRole;
+    if (theRole == 'Student') {
+      print('you are a student');
+      return true;
+    } else {
+      return false;
+    }
+  }
 }

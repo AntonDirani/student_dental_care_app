@@ -7,7 +7,7 @@ import 'package:http/http.dart' as http;
 import 'package:student_care_app/resources/constants_manager.dart';
 import 'package:student_care_app/models/university_model.dart';
 
-class UniveristyController extends ChangeNotifier {
+class UniversityController extends ChangeNotifier {
   List<University> _unis = [];
   Future<bool> getUnis() async {
     try {

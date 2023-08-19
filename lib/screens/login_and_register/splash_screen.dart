@@ -3,6 +3,7 @@ import 'package:flutter_svg/svg.dart';
 import 'package:provider/provider.dart';
 import 'package:responsive_sizer/responsive_sizer.dart';
 import 'package:student_care_app/controllers/location_controller.dart';
+import 'package:student_care_app/controllers/report_controller.dart';
 import 'package:student_care_app/controllers/treatment_controller.dart';
 import 'package:student_care_app/screens/login_and_register/do_you_have_an_account.dart';
 import 'package:student_care_app/screens/login_and_register/patient/choose_treatment.dart';
@@ -21,10 +22,11 @@ class SplashScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    Provider.of<UniveristyController>(context, listen: false).getUnis();
+    Provider.of<UniversityController>(context, listen: false).getUnis();
     Provider.of<LocationController>(context, listen: false).fetchLocations();
     Provider.of<PostController>(context, listen: false).getPosts();
     Provider.of<TreatmentController>(context, listen: false).fetchTreatments();
+    Provider.of<ReportController>(context, listen: false).fetchReportsItems();
     return Scaffold(
       body: Center(
         child: Padding(
