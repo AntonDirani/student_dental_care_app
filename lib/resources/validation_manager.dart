@@ -4,7 +4,9 @@ class ValidationManager {
     RegExp regExp = RegExp(pattern);
     if (value!.isEmpty) {
       return 'الرجاء إدخال رقم هاتف';
-    } else if (!regExp.hasMatch(value)) {
+    } else if (!regExp.hasMatch(value) && value.length < 10) {
+      return 'الرجاء إدخال رقم هاتف صحيح';
+    } else if (value.length > 10) {
       return 'الرجاء إدخال رقم هاتف صحيح';
     }
     return null;

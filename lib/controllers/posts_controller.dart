@@ -72,9 +72,10 @@ class PostController extends ChangeNotifier {
             postLastDate: date2,
             postLastTime: time2,
             postStudentName: data[j]['student_name'],
-            postAvgRate: data[j]['\$avg_rate'],
-            postUniName: 'جامعة البعث',
-            postTreatmentName: data[j]['treatment_name']));
+            postAvgRate: data[j]['avg_rate'],
+            postUniName: data[j]['university'],
+            postTreatmentName: data[j]['treatment_name'],
+            postTreatmentDescription: data[j]['treatment_description']));
       }
 
       _posts = loadedPosts;

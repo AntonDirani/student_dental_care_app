@@ -10,10 +10,12 @@ class Post {
   String? postLastTime;
   String? postFirstDate;
   String? postLastDate;
+  String? postTreatmentDescription;
   int? postAvgRate;
 
   Post(
-      {this.postFirstDate,
+      {this.postTreatmentDescription,
+      this.postFirstDate,
       this.postFirstTime,
       this.postLastDate,
       this.postLastTime,
@@ -21,7 +23,7 @@ class Post {
       this.postId,
       this.postDescription,
       this.postStudentName,
-      this.postTreatmentId,
+      //this.postTreatmentId,
       this.postImages,
       this.postTreatmentName,
       this.postUniName});

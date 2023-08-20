@@ -45,12 +45,7 @@ class _PostListState extends State<PostList> {
             if (snapshot.hasData) {
               // Existing code...
               List<Post> posts = snapshot.data!;
-              // Retrieve the stored treatment name from SharedPreferences
-              Future<SharedPreferences> _prefs =
-                  SharedPreferences.getInstance();
-              Future<String?> _storedTreatmentName = _prefs.then((prefs) {
-                return prefs.getString('treatmentName');
-              });
+              //
               return SizedBox(
                 height: 41.h,
                 child: ListView.separated(
@@ -62,6 +57,7 @@ class _PostListState extends State<PostList> {
                   itemBuilder: (BuildContext context, int index) {
                     return GestureDetector(
                       onTap: () {
+                        print(posts[index]);
                         Navigator.push(
                           context,
                           MaterialPageRoute(

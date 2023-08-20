@@ -322,6 +322,99 @@ class _PostDetailsState extends State<PostDetails> {
                   children: [
                     Padding(
                       padding: const EdgeInsets.fromLTRB(20, 0, 0, 0),
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.end,
+                        children: [
+                          Icon(
+                            Icons.star,
+                            size: 25,
+                            color: ColorManager.star,
+                          ),
+                          const SizedBox(
+                            width: 3,
+                          ),
+                          Text(
+                            _myPost.postAvgRate!.toString(),
+                            style: StylesManager.bold18Black(),
+                            //textAlign: TextAlign.right,
+                            //  textDirection: TextDirection.rtl,
+                          ),
+                        ],
+                      ),
+                    ),
+                    GestureDetector(
+                      onTap: () {
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                              builder: (context) => StudentProfileScreen()),
+                        );
+                      },
+                      child: Row(
+                        children: [
+                          Column(
+                            crossAxisAlignment: CrossAxisAlignment.end,
+                            children: [
+                              Padding(
+                                padding: const EdgeInsets.fromLTRB(0, 10, 8, 0),
+                                child: Text(
+                                  //  values[index].postUniName!,
+                                  _myPost.postStudentName!,
+                                  style: StylesManager.medium19(),
+                                  //textAlign: TextAlign.right,
+                                  //  textDirection: TextDirection.rtl,
+                                ),
+                              ),
+                              Padding(
+                                  padding:
+                                      const EdgeInsets.fromLTRB(0, 0, 6, 10),
+                                  child: Row(
+                                    mainAxisAlignment: MainAxisAlignment.end,
+                                    children: [
+                                      Text(
+                                        //  values[index].postUniName!,
+                                        _myPost.postUniName!,
+                                        style: StylesManager.regular14Grey(),
+                                        //textAlign: TextAlign.right,
+                                        //  textDirection: TextDirection.rtl,
+                                      ),
+                                      const SizedBox(
+                                        width: 3,
+                                      ),
+                                      Icon(
+                                        Icons.location_on,
+                                        size: 15,
+                                        color: ColorManager.grey,
+                                      ),
+                                    ],
+                                  )),
+                            ],
+                          ),
+                          Padding(
+                            padding: const EdgeInsets.fromLTRB(0, 0, 10, 0),
+                            child: Icon(
+                              Icons.person_outline,
+                              size: 55,
+                              color: ColorManager.primary,
+                            ),
+                          ),
+                        ],
+                      ),
+                    ),
+                  ],
+                ),
+                Padding(
+                  padding: const EdgeInsets.symmetric(horizontal: 18.0),
+                  child: Divider(
+                    thickness: 3,
+                    color: ColorManager.lightGrey,
+                  ),
+                ),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.end,
+                  children: [
+                    Padding(
+                      padding: const EdgeInsets.fromLTRB(20, 0, 0, 0),
                       child: Container(
                         width: 55,
                         height: 80,
@@ -363,60 +456,28 @@ class _PostDetailsState extends State<PostDetails> {
                         ),
                       ),
                     ),
-                    GestureDetector(
-                      onTap: () {
-                        Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                              builder: (context) => StudentProfileScreen()),
-                        );
-                      },
-                      child: Row(
+                    Expanded(
+                      child: Column(
                         children: [
-                          Column(
-                            crossAxisAlignment: CrossAxisAlignment.end,
-                            children: [
-                              Padding(
-                                padding: const EdgeInsets.fromLTRB(0, 10, 8, 0),
-                                child: Text(
-                                  //  values[index].postUniName!,
-                                  _myPost.postStudentName!,
-                                  style: StylesManager.medium19(),
-                                  //textAlign: TextAlign.right,
-                                  //  textDirection: TextDirection.rtl,
-                                ),
+                          Padding(
+                            padding: const EdgeInsets.fromLTRB(0, 0, 15, 0),
+                            child: Align(
+                              alignment: Alignment.centerRight,
+                              child: Text(
+                                'وصف المعالجة',
+                                style: StylesManager.medium18Black(),
                               ),
-                              Padding(
-                                  padding:
-                                      const EdgeInsets.fromLTRB(0, 0, 6, 10),
-                                  child: Row(
-                                    mainAxisAlignment: MainAxisAlignment.end,
-                                    children: [
-                                      Text(
-                                        //  values[index].postUniName!,
-                                        'جامعة دمشق',
-                                        style: StylesManager.regular14Grey(),
-                                        //textAlign: TextAlign.right,
-                                        //  textDirection: TextDirection.rtl,
-                                      ),
-                                      const SizedBox(
-                                        width: 3,
-                                      ),
-                                      Icon(
-                                        Icons.location_on,
-                                        size: 15,
-                                        color: ColorManager.grey,
-                                      ),
-                                    ],
-                                  )),
-                            ],
+                            ),
                           ),
                           Padding(
-                            padding: const EdgeInsets.fromLTRB(0, 0, 10, 0),
-                            child: Icon(
-                              Icons.person_outline,
-                              size: 55,
-                              color: ColorManager.primary,
+                            padding: const EdgeInsets.fromLTRB(15, 0, 15, 0),
+                            child: Align(
+                              alignment: Alignment.centerRight,
+                              child: Text(
+                                _myPost.postDescription!,
+                                style: StylesManager.regular16Grey(),
+                                textAlign: TextAlign.right,
+                              ),
                             ),
                           ),
                         ],
@@ -424,40 +485,9 @@ class _PostDetailsState extends State<PostDetails> {
                     ),
                   ],
                 ),
-                Padding(
-                  padding: const EdgeInsets.symmetric(horizontal: 18.0),
-                  child: Divider(
-                    thickness: 3,
-                    color: ColorManager.lightGrey,
-                  ),
-                ),
               ],
             ),
-            Column(
-              children: [
-                Padding(
-                  padding: const EdgeInsets.fromLTRB(0, 0, 15, 0),
-                  child: Align(
-                    alignment: Alignment.centerRight,
-                    child: Text(
-                      'وصف المعالجة',
-                      style: StylesManager.medium18Black(),
-                    ),
-                  ),
-                ),
-                Padding(
-                  padding: const EdgeInsets.fromLTRB(15, 0, 15, 0),
-                  child: Align(
-                    alignment: Alignment.centerRight,
-                    child: Text(
-                      _myPost.postDescription!,
-                      style: StylesManager.regular16Grey(),
-                      textAlign: TextAlign.right,
-                    ),
-                  ),
-                ),
-              ],
-            ),
+
             /* Padding(
                   padding: const EdgeInsets.symmetric(horizontal: 18.0),
                   child: Divider(
