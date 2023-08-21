@@ -3,11 +3,11 @@ import 'package:flutter_svg/svg.dart';
 import 'package:provider/provider.dart';
 import 'package:responsive_sizer/responsive_sizer.dart';
 import 'package:student_care_app/controllers/location_controller.dart';
+import 'package:student_care_app/screens/login_and_register/do_you_have_an_account.dart';
 import 'package:student_care_app/screens/diagnose/diagnose.dart';
 import 'package:student_care_app/screens/login_and_register/do_you_have_an_account.dart';
 
 import '../../controllers/university_controller.dart';
-import '../../home_screen.dart';
 import '../../resources/assets_manager.dart';
 import '../../resources/components_manager.dart';
 import '../../resources/string_manager.dart';
@@ -55,7 +55,8 @@ class SplashScreen extends StatelessWidget {
                           Navigator.pushReplacement(
                             context,
                             MaterialPageRoute(
-                                builder: (context) => DoYouHaveAnAccount()),
+                                builder: (context) =>
+                                    const DoYouHaveAnAccount()),
                           );
                         },
                         text: AppStrings.continueText,

@@ -11,7 +11,7 @@ class UniveristyController extends ChangeNotifier {
   List<University> _unis =
       []; /*
   final List<String> _unisNames = [
-    'اختر الجامعة الخاصة بك...',
+    'اختر الجامعة الخاصة بك..',
   ];
   final List<int> _unisIds = [0];*/
   Future<bool> getUnis() async {
