@@ -6,6 +6,7 @@ import 'package:provider/provider.dart';
 import 'package:student_care_app/controllers/register_controller.dart';
 import 'package:student_care_app/screens/login_and_register/student/register_student_followup1.dart';
 
+import '../../../models/user_model.dart';
 import '../../../resources/assets_manager.dart';
 import '../../../resources/color_manager.dart';
 import '../../../resources/components_manager.dart';
@@ -35,7 +36,8 @@ class _StudentRegisterScreenState extends State<StudentRegisterScreen> {
   bool _firstNameSubmitted = false;
   bool _secondNameSubmitted = false;
   bool _phoneSubmitted = false;
-  bool _success = false;
+  // bool _success = false;
+  User? user;
   bool _isLoading = false;
 
   @override
@@ -262,18 +264,15 @@ class _StudentRegisterScreenState extends State<StudentRegisterScreen> {
                                     _isLoading = true;
                                   });
 
-                                  _success = await provider.register(
-                                    pass: _password1Controller.value.text,
+                                  user = await provider.register(
+                                    password: _password1Controller.value.text,
                                     email: _emailController.value.text,
                                     firstName: _firstNameController.value.text,
-                                    secondName:
-                                        _secondNameController.value.text,
+                                    lastName: _secondNameController.value.text,
                                     phoneNumber: _phoneController.value.text,
                                     role: 'Student',
                                   );
-
-                                  print(_success.toString());
-                                  if (_success == true) {
+                                  if (user != null) {
                                     _isLoading = false;
                                     if (!mounted) return;
                                     Navigator.pushReplacement(

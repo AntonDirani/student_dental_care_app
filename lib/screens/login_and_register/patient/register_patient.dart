@@ -5,6 +5,7 @@ import 'package:flutter_svg/svg.dart';
 import 'package:provider/provider.dart';
 import 'package:student_care_app/controllers/register_controller.dart';
 import 'package:student_care_app/screens/login_and_register/patient/register_patient_followup.dart';
+import '../../../models/user_model.dart';
 import '../../../resources/assets_manager.dart';
 import '../../../resources/color_manager.dart';
 import '../../../resources/components_manager.dart';
@@ -27,14 +28,15 @@ class _PatientRegisterScreenState extends State<PatientRegisterScreen> {
   final _password2Controller = TextEditingController();
   final _phoneController = TextEditingController();
   final _firstNameController = TextEditingController();
-  final _secondNameController = TextEditingController();
+  final _lastNameController = TextEditingController();
   bool _emailSubmitted = false;
   bool _password1Submitted = false;
   bool _password2Submitted = false;
   bool _firstNameSubmitted = false;
   bool _secondNameSubmitted = false;
   bool _phoneSubmitted = false;
-  bool _success = false;
+  // bool _success = false;
+  User? user;
   bool _isLoading = false;
 
   @override
@@ -81,9 +83,9 @@ class _PatientRegisterScreenState extends State<PatientRegisterScreen> {
                           }),
                           errorText: _secondNameSubmitted
                               ? ValidationManager.validateName(
-                                  _secondNameController.value.text)
+                                  _lastNameController.value.text)
                               : null,
-                          controller: _secondNameController,
+                          controller: _lastNameController,
                           label: AppStrings.enterYourSecondNameText,
                         ),
                       ),
@@ -251,7 +253,7 @@ class _PatientRegisterScreenState extends State<PatientRegisterScreen> {
                                           _firstNameController.value.text) ==
                                       null &&
                                   ValidationManager.validateName(
-                                          _secondNameController.value.text) ==
+                                          _lastNameController.value.text) ==
                                       null &&
                                   ValidationManager.validateMobile(
                                           _phoneController.value.text) ==
@@ -261,17 +263,15 @@ class _PatientRegisterScreenState extends State<PatientRegisterScreen> {
                                     _isLoading = true;
                                   });
 
-                                  _success = await provider.register(
-                                    pass: _password1Controller.value.text,
+                                  user = await provider.register(
                                     email: _emailController.value.text,
+                                    password: _password1Controller.value.text,
                                     firstName: _firstNameController.value.text,
-                                    secondName:
-                                        _secondNameController.value.text,
+                                    lastName: _lastNameController.value.text,
                                     phoneNumber: _phoneController.value.text,
                                     role: 'Patient',
                                   );
-                                  print(_success.toString());
-                                  if (_success == true) {
+                                  if (user != null) {
                                     _isLoading = false;
                                     if (!mounted) return;
                                     Navigator.pushReplacement(

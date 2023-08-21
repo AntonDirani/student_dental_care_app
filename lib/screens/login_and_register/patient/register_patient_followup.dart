@@ -1,12 +1,10 @@
 // ignore_for_file: avoid_print, must_be_immutable
-
 import 'package:flutter/material.dart';
 import 'dart:ui' as ui;
 import 'package:flutter_svg/svg.dart';
 import 'package:provider/provider.dart';
 import 'package:student_care_app/controllers/location_controller.dart';
 import 'package:student_care_app/controllers/patient_controller.dart';
-
 import 'package:intl/intl.dart';
 import '../../../models/location_model.dart';
 import '../../../resources/assets_manager.dart';
@@ -18,7 +16,7 @@ import '../../../resources/styles_manager.dart';
 import '../../../resources/values_manager.dart';
 
 class PatientRegisterScreenFollowUp extends StatefulWidget {
-  PatientRegisterScreenFollowUp({super.key});
+  const PatientRegisterScreenFollowUp({super.key});
   @override
   State<PatientRegisterScreenFollowUp> createState() =>
       _PatientRegisterScreenFollowUpState();
@@ -166,7 +164,7 @@ class _PatientRegisterScreenFollowUpState
                                       _success =
                                           await provider.patientDataEntry(
                                         locationId: _dropDownValue1Location!,
-                                        dateOfBirth: _dateController.text!,
+                                        dateOfBirth: _dateController.text,
                                       );
                                       print(_success.toString());
                                       if (_success == true) {

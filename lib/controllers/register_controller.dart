@@ -4,16 +4,18 @@ import 'dart:convert';
 import 'package:flutter/cupertino.dart';
 import 'package:http/http.dart' as http;
 import 'package:shared_preferences/shared_preferences.dart';
+import 'package:student_care_app/models/user_model.dart';
 import 'package:student_care_app/resources/constants_manager.dart';
 
 class RegisterController extends ChangeNotifier {
-  String? _token;
+  late String token;
+  late User user;
 
-  Future<bool> register({
+  Future<User?> register({
     required String email,
-    required String pass,
+    required String password,
     required String firstName,
-    required String secondName,
+    required String lastName,
     required String phoneNumber,
     required String role,
   }) async {
@@ -24,26 +26,27 @@ class RegisterController extends ChangeNotifier {
             'Content-Type': 'application/json; charset=UTF-8',
           },
           body: jsonEncode({
-            "name": '$firstName $secondName',
+            "name": '$firstName $lastName',
             "email": email,
-            "password": pass,
+            "password": password,
             "phone_number": phoneNumber,
             "role": role
           }));
 
-      final body = jsonDecode(response.body);
-      print(body);
-      _token = await body['The Token'];
-      SharedPreferences prefs = await SharedPreferences.getInstance();
-      await prefs.setString('token', _token!);
-      print(prefs.getString('token'));
-
-      return true;
+      if (response.statusCode == 200) {
+        final jsonResponse = json.decode(response.body);
+        final userDetails = jsonResponse['User Details :'];
+        user = User.fromJson(userDetails);
+        final token = jsonResponse['The Token'];
+        SharedPreferences prefs = await SharedPreferences.getInstance();
+        await prefs.setString('token', token);
+        print(prefs.getString('token'));
+      }
+      return user;
     } catch (e) {
-      print(e);
-      return false;
+      print("EEEEEEEEEEEEEEEEEEEE " + '$e');
     }
   }
 
-  String? get token => _token;
+  // String? get token => _token;
 }

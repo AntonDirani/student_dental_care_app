@@ -3,6 +3,8 @@ import 'package:flutter_svg/svg.dart';
 import 'package:provider/provider.dart';
 import 'package:responsive_sizer/responsive_sizer.dart';
 import 'package:student_care_app/controllers/location_controller.dart';
+import 'package:student_care_app/screens/diagnose/diagnose.dart';
+import 'package:student_care_app/screens/login_and_register/do_you_have_an_account.dart';
 
 import '../../controllers/university_controller.dart';
 import '../../home_screen.dart';
@@ -49,15 +51,16 @@ class SplashScreen extends StatelessWidget {
                     Padding(
                       padding: EdgeInsets.fromLTRB(0, 3.h, 0, 1.h),
                       child: ComponentManager.mainGradientButton(
-                          onPressed: () {
-                            Navigator.pushReplacement(
-                              context,
-                              MaterialPageRoute(
-                                  builder: (context) => HomeScreen()),
-                            );
-                          },
-                          text: AppStrings.continueText,
-                          icon: Icons.arrow_back_ios),
+                        onPressed: () {
+                          Navigator.pushReplacement(
+                            context,
+                            MaterialPageRoute(
+                                builder: (context) => DoYouHaveAnAccount()),
+                          );
+                        },
+                        text: AppStrings.continueText,
+                        icon: Icons.arrow_back_ios,
+                      ),
                     )
                   ],
                 ),

@@ -9,7 +9,7 @@ import 'package:student_care_app/resources/constants_manager.dart';
 class LoginController extends ChangeNotifier {
   String? _token;
 
-  Future<bool> logIn(String email, String pass) async {
+  Future<bool> logIn(String email, String password) async {
     try {
       var url = '${AppConstants.mainUrl}/login';
 
@@ -19,7 +19,7 @@ class LoginController extends ChangeNotifier {
           },
           body: jsonEncode({
             "email": email,
-            "password": pass,
+            "password": password,
           }));
 
       final body = jsonDecode(response.body);

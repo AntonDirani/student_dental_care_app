@@ -5,6 +5,7 @@ import 'dart:io';
 import 'package:flutter/cupertino.dart';
 import 'package:http/http.dart' as http;
 import 'package:shared_preferences/shared_preferences.dart';
+import 'package:student_care_app/resources/constants_manager.dart';
 
 class StudentController extends ChangeNotifier {
   String? _token;
@@ -18,7 +19,7 @@ class StudentController extends ChangeNotifier {
     SharedPreferences prefs = await SharedPreferences.getInstance();
     _token = prefs.getString('token');
     var url = Uri.parse(
-        'http://10.0.2.2:8000/api/student_data_entry'); // Replace with your actual URL.
+        '${AppConstants.mainUrl}/student_data_entry'); // Replace with your actual URL.
 
     var request = http.MultipartRequest('POST', url);
 
