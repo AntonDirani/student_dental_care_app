@@ -5,6 +5,7 @@ import 'package:provider/provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:student_care_app/components/home_screen_drawer.dart';
 import 'package:student_care_app/controllers/posts_controller.dart';
+import 'package:student_care_app/controllers/student_controller.dart';
 import 'package:student_care_app/controllers/treatment_controller.dart';
 import 'package:student_care_app/models/treatment_model.dart';
 
@@ -13,11 +14,11 @@ import 'package:student_care_app/resources/font_manager.dart';
 import 'package:student_care_app/resources/styles_manager.dart';
 import 'package:student_care_app/screens/posts/add_post_screen.dart';
 
-import '../components/post_list_home_screen.dart';
-import '../components/search_bar.dart';
-import '../controllers/location_controller.dart';
-import '../models/location_model.dart';
-import '../models/post_model.dart';
+import '../../components/post_list_home_screen.dart';
+import '../../components/search_bar.dart';
+import '../../controllers/location_controller.dart';
+import '../../models/location_model.dart';
+import '../../models/post_model.dart';
 
 class HomeScreenStudent extends StatefulWidget {
   @override
@@ -163,14 +164,17 @@ class _HomeScreenBodyState extends State<HomeScreenBody> {
   void initState() {
     _treatments = Provider.of<TreatmentController>(context, listen: false)
         .getTreatmentsList();
+
     // Get the initial list of posts, no need to use setState here
     _posts = Provider.of<PostController>(context, listen: false).getPostsList();
+    Provider.of<StudentController>(context, listen: false).getMyPosts();
+
     super.initState();
   }
 
   Future<void> _refreshList() async {
     final postController = Provider.of<PostController>(context, listen: false);
-
+    Provider.of<StudentController>(context, listen: false).getMyPosts();
     // Fetch the updated posts
     await postController.getPosts();
 

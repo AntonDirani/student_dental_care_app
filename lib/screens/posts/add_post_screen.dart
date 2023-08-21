@@ -9,7 +9,7 @@ import 'package:provider/provider.dart';
 import 'package:student_care_app/controllers/student_controller.dart';
 import 'package:student_care_app/resources/assets_manager.dart';
 import 'package:student_care_app/resources/color_manager.dart';
-import 'package:student_care_app/screens/home_screen_student.dart';
+import 'package:student_care_app/screens/student_screens/home_screen_student.dart';
 import '../../controllers/treatment_controller.dart';
 import '../../models/treatment_model.dart';
 import '../../resources/components_manager.dart';
@@ -111,6 +111,7 @@ class _AddPostScreenState extends State<AddPostScreen> {
                                   ),
                                 );
                               } else if (studentController.isApiSuccessful) {
+                                _selectedTreatmentId = null;
                                 return Dialog(
                                   child: Padding(
                                     padding: EdgeInsets.all(8.0),

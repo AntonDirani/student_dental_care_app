@@ -11,6 +11,7 @@ import 'package:student_care_app/resources/components_manager.dart';
 import 'package:student_care_app/resources/styles_manager.dart';
 
 import '../../components/booking_dialog.dart';
+import '../../controllers/student_controller.dart';
 import '../../models/post_model.dart';
 import '../../resources/font_manager.dart';
 import '../../student_details.dart';
@@ -192,7 +193,41 @@ class _PostDetailsState extends State<PostDetails> {
     // You can perform any other actions here
   }
 
-  void showPopup(BuildContext context) {
+  void _showOverlay(BuildContext context) async {
+    print('object');
+    OverlayState? overlayState = Overlay.of(context);
+    OverlayEntry overlay1;
+    OverlayEntry overlay2;
+    OverlayEntry overlay3;
+    overlay1 = OverlayEntry(builder: (context) {
+      return Positioned(
+        top: MediaQuery.of(context).size.height * 0.5,
+        left: MediaQuery.of(context).size.width * 0.1,
+        width: MediaQuery.of(context).size.width * 0.8,
+        //  right: MediaQuery.of(context).size.width * 0.1,
+        child: ClipRRect(
+          borderRadius: BorderRadius.circular(50),
+          child: Container(
+            padding: EdgeInsets.all(MediaQuery.of(context).size.height * 0.02),
+            color: ColorManager.primary.withOpacity(0.8),
+            child: Material(
+              color: Colors.transparent,
+              child: Text(_myPost.postTreatmentDescription!,
+                  textAlign: TextAlign.center,
+                  style: StylesManager.medium16White()),
+            ),
+          ),
+        ),
+      );
+    });
+
+    overlayState.insert(overlay1);
+
+    await Future.delayed(const Duration(seconds: 4));
+    overlay1.remove();
+  }
+
+  /*void showPopup(BuildContext context) async {
     OverlayEntry overlayEntry;
 
     overlayEntry = OverlayEntry(
@@ -223,10 +258,10 @@ class _PostDetailsState extends State<PostDetails> {
     Overlay.of(context).insert(overlayEntry);
 
     // Automatically dismiss the popup after 3 seconds
-    Future.delayed(const Duration(seconds: 2), () {
+    await Future.delayed(const Duration(seconds: 2), () {
       overlayEntry.remove();
     });
-  }
+  }*/
 
   @override
   Widget build(BuildContext context) {
@@ -243,6 +278,7 @@ class _PostDetailsState extends State<PostDetails> {
         appBar: AppBar(
           actions: [
             PopupMenuButton<String>(
+              icon: Icon(Icons.help),
               itemBuilder: (BuildContext context) {
                 return [
                   PopupMenuItem<String>(
@@ -343,11 +379,15 @@ class _PostDetailsState extends State<PostDetails> {
                       ),
                     ),
                     GestureDetector(
-                      onTap: () {
+                      onTap: () async {
+                        await Provider.of<StudentController>(context,
+                                listen: false)
+                            .fetchStudentProfile(userId: 1);
                         Navigator.push(
                           context,
                           MaterialPageRoute(
-                              builder: (context) => StudentProfileScreen()),
+                              builder: (context) =>
+                                  StudentProfileScreen(_myPost)),
                         );
                       },
                       child: Row(
@@ -413,25 +453,25 @@ class _PostDetailsState extends State<PostDetails> {
                 Row(
                   mainAxisAlignment: MainAxisAlignment.end,
                   children: [
-                    Padding(
-                      padding: const EdgeInsets.fromLTRB(20, 0, 0, 0),
-                      child: Container(
-                        width: 55,
-                        height: 80,
-                        decoration: BoxDecoration(
-                          color: ColorManager.lightGrey,
-                          borderRadius: const BorderRadius.all(
-                            Radius.circular(10),
+                    GestureDetector(
+                      onTap: () {
+                        _showOverlay(context);
+                      },
+                      child: Padding(
+                        padding: const EdgeInsets.fromLTRB(20, 0, 0, 0),
+                        child: Container(
+                          width: 55,
+                          height: 80,
+                          decoration: BoxDecoration(
+                            color: ColorManager.lightGrey,
+                            borderRadius: const BorderRadius.all(
+                              Radius.circular(10),
+                            ),
                           ),
-                        ),
-                        child: Column(
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          children: [
-                            Expanded(
-                              child: GestureDetector(
-                                onTap: () {
-                                  showPopup(context);
-                                },
+                          child: Column(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children: [
+                              Expanded(
                                 child: Padding(
                                   padding: const EdgeInsets.all(5.0),
                                   child: SvgPicture.asset(
@@ -440,19 +480,19 @@ class _PostDetailsState extends State<PostDetails> {
                                   ),
                                 ),
                               ),
-                            ),
-                            Padding(
-                              padding: const EdgeInsets.fromLTRB(0, 0, 0, 2),
-                              child: Text(
-                                _myPost.postTreatmentName!,
-                                style: TextStyle(
-                                    fontFamily: FontConstants.fontFamily,
-                                    fontSize: 14,
-                                    color: ColorManager.costumeBlack),
-                                textAlign: TextAlign.center,
+                              Padding(
+                                padding: const EdgeInsets.fromLTRB(0, 0, 0, 2),
+                                child: Text(
+                                  _myPost.postTreatmentName!,
+                                  style: TextStyle(
+                                      fontFamily: FontConstants.fontFamily,
+                                      fontSize: 14,
+                                      color: ColorManager.costumeBlack),
+                                  textAlign: TextAlign.center,
+                                ),
                               ),
-                            ),
-                          ],
+                            ],
+                          ),
                         ),
                       ),
                     ),

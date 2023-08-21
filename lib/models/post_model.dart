@@ -1,3 +1,5 @@
+import 'package:student_care_app/models/student_model.dart';
+
 class Post {
   int? postId;
   String? postDescription;
@@ -12,9 +14,11 @@ class Post {
   String? postLastDate;
   String? postTreatmentDescription;
   int? postAvgRate;
+  Student? postStudentCreator;
 
   Post(
-      {this.postTreatmentDescription,
+      {this.postStudentCreator,
+      this.postTreatmentDescription,
       this.postFirstDate,
       this.postFirstTime,
       this.postLastDate,

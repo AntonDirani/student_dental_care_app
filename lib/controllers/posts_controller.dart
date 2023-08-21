@@ -5,6 +5,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:path_provider/path_provider.dart';
 
 import '../models/post_model.dart';
+import '../models/student_model.dart';
 import '../resources/constants_manager.dart';
 import 'package:http/http.dart' as http;
 
@@ -63,7 +64,33 @@ class PostController extends ChangeNotifier {
         // Extract the time in 'HH:mm' format
         String time2 =
             "${lastDateTime.hour.toString().padLeft(2, '0')}:${lastDateTime.minute.toString().padLeft(2, '0')}";
+
+        final userIdPost = data[j]['user_id'];
+        var urlStudent =
+            '${AppConstants.mainUrl}/view_student_profile/$userIdPost';
+        final responseStudent = await http.get(
+          Uri.parse(urlStudent),
+          headers: {
+            'Content-Type': 'application/json; charset=UTF-8',
+          },
+        );
+
+        final dataStudent = jsonDecode(responseStudent.body);
+        print(dataStudent);
+        final Student tempPostStudent;
+
+        final info0Student = dataStudent['0'] as List<dynamic>;
+        final info1Student = dataStudent['1'] as List<dynamic>;
+        final imageStudentName = dataStudent['profile_photo'];
+        tempPostStudent = Student(
+            profileImage:
+                '${AppConstants.mainUrl}/show_image/$imageStudentName',
+            studentPhoneNumber: info0Student[0]['phone_number'],
+            studentUniversityId: info1Student[0]['university_id'],
+            studentYear: info1Student[0]['studying_year']);
+
         loadedPosts.add(Post(
+            postStudentCreator: tempPostStudent,
             postId: data[j]['post_id'],
             postDescription: data[j]['description'],
             postImages: loadedImages,

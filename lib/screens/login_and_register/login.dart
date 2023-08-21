@@ -8,7 +8,7 @@ import 'package:student_care_app/resources/validation_manager.dart';
 import 'package:student_care_app/resources/components_manager.dart';
 import 'package:student_care_app/home_screen.dart';
 import 'package:student_care_app/resources/values_manager.dart';
-import 'package:student_care_app/screens/home_screen_student.dart';
+import 'package:student_care_app/screens/student_screens/home_screen_student.dart';
 import 'package:student_care_app/screens/login_and_register/signup_choose_role.dart';
 import '../../resources/assets_manager.dart';
 import '../../resources/color_manager.dart';

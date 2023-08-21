@@ -8,6 +8,14 @@ import 'package:student_care_app/resources/constants_manager.dart';
 import 'package:student_care_app/models/university_model.dart';
 
 class UniversityController extends ChangeNotifier {
+  static List<String> yearString = [
+    '',
+    '',
+    '',
+    '',
+    'السنة الرابعة',
+    'السنة الخامسة'
+  ];
   List<University> _unis = [];
   Future<bool> getUnis() async {
     try {
@@ -40,4 +48,6 @@ class UniversityController extends ChangeNotifier {
   }
 
   List<University> get unis => _unis;
+
+  //List<String> get yearString => _yearString;
 }
