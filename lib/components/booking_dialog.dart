@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart'; // Import this for TextEditingController
+
 import 'package:provider/provider.dart';
 import 'package:student_care_app/models/post_model.dart';
 import 'package:student_care_app/resources/styles_manager.dart';
@@ -63,7 +63,7 @@ class _BookingDialogState extends State<BookingDialog> {
               text: pickedDate?.toIso8601String().split('T')[0] ?? '',
             ),
           ),
-          SizedBox(height: 10),
+          const SizedBox(height: 10),
           TextFormField(
             readOnly: true,
             decoration: InputDecoration(
@@ -100,7 +100,7 @@ class _BookingDialogState extends State<BookingDialog> {
 
               // Handle appointment booking logic with the iso8601DateTime
               finalDate = iso8601DateTime;
-              print(iso8601DateTime);
+              //print(iso8601DateTime);
             }
             showDialog(
               context: context,
@@ -123,7 +123,7 @@ class _BookingDialogState extends State<BookingDialog> {
                     } else if (patientController.isApiSuccessful) {
                       return Dialog(
                         child: Padding(
-                          padding: EdgeInsets.all(8.0),
+                          padding: const EdgeInsets.all(8.0),
                           child: Row(
                             mainAxisSize: MainAxisSize.min,
                             mainAxisAlignment: MainAxisAlignment.center,
@@ -166,7 +166,7 @@ class _BookingDialogState extends State<BookingDialog> {
                                 onPressed: () {
                                   Navigator.pop(context);
                                 },
-                                child: Text('Close'),
+                                child: const Text('إغلاق'),
                               ),
                             ],
                           ),

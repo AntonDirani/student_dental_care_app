@@ -7,15 +7,20 @@ import 'package:flutter/cupertino.dart';
 import 'package:http/http.dart' as http;
 import 'package:image_picker/image_picker.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import 'package:student_care_app/models/appointment_model.dart';
 import 'package:student_care_app/models/student_model.dart';
 
 import '../models/post_model.dart';
+import '../resources/assets_manager.dart';
 import '../resources/constants_manager.dart';
 
 class StudentController extends ChangeNotifier {
-  Student? _currentPostStudent;
-
+  late List<Appointment> _currentPostAppointments;
+  List<Student> _studentsFiltered = [];
+  Student _student = Student();
   String _apiResponseDelete = '';
+
+  Student get student => _student;
 
   String get apiResponse => _apiResponseDelete;
 
@@ -142,9 +147,24 @@ class StudentController extends ChangeNotifier {
     }
   }
 
+  Future<List<Appointment>> getCurrentPostAppointmentsList() async {
+    notifyListeners();
+    return _currentPostAppointments;
+  }
+
+  Future<Student> getStudent() async {
+    notifyListeners();
+    return _student;
+  }
+
   Future<List<Post>> getMyPostsList() async {
     notifyListeners();
     return _myPosts;
+  }
+
+  Future<List<Student>> getStudentsByNameList() async {
+    notifyListeners();
+    return _studentsFiltered;
   }
 
   Future<bool> studentDataEntry({
@@ -245,7 +265,7 @@ class StudentController extends ChangeNotifier {
 
   Future<bool> fetchStudentProfile({required int userId}) async {
     try {
-      var urlStudent = '${AppConstants.mainUrl}/view_student_profile/2';
+      var urlStudent = '${AppConstants.mainUrl}/view_student_profile/$userId';
       final response = await http.get(
         Uri.parse(urlStudent),
         headers: {
@@ -265,9 +285,9 @@ class StudentController extends ChangeNotifier {
           studentPhoneNumber: info0Student[0]['phone_number'],
           studentUniversityId: info1Student[0]['university_id'],
           studentYear: info1Student[0]['studying_year']);
-      /*  print(info0);
+      /*print(info0);
       print(info1);
-      print(int.parse(tempPostStudent.studentYear!));*/
+      print(int.parse(tempPostStudent.studentYear!)); */
       return true;
     } catch (e) {
       print(e);
@@ -312,6 +332,133 @@ class StudentController extends ChangeNotifier {
     } finally {
       _isApiInProgressDelete = false;
       notifyListeners();
+    }
+  }
+
+  Future<bool> getPostAppointments(int postId) async {
+    try {
+      print('hereee');
+      var headers = {'Content-Type': 'application/json'};
+      var request = http.Request(
+          'GET', Uri.parse('${AppConstants.mainUrl}/show_posts_dates'));
+      request.body = json.encode({"post_id": postId});
+      request.headers.addAll(headers);
+
+      http.StreamedResponse response = await request.send();
+// Convert the response to a String
+      String responseBody = await response.stream.bytesToString();
+
+// Parse the response JSON
+      Map<String, dynamic> jsonResponse = json.decode(responseBody);
+
+// Extract the values
+      int count = jsonResponse['count'];
+      final data = jsonResponse['data'] as List<dynamic>;
+      print('object');
+      print(data);
+      List<Appointment> loadedAppointments = [];
+// Iterate through the data list to extract id and patient_name
+
+      for (var item in data) {
+        int id = item['id'];
+        String patientName = item['patient_name'];
+        loadedAppointments.add(Appointment(
+            appointmentId: id, appointmentPatientName: patientName));
+        print('ID: $id, Patient Name: $patientName');
+      }
+
+      /*String responseBody = await response.stream.bytesToString();
+      print(responseBody);
+      final data = responseBody["data"];
+      print(data);
+      List<Appointment> loadedAppointments = [];*/
+
+      /*  for (int j = 0; j < data.length; j++) {
+        loadedAppointments.add(Appointment(
+            appointmentId: data[j]['id'],
+            appointmentPatientName: data[j]['id']));
+      }*/
+
+      _currentPostAppointments = loadedAppointments;
+      print(_currentPostAppointments);
+      notifyListeners();
+      /*unPackUnisNames(_unis);
+      unPackUnisIds(_unis);*/
+      // print(_unisNames);
+      return true;
+    } catch (e) {
+      print(e);
+      return false;
+    }
+  }
+
+  Future<bool> getStudentProfile() async {
+    try {
+      print('Its workinsgg');
+      SharedPreferences prefs = await SharedPreferences.getInstance();
+      final studentId = await prefs.getInt('userId');
+      var urlStudent =
+          '${AppConstants.mainUrl}/view_student_profile/$studentId';
+      final responseStudent = await http.get(
+        Uri.parse(urlStudent),
+        headers: {
+          'Content-Type': 'application/json; charset=UTF-8',
+        },
+      );
+      final dataStudent = jsonDecode(responseStudent.body);
+      print(dataStudent);
+      if (responseStudent.statusCode == 200) {
+        final Student tempStudent;
+        final info0Student = dataStudent['0'] as List<dynamic>;
+        final info1Student = dataStudent['1'] as List<dynamic>;
+        final imageStudentName = dataStudent['profile_photo'];
+        tempStudent = Student(
+            studentEmail: info0Student[0]['email'],
+            studentName: info0Student[0]['name'],
+            profileImage:
+                '${AppConstants.mainUrl}/show_image/$imageStudentName',
+            studentPhoneNumber: info0Student[0]['phone_number'],
+            studentUniversityId: info1Student[0]['university_id'],
+            studentYear: info1Student[0]['studying_year']);
+        _student = tempStudent;
+      }
+      return true;
+    } catch (e) {
+      return false;
+    }
+  }
+
+  Future<bool> getStudentsByName(String studentName) async {
+    try {
+      print('Here');
+      var urlStudent = '${AppConstants.mainUrl}/search_by_student_name';
+
+      final responseStudent = await http.post(Uri.parse(urlStudent),
+          headers: {
+            'Content-Type': 'application/json; charset=UTF-8',
+          },
+          body: jsonEncode({
+            "name": studentName,
+          }));
+
+      print('Heresssssss');
+      print(responseStudent.body);
+      final dataStudent = jsonDecode(responseStudent.body) as List<dynamic>;
+      print(dataStudent);
+      if (responseStudent.statusCode == 200) {
+        List<Student> tempStudentsList = [];
+        for (int i = 0; i < dataStudent.length; i++) {
+          tempStudentsList.add(Student(
+            studentId: dataStudent[i]['id'],
+            studentName: dataStudent[i]['name'],
+          ));
+        }
+
+        _studentsFiltered = tempStudentsList;
+      }
+      return true;
+    } catch (e) {
+      return false;
     }
   }
 }

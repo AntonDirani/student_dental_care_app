@@ -3,13 +3,12 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:responsive_sizer/responsive_sizer.dart';
-import 'package:shared_preferences/shared_preferences.dart';
-import 'package:student_care_app/controllers/student_controller.dart';
-import 'package:student_care_app/screens/posts/post_details.dart';
 
-import '../controllers/posts_controller.dart';
+import 'package:student_care_app/controllers/student_controller.dart';
+import 'package:student_care_app/screens/posts/my_post_appointments.dart';
+
 import '../models/post_model.dart';
-import '../resources/assets_manager.dart';
+
 import '../resources/color_manager.dart';
 import '../resources/styles_manager.dart';
 
@@ -169,10 +168,16 @@ class PostCard extends StatelessWidget {
         Expanded(
           flex: 9,
           child: GestureDetector(
-              onTap: () {
+              onTap: () async {
+                await Provider.of<StudentController>(context, listen: false)
+                    .getPostAppointments(post.postId!);
                 Navigator.push(
                   context,
-                  MaterialPageRoute(builder: (context) => PostDetails(post)),
+                  MaterialPageRoute(
+                      builder: (context) => //PostDetails(post)
+                          MyPostAppointments(
+                            postID: post.postId!,
+                          )),
                 );
               },
               child: ClipRRect(
@@ -316,7 +321,7 @@ class PostCard extends StatelessWidget {
                             ),
                           ),
                           Padding(
-                              padding: EdgeInsets.symmetric(
+                              padding: const EdgeInsets.symmetric(
                                   horizontal: 10, vertical: 3),
                               child: Text(
                                 post.postDescription!,

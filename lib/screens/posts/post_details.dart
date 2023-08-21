@@ -119,7 +119,7 @@ class _PostDetailsState extends State<PostDetails> {
                                   .isApiSuccessfulReport) {
                                 return Dialog(
                                   child: Padding(
-                                    padding: EdgeInsets.all(8.0),
+                                    padding: const EdgeInsets.all(8.0),
                                     child: Row(
                                       mainAxisSize: MainAxisSize.min,
                                       mainAxisAlignment:
@@ -432,10 +432,10 @@ class _PostDetailsState extends State<PostDetails> {
                           ),
                           Padding(
                             padding: const EdgeInsets.fromLTRB(0, 0, 10, 0),
-                            child: Icon(
-                              Icons.person_outline,
-                              size: 55,
-                              color: ColorManager.primary,
+                            child: CircleAvatar(
+                              backgroundImage: NetworkImage(
+                                  _myPost.postStudentCreator!.profileImage!),
+                              radius: 25,
                             ),
                           ),
                         ],

@@ -6,8 +6,6 @@ import 'package:student_care_app/resources/color_manager.dart';
 import 'package:student_care_app/resources/styles_manager.dart';
 import 'package:student_care_app/screens/login_and_register/login.dart';
 import 'package:student_care_app/screens/login_and_register/patient/choose_treatment.dart';
-import '../screens/profiles/patient_profile.dart';
-import '../screens/student_screens/my_posts.dart';
 
 class HomeScreenDrawer extends StatelessWidget {
   @override
@@ -48,7 +46,7 @@ class HomeScreenDrawer extends StatelessWidget {
                 ),
               ),
             )),
-        ListTile(
+        /* ListTile(
           subtitle: Text(
             'رؤية الحالات الطبية التى قمت بنشرها',
             style: StylesManager.regular14Grey(),
@@ -73,7 +71,7 @@ class HomeScreenDrawer extends StatelessWidget {
               MaterialPageRoute(builder: (context) => StudentMyPosts()),
             );
           },
-        ),
+        ),*/
         ListTile(
           subtitle: Text(
             'تسجيل الخروج من التطبيق',

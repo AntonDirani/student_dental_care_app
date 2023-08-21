@@ -22,7 +22,9 @@ class LocationController extends ChangeNotifier {
 
       final data = jsonDecode(response.body) as List<dynamic>;
       print(data);
-      final List<Governorate> loadedLocations = [];
+      final List<Governorate> loadedLocations = [
+        Governorate(governorateId: 0, governorateName: 'جميع المحافظات')
+      ];
       for (int j = 0; j < data.length; j++) {
         loadedLocations.add(Governorate(
             governorateId: data[j]['id'],

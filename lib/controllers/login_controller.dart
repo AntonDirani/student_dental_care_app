@@ -7,6 +7,7 @@ import 'package:http/http.dart' as http;
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:student_care_app/resources/constants_manager.dart';
 
+import '../models/student_model.dart';
 import '../models/user_model.dart';
 
 class LoginController extends ChangeNotifier {
@@ -40,7 +41,7 @@ class LoginController extends ChangeNotifier {
           userRole: userDetails['role'],
           userName: userDetails['name']);
       await prefs.setString('userRole', _user!.userRole!);
-      await prefs.setInt('user', _user!.userId!);
+      await prefs.setInt('userId', _user!.userId!);
       return true;
     } catch (e) {
       print(e);

@@ -3,12 +3,9 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:responsive_sizer/responsive_sizer.dart';
-import 'package:shared_preferences/shared_preferences.dart';
 import 'package:student_care_app/screens/posts/post_details.dart';
-
 import '../controllers/posts_controller.dart';
 import '../models/post_model.dart';
-import '../resources/assets_manager.dart';
 import '../resources/color_manager.dart';
 import '../resources/styles_manager.dart';
 
@@ -73,7 +70,7 @@ class _PostListState extends State<PostList> {
                 ).build(context),
               );
             } else {
-              return CircularProgressIndicator();
+              return const CircularProgressIndicator();
             }
           });
     });
@@ -108,7 +105,7 @@ class PostCard extends StatelessWidget {
           mainAxisAlignment: MainAxisAlignment.start,
           children: [
             Expanded(
-              child: Container(
+              child: SizedBox(
                 width: double.infinity,
                 child: Image.network(
                   post.postImages![0],
@@ -177,7 +174,7 @@ class PostCard extends StatelessWidget {
                                   //textAlign: TextAlign.right,
                                   //  textDirection: TextDirection.rtl,
                                 ),
-                                SizedBox(
+                                const SizedBox(
                                   width: 3,
                                 ),
                                 Icon(
