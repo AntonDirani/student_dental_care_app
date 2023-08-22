@@ -81,103 +81,109 @@ class _PostDetailsState extends State<PostDetails> {
                 style: StylesManager.semiBold17Black(),
                 textAlign: TextAlign.right,
               ),
-              ListView.builder(
-                shrinkWrap: true,
-                itemCount: reportReasons.length,
-                itemBuilder: (BuildContext context, int index) {
-                  return ListTile(
-                    trailing: Icon(
-                      Icons.circle,
-                      color: ColorManager.costumeBlack,
-                      size: 10,
-                    ),
-                    title: Text(
-                      reportReasons[index].reportItemName!,
-                      style: StylesManager.medium16Black(),
-                      textAlign: TextAlign.right,
-                    ),
-                    onTap: () async {
-                      showDialog(
-                        context: context,
-                        barrierDismissible: true,
-                        builder: (BuildContext context) {
-                          return Consumer<PatientController>(
-                            builder: (context, patientController, _) {
-                              if (patientController.isApiInProgressReport) {
-                                return const Dialog(
-                                  child: Padding(
-                                    padding: EdgeInsets.all(16.0),
-                                    child: Column(
-                                      mainAxisSize: MainAxisSize.min,
-                                      children: <Widget>[
-                                        LinearProgressIndicator(),
-                                      ],
+              SizedBox(
+                height: 500,
+                width: 300,
+                child: ListView.builder(
+                  shrinkWrap: true,
+                  itemCount: reportReasons.length,
+                  itemBuilder: (BuildContext context, int index) {
+                    return ListTile(
+                      trailing: Icon(
+                        Icons.circle,
+                        color: ColorManager.costumeBlack,
+                        size: 10,
+                      ),
+                      title: Text(
+                        reportReasons[index].reportItemName!,
+                        style: StylesManager.medium16Black(),
+                        textAlign: TextAlign.right,
+                      ),
+                      onTap: () async {
+                        showDialog(
+                          context: context,
+                          barrierDismissible: true,
+                          builder: (BuildContext context) {
+                            return Consumer<PatientController>(
+                              builder: (context, patientController, _) {
+                                if (patientController.isApiInProgressReport) {
+                                  return const Dialog(
+                                    child: Padding(
+                                      padding: EdgeInsets.all(16.0),
+                                      child: Column(
+                                        mainAxisSize: MainAxisSize.min,
+                                        children: <Widget>[
+                                          LinearProgressIndicator(),
+                                        ],
+                                      ),
                                     ),
-                                  ),
-                                );
-                              } else if (patientController
-                                  .isApiSuccessfulReport) {
-                                return Dialog(
-                                  child: Padding(
-                                    padding: const EdgeInsets.all(8.0),
-                                    child: Row(
-                                      mainAxisSize: MainAxisSize.min,
-                                      mainAxisAlignment:
-                                          MainAxisAlignment.center,
-                                      children: <Widget>[
-                                        TextButton(
+                                  );
+                                } else if (patientController
+                                    .isApiSuccessfulReport) {
+                                  return Dialog(
+                                    child: Padding(
+                                      padding: const EdgeInsets.all(8.0),
+                                      child: Row(
+                                        mainAxisSize: MainAxisSize.min,
+                                        mainAxisAlignment:
+                                            MainAxisAlignment.center,
+                                        children: <Widget>[
+                                          TextButton(
+                                              onPressed: () {
+                                                Navigator.pop(context);
+                                              },
+                                              child: Text(
+                                                'العودة',
+                                                style: StylesManager
+                                                    .semiBold16Primary(),
+                                              )),
+                                          Text(
+                                            '!تمت العملية بنجاح',
+                                            style:
+                                                StylesManager.medium16Black(),
+                                          ),
+                                        ],
+                                      ),
+                                    ),
+                                  );
+                                } else {
+                                  return Dialog(
+                                    child: Padding(
+                                      padding: const EdgeInsets.all(16.0),
+                                      child: Column(
+                                        mainAxisSize: MainAxisSize.min,
+                                        children: <Widget>[
+                                          Text(
+                                            patientController.apiResponseReport,
+                                            style:
+                                                StylesManager.medium16Black(),
+                                          ),
+                                          ElevatedButton(
                                             onPressed: () {
                                               Navigator.pop(context);
                                             },
-                                            child: Text(
-                                              'العودة',
-                                              style: StylesManager
-                                                  .semiBold16Primary(),
-                                            )),
-                                        Text(
-                                          '!تمت العملية بنجاح',
-                                          style: StylesManager.medium16Black(),
-                                        ),
-                                      ],
+                                            child: Text('Close'),
+                                          ),
+                                        ],
+                                      ),
                                     ),
-                                  ),
-                                );
-                              } else {
-                                return Dialog(
-                                  child: Padding(
-                                    padding: const EdgeInsets.all(16.0),
-                                    child: Column(
-                                      mainAxisSize: MainAxisSize.min,
-                                      children: <Widget>[
-                                        Text(
-                                          patientController.apiResponseReport,
-                                          style: StylesManager.medium16Black(),
-                                        ),
-                                        ElevatedButton(
-                                          onPressed: () {
-                                            Navigator.pop(context);
-                                          },
-                                          child: Text('Close'),
-                                        ),
-                                      ],
-                                    ),
-                                  ),
-                                );
-                              }
-                            },
-                          );
-                        },
-                      );
-                      await Provider.of<PatientController>(context,
-                              listen: false)
-                          .reportPost(
-                              postId: _myPost.postId!,
-                              reportId: reportReasons[index].reportItemId!);
-                      print('Reporting for: ${reportReasons[index]}');
-                      //    Navigator.pop(context); // Close the dialog
-                    },
-                  );
-                },
+                                  );
+                                }
+                              },
+                            );
+                          },
+                        );
+                        await Provider.of<PatientController>(context,
+                                listen: false)
+                            .reportPost(
+                                postId: _myPost.postId!,
+                                reportId: reportReasons[index].reportItemId!);
+                        print('Reporting for: ${reportReasons[index]}');
+                        //    Navigator.pop(context); // Close the dialog
+                      },
+                    );
+                  },
+                ),
               ),
             ],
           ),

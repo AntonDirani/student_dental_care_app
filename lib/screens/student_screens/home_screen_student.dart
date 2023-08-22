@@ -389,7 +389,8 @@ class _HomeScreenBodyState extends State<HomeScreenBody> {
                                                             Colors.blue,
                                                       ),
                                                       title: Text(
-                                                        'text',
+                                                        students[index]
+                                                            .studentName!,
                                                         textAlign:
                                                             TextAlign.right,
                                                         style: StylesManager
