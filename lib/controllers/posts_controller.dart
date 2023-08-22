@@ -90,6 +90,7 @@ class PostController extends ChangeNotifier {
             studentYear: info1Student[0]['studying_year']);
 
         loadedPosts.add(Post(
+            postLocation: data[j]['location_name'],
             postStudentCreator: tempPostStudent,
             postId: data[j]['post_id'],
             postDescription: data[j]['description'],
