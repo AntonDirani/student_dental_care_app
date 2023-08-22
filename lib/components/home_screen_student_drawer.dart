@@ -56,6 +56,7 @@ class _HomeScreenStudentDrawerState extends State<HomeScreenStudentDrawer> {
                     } else {
                       Student _theStudent = snapshot.data!;
                       return Column(
+                        mainAxisAlignment: MainAxisAlignment.end,
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
                           GestureDetector(
@@ -67,10 +68,11 @@ class _HomeScreenStudentDrawerState extends State<HomeScreenStudentDrawer> {
                                         const ChooseTreatment()),
                               );
                             },
-                            child: CircleAvatar(
-                              radius: 4.5.h,
-                              backgroundImage:
-                                  NetworkImage(_theStudent.profileImage!),
+                            child: Expanded(
+                              child: CircleAvatar(
+                                backgroundImage:
+                                    NetworkImage(_theStudent.profileImage!),
+                              ),
                             ),
                           ),
                           Text(
@@ -92,16 +94,14 @@ class _HomeScreenStudentDrawerState extends State<HomeScreenStudentDrawer> {
           subtitle: Text(
             'رؤية الحالات الطبية التى قمت بنشرها',
             style: StylesManager.regular14Grey(),
-            textAlign: TextAlign.end,
           ),
-          trailing: Icon(
+          leading: Icon(
             Icons.table_rows,
             color: ColorManager.primary,
             size: 4.5.h,
           ),
           title: Text(
             'منشوراتي',
-            textAlign: TextAlign.end,
             style: StylesManager.bold17Black(),
           ),
           onTap: () async {
@@ -115,16 +115,14 @@ class _HomeScreenStudentDrawerState extends State<HomeScreenStudentDrawer> {
           subtitle: Text(
             'تسجيل الخروج من التطبيق',
             style: StylesManager.regular14Grey(),
-            textAlign: TextAlign.end,
           ),
-          trailing: Icon(
+          leading: Icon(
             Icons.logout,
             color: ColorManager.primary,
             size: 4.5.h,
           ),
           title: Text(
             'تسجيل الخروج',
-            textAlign: TextAlign.end,
             style: StylesManager.bold17Black(),
           ),
           onTap: () async {

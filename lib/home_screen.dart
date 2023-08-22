@@ -229,7 +229,7 @@ class _HomeScreenState extends State<HomeScreen> {
           backgroundColor: Colors.transparent,
           elevation: 0,
         ),
-        endDrawer: HomeScreenStudentDrawer(/*_student*/),
+        drawer: HomeScreenStudentDrawer(/*_student*/),
         body: Builder(builder: (context) {
           return RefreshIndicator(
             onRefresh: _refreshList,
