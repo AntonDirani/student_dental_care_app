@@ -69,12 +69,15 @@ class MyApp extends StatelessWidget {
       ],
       child: ResponsiveSizer(
         builder: (buildContext, orientation, screenType) {
-          return const MaterialApp(
+          return MaterialApp(
             locale: Locale('ar'),
             localizationsDelegates: GlobalMaterialLocalizations.delegates,
             supportedLocales: [Locale('ar')],
             debugShowCheckedModeBanner: false,
             home: /*jwt == null ? Home */ SplashScreen(),
+            theme: ThemeData(
+              androidOverscrollIndicator: AndroidOverscrollIndicator.stretch,
+            ),
           );
         },
       ),

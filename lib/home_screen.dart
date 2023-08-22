@@ -131,7 +131,7 @@ class _HomeScreenState extends State<HomeScreen> {
   late final Treatment treatment;
   late Future<List<Governorate>> _dropDownLocations;
   late Governorate _valueLocation;
-  late bool isStudent;
+  bool isStudent = false;
 
   /*late final Future<Student> _student;*/
   @override
@@ -152,14 +152,14 @@ class _HomeScreenState extends State<HomeScreen> {
     // Get the initial list of posts, no need to use setState here
     posts = Provider.of<PostController>(context, listen: false).getPostsList();
     Provider.of<StudentController>(context, listen: false).getMyPosts();
-    isStudentFunction();
+    // isStudentFunction();
     super.initState();
   }
 
-  isStudentFunction() async {
-    isStudent =
-        await Provider.of<LoginController>(context, listen: false).isStudent();
-  }
+  // isStudentFunction() async {
+  //   isStudent =
+  //       await Provider.of<LoginController>(context, listen: false).isStudent();
+  // }
 
   void filterByLocation() {}
 
@@ -169,379 +169,460 @@ class _HomeScreenState extends State<HomeScreen> {
   @override
   Widget build(BuildContext context) {
     return SafeArea(
-      child: Scaffold(
-        floatingActionButton: isStudent
-            ? FloatingActionButton.small(
-                child: Icon(Icons.add),
-                onPressed: () {
-                  Navigator.push(
-                    context,
-                    MaterialPageRoute(
-                        builder: (context) => const AddPostScreen()),
-                  );
-                },
-              )
-            : Container(),
-        appBar: AppBar(
-          centerTitle: true,
-          title: FutureBuilder<List<Governorate>>(
-            future: _dropDownLocations,
-            builder: (BuildContext context, AsyncSnapshot snapshot) {
+        child: FutureBuilder(
+            future: Provider.of<LoginController>(context, listen: false)
+                .isStudent(),
+            builder: (context, snapshot) {
               if (snapshot.hasData) {
-                List<Governorate> _values = snapshot.data;
-                // Remove this line: Governorate? _valueLocation = _values[0];
-                // if data is loaded
-                return DropdownButton(
-                  value: _valueLocation,
-                  style: StylesManager.medium16Black(),
-                  underline: const SizedBox(),
-                  dropdownColor: ColorManager.lightGrey,
-                  iconEnabledColor: ColorManager.costumeBlack,
-                  items: _values.map<DropdownMenuItem<Governorate>>(
-                    (Governorate location) {
-                      return DropdownMenuItem<Governorate>(
-                        value: location,
-                        child: Text(location.governorateName.toString()),
-                      );
-                    },
-                  ).toList(),
-                  onChanged: (Governorate? value) {
-                    // This is called when the user selects an item.
-                    setState(() {
-                      _valueLocation = value!; // Update the selected value
-                      print(_valueLocation.governorateId);
-                      print(_valueLocation.governorateName);
-                      widget.selectedLocation = value.governorateName!;
-                    });
-                  },
-                );
-              } else {
-                return const CircularProgressIndicator();
-              }
-            },
-          ),
-          iconTheme: const IconThemeData(
-            size: 40,
-            color: Color(0xff242837),
-          ),
-          backgroundColor: Colors.transparent,
-          elevation: 0,
-        ),
-        endDrawer: isStudent
-            ? HomeScreenStudentDrawer(/*_student*/)
-            : HomeScreenDrawer(),
-        body: Builder(builder: (context) {
-          return RefreshIndicator(
-            onRefresh: _refreshList,
-            child: SingleChildScrollView(
-              physics: const AlwaysScrollableScrollPhysics(),
-              child: Padding(
-                padding: const EdgeInsets.fromLTRB(0, 10, 0, 0),
-                child: Row(
-                  children: [
-                    Expanded(
-                      child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          Padding(
-                            padding: const EdgeInsets.fromLTRB(0, 0, 15, 5),
-                            child: Text(
-                              'الحالات الطبية',
-                              style: StylesManager.medium18Black(),
-                            ),
-                          ),
-                          FutureBuilder<List<Treatment>>(
-                            future:
-                                _treatments, // Replace with your future method that fetches treatments
-                            builder: (BuildContext context,
-                                AsyncSnapshot<List<Treatment>> snapshot) {
-                              if (snapshot.connectionState ==
-                                  ConnectionState.waiting) {
-                                return const CircularProgressIndicator();
-                              } else if (snapshot.hasError) {
-                                return Text('Error: ${snapshot.error}');
-                              } else if (!snapshot.hasData ||
-                                  snapshot.data!.isEmpty) {
-                                return const Text('No data available.');
-                              } else {
-                                List<Treatment> treatments = snapshot.data!;
-                                return SizedBox(
-                                  height: 150,
-                                  child: ListView.separated(
-                                    reverse: true,
-                                    padding: const EdgeInsets.all(8.0),
-                                    scrollDirection: Axis.horizontal,
-                                    itemCount: treatments.length,
-                                    itemBuilder:
-                                        (BuildContext context, int index) {
-                                      final treatment = treatments[index];
-                                      return GestureDetector(
-                                        onTap: () async {
-                                          // Store the selected treatment name using SharedPreferences
-                                          setState(() {
-                                            widget.selectedTreatment =
-                                                treatment.treatmentName!;
-                                            widget.selectedIndex = index;
-                                            // treatments.forEach((treatment) {
-                                            //   treatment.isSelected = false;
-                                            // });
-                                            // treatment.isSelected = true;
-                                          });
-                                        },
-                                        child: Container(
-                                          width: 70,
-                                          decoration: BoxDecoration(
-                                            color: widget.selectedIndex == index
-                                                ? ColorManager.primary
-                                                : ColorManager.lightGrey,
-                                            borderRadius:
-                                                const BorderRadius.all(
-                                              Radius.circular(10),
-                                            ),
-                                          ),
-                                          child: Column(
-                                            mainAxisAlignment:
-                                                MainAxisAlignment.start,
-                                            children: [
-                                              Expanded(
-                                                child: Padding(
-                                                  padding:
-                                                      const EdgeInsets.all(8.0),
-                                                  child: SvgPicture.network(
-                                                    treatment.treatmentImage!,
-                                                    color:
-                                                        widget.selectedIndex ==
-                                                                index
-                                                            ? Colors.white
-                                                            : null,
-                                                  ),
-                                                ),
-                                              ),
-                                              Padding(
-                                                padding:
-                                                    const EdgeInsets.fromLTRB(
-                                                        3, 0, 3, 6),
-                                                child: Text(
-                                                  treatment.treatmentName!,
-                                                  style: TextStyle(
-                                                    fontFamily: FontConstants
-                                                        .fontFamily,
-                                                    fontSize: 14,
-                                                    color:
-                                                        widget.selectedIndex ==
-                                                                index
-                                                            ? Colors.white
-                                                            : Colors.black,
-                                                  ),
-                                                  textAlign: TextAlign.center,
-                                                ),
-                                              ),
-                                            ],
-                                          ),
-                                        ),
-                                      );
-                                    },
-                                    separatorBuilder:
-                                        (BuildContext context, int index) {
-                                      return const SizedBox(width: 10);
-                                    },
-                                  ),
+                return Scaffold(
+                  floatingActionButton: isStudent
+                      ? FloatingActionButton.small(
+                          child: Icon(Icons.add),
+                          onPressed: () {
+                            Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                  builder: (context) => const AddPostScreen()),
+                            );
+                          },
+                        )
+                      : Container(),
+                  appBar: AppBar(
+                    centerTitle: true,
+                    title: FutureBuilder<List<Governorate>>(
+                      future: _dropDownLocations,
+                      builder: (BuildContext context, AsyncSnapshot snapshot) {
+                        if (snapshot.hasData) {
+                          List<Governorate> _values = snapshot.data;
+                          // Remove this line: Governorate? _valueLocation = _values[0];
+                          // if data is loaded
+                          return DropdownButton(
+                            value: _valueLocation,
+                            style: StylesManager.medium16Black(),
+                            underline: const SizedBox(),
+                            dropdownColor: ColorManager.lightGrey,
+                            iconEnabledColor: ColorManager.costumeBlack,
+                            items: _values.map<DropdownMenuItem<Governorate>>(
+                              (Governorate location) {
+                                return DropdownMenuItem<Governorate>(
+                                  value: location,
+                                  child:
+                                      Text(location.governorateName.toString()),
                                 );
-                              }
+                              },
+                            ).toList(),
+                            onChanged: (Governorate? value) {
+                              // This is called when the user selects an item.
+                              setState(() {
+                                _valueLocation =
+                                    value!; // Update the selected value
+                                print(_valueLocation.governorateId);
+                                print(_valueLocation.governorateName);
+                                widget.selectedLocation =
+                                    value.governorateName!;
+                              });
                             },
-                          ),
-                          SearchBar(),
-                          query.isNotEmpty
-                              ? Column(
-                                  // crossAxisAlignment: CrossAxisAlignment.end,
-                                  children: [
-                                    Padding(
-                                      padding: const EdgeInsets.fromLTRB(
-                                          0, 15, 15, 5),
-                                      child: Text(
-                                        'اضغط على الحساب لمشاهدة التفاصيل',
-                                        style: StylesManager.medium18Black(),
-                                      ),
-                                    ),
-                                    Consumer<StudentController>(builder:
-                                        (context, studentController, child) {
-                                      return FutureBuilder<List<Student>>(
-                                          future: studentController
-                                              .getStudentsByNameList(), // Use the provider here
-                                          builder: (BuildContext context,
-                                              AsyncSnapshot<List<Student>>
-                                                  snapshot) {
-                                            if (snapshot.hasData) {
-                                              // Existing code...
-                                              List<Student> students =
-                                                  snapshot.data!;
-                                              //
-
-                                              return ListView.separated(
-                                                shrinkWrap: true,
-                                                padding:
-                                                    const EdgeInsets.fromLTRB(
-                                                        15, 10, 10, 10),
-                                                scrollDirection: Axis.vertical,
-                                                itemCount: students.length,
-                                                itemBuilder:
-                                                    (BuildContext context,
-                                                        int index) {
-                                                  return GestureDetector(
-                                                    onTap: () async {
-                                                      print(students[index]);
-                                                      await Provider.of<
-                                                                  StudentController>(
-                                                              context,
-                                                              listen: false)
-                                                          .viewStudentProfile(
-                                                              students[index]
-                                                                  .studentId!);
-                                                      _studentSearch = Provider
-                                                              .of<StudentController>(
-                                                                  context,
-                                                                  listen: false)
-                                                          .studentSearchProfile;
-                                                      setState(() {});
-                                                      Navigator.push(
-                                                        context,
-                                                        MaterialPageRoute(
-                                                            builder: (context) =>
-                                                                StudentProfileScreenStudent(
-                                                                    _studentSearch)),
-                                                      );
-                                                    },
-                                                    child: Card(
-                                                      shape:
-                                                          RoundedRectangleBorder(
-                                                        borderRadius:
-                                                            BorderRadius
-                                                                .circular(10),
-                                                      ),
-                                                      color: ColorManager
-                                                          .lightGrey,
-                                                      elevation: 0.5,
-                                                      margin: const EdgeInsets
-                                                              .symmetric(
-                                                          horizontal: 20,
-                                                          vertical: 10),
-                                                      child: ListTile(
-                                                        leading: CircleAvatar(
-                                                          backgroundImage:
-                                                              NetworkImage(
-                                                                  _studentSearch
-                                                                      .profileImage!),
-                                                          backgroundColor:
-                                                              Colors.blue,
-                                                        ),
-                                                        title: Text(
-                                                          students[index]
-                                                              .studentName!,
-                                                          textAlign:
-                                                              TextAlign.right,
-                                                          style: StylesManager
-                                                              .medium17Black(),
-                                                        ),
-                                                      ),
-                                                    ),
-                                                  );
-                                                },
-                                                separatorBuilder:
-                                                    (BuildContext context,
-                                                        int index) {
-                                                  return const SizedBox(
-                                                      width: 10);
-                                                },
-                                              ).build(context);
-                                            } else {
-                                              return const CircularProgressIndicator();
-                                            }
-                                          });
-                                    }),
-                                  ],
-                                )
-                              : Column(
+                          );
+                        } else {
+                          return const CircularProgressIndicator();
+                        }
+                      },
+                    ),
+                    iconTheme: const IconThemeData(
+                      size: 40,
+                      color: Color(0xff242837),
+                    ),
+                    backgroundColor: Colors.transparent,
+                    elevation: 0,
+                  ),
+                  endDrawer: isStudent
+                      ? HomeScreenStudentDrawer(/*_student*/)
+                      : HomeScreenDrawer(),
+                  body: Builder(builder: (context) {
+                    return RefreshIndicator(
+                      onRefresh: _refreshList,
+                      child: SingleChildScrollView(
+                        physics: const AlwaysScrollableScrollPhysics(),
+                        child: Padding(
+                          padding: const EdgeInsets.fromLTRB(0, 10, 0, 0),
+                          child: Row(
+                            children: [
+                              Expanded(
+                                child: Column(
                                   crossAxisAlignment: CrossAxisAlignment.start,
                                   children: [
                                     Padding(
                                       padding: const EdgeInsets.fromLTRB(
-                                          0, 15, 15, 5),
+                                          0, 0, 15, 5),
                                       child: Text(
-                                        'المعالجات الحالية',
+                                        'الحالات الطبية',
                                         style: StylesManager.medium18Black(),
                                       ),
                                     ),
-                                    Consumer<PostController>(builder:
-                                        (context, postController, child) {
-                                      return FutureBuilder<List<Post>>(
-                                          future: postController
-                                              .getPostsList(), // Use the provider here
-                                          builder: (BuildContext context,
-                                              AsyncSnapshot<List<Post>>
-                                                  snapshot) {
-                                            if (snapshot.hasData) {
-                                              // Existing code...
-                                              // List<Post> posts = snapshot.data!;
-                                              final result =
-                                                  _search(snapshot.data);
-                                              //
-                                              return SizedBox(
-                                                height: 41.h,
-                                                child: ListView.separated(
-                                                  shrinkWrap: true,
-                                                  padding:
-                                                      const EdgeInsets.fromLTRB(
-                                                          15, 10, 10, 10),
-                                                  scrollDirection:
-                                                      Axis.horizontal,
-                                                  reverse: true,
-                                                  itemCount: result.length,
-                                                  itemBuilder:
-                                                      (BuildContext context,
-                                                          int index) {
-                                                    return GestureDetector(
-                                                      onTap: () {
-                                                        print(result[index]);
-                                                        Navigator.push(
-                                                          context,
-                                                          MaterialPageRoute(
-                                                              builder: (context) =>
-                                                                  PostDetails(
-                                                                      result[
-                                                                          index])),
+                                    FutureBuilder<List<Treatment>>(
+                                      future:
+                                          _treatments, // Replace with your future method that fetches treatments
+                                      builder: (BuildContext context,
+                                          AsyncSnapshot<List<Treatment>>
+                                              snapshot) {
+                                        if (snapshot.connectionState ==
+                                            ConnectionState.waiting) {
+                                          return const CircularProgressIndicator();
+                                        } else if (snapshot.hasError) {
+                                          return Text(
+                                              'Error: ${snapshot.error}');
+                                        } else if (!snapshot.hasData ||
+                                            snapshot.data!.isEmpty) {
+                                          return const Text(
+                                              'No data available.');
+                                        } else {
+                                          List<Treatment> treatments =
+                                              snapshot.data!;
+                                          return SizedBox(
+                                            height: 150,
+                                            child: ListView.separated(
+                                              reverse: true,
+                                              padding:
+                                                  const EdgeInsets.all(8.0),
+                                              scrollDirection: Axis.horizontal,
+                                              itemCount: treatments.length,
+                                              itemBuilder:
+                                                  (BuildContext context,
+                                                      int index) {
+                                                final treatment =
+                                                    treatments[index];
+                                                return GestureDetector(
+                                                  onTap: () async {
+                                                    // Store the selected treatment name using SharedPreferences
+                                                    setState(() {
+                                                      widget.selectedTreatment =
+                                                          treatment
+                                                              .treatmentName!;
+                                                      widget.selectedIndex =
+                                                          index;
+                                                      // treatments.forEach((treatment) {
+                                                      //   treatment.isSelected = false;
+                                                      // });
+                                                      // treatment.isSelected = true;
+                                                    });
+                                                  },
+                                                  child: Container(
+                                                    width: 70,
+                                                    decoration: BoxDecoration(
+                                                      color:
+                                                          widget.selectedIndex ==
+                                                                  index
+                                                              ? ColorManager
+                                                                  .primary
+                                                              : ColorManager
+                                                                  .lightGrey,
+                                                      borderRadius:
+                                                          const BorderRadius
+                                                              .all(
+                                                        Radius.circular(10),
+                                                      ),
+                                                    ),
+                                                    child: Column(
+                                                      mainAxisAlignment:
+                                                          MainAxisAlignment
+                                                              .start,
+                                                      children: [
+                                                        Expanded(
+                                                          child: Padding(
+                                                            padding:
+                                                                const EdgeInsets
+                                                                    .all(8.0),
+                                                            child: SvgPicture
+                                                                .network(
+                                                              treatment
+                                                                  .treatmentImage!,
+                                                              color:
+                                                                  widget.selectedIndex ==
+                                                                          index
+                                                                      ? Colors
+                                                                          .white
+                                                                      : null,
+                                                            ),
+                                                          ),
+                                                        ),
+                                                        Padding(
+                                                          padding:
+                                                              const EdgeInsets
+                                                                      .fromLTRB(
+                                                                  3, 0, 3, 6),
+                                                          child: Text(
+                                                            treatment
+                                                                .treatmentName!,
+                                                            style: TextStyle(
+                                                              fontFamily:
+                                                                  FontConstants
+                                                                      .fontFamily,
+                                                              fontSize: 14,
+                                                              color:
+                                                                  widget.selectedIndex ==
+                                                                          index
+                                                                      ? Colors
+                                                                          .white
+                                                                      : Colors
+                                                                          .black,
+                                                            ),
+                                                            textAlign: TextAlign
+                                                                .center,
+                                                          ),
+                                                        ),
+                                                      ],
+                                                    ),
+                                                  ),
+                                                );
+                                              },
+                                              separatorBuilder:
+                                                  (BuildContext context,
+                                                      int index) {
+                                                return const SizedBox(
+                                                    width: 10);
+                                              },
+                                            ),
+                                          );
+                                        }
+                                      },
+                                    ),
+                                    SearchBar(),
+                                    query.isNotEmpty
+                                        ? Column(
+                                            // crossAxisAlignment: CrossAxisAlignment.end,
+                                            children: [
+                                              Padding(
+                                                padding:
+                                                    const EdgeInsets.fromLTRB(
+                                                        0, 15, 15, 5),
+                                                child: Text(
+                                                  'اضغط على الحساب لمشاهدة التفاصيل',
+                                                  style: StylesManager
+                                                      .medium18Black(),
+                                                ),
+                                              ),
+                                              Consumer<StudentController>(
+                                                  builder: (context,
+                                                      studentController,
+                                                      child) {
+                                                return FutureBuilder<
+                                                        List<Student>>(
+                                                    future: studentController
+                                                        .getStudentsByNameList(), // Use the provider here
+                                                    builder: (BuildContext
+                                                            context,
+                                                        AsyncSnapshot<
+                                                                List<Student>>
+                                                            snapshot) {
+                                                      if (snapshot.hasData) {
+                                                        // Existing code...
+                                                        List<Student> students =
+                                                            snapshot.data!;
+                                                        //
+
+                                                        return ListView
+                                                            .separated(
+                                                          shrinkWrap: true,
+                                                          padding:
+                                                              const EdgeInsets
+                                                                      .fromLTRB(
+                                                                  15,
+                                                                  10,
+                                                                  10,
+                                                                  10),
+                                                          scrollDirection:
+                                                              Axis.vertical,
+                                                          itemCount:
+                                                              students.length,
+                                                          itemBuilder:
+                                                              (BuildContext
+                                                                      context,
+                                                                  int index) {
+                                                            return GestureDetector(
+                                                              onTap: () async {
+                                                                print(students[
+                                                                    index]);
+                                                                await Provider.of<
+                                                                            StudentController>(
+                                                                        context,
+                                                                        listen:
+                                                                            false)
+                                                                    .viewStudentProfile(
+                                                                        students[index]
+                                                                            .studentId!);
+                                                                _studentSearch = Provider.of<
+                                                                            StudentController>(
+                                                                        context,
+                                                                        listen:
+                                                                            false)
+                                                                    .studentSearchProfile;
+                                                                setState(() {});
+                                                                Navigator.push(
+                                                                  context,
+                                                                  MaterialPageRoute(
+                                                                      builder: (context) =>
+                                                                          StudentProfileScreenStudent(
+                                                                              _studentSearch)),
+                                                                );
+                                                              },
+                                                              child: Card(
+                                                                shape:
+                                                                    RoundedRectangleBorder(
+                                                                  borderRadius:
+                                                                      BorderRadius
+                                                                          .circular(
+                                                                              10),
+                                                                ),
+                                                                color: ColorManager
+                                                                    .lightGrey,
+                                                                elevation: 0.5,
+                                                                margin: const EdgeInsets
+                                                                        .symmetric(
+                                                                    horizontal:
+                                                                        20,
+                                                                    vertical:
+                                                                        10),
+                                                                child: ListTile(
+                                                                  leading:
+                                                                      CircleAvatar(
+                                                                    backgroundImage:
+                                                                        NetworkImage(
+                                                                            _studentSearch.profileImage!),
+                                                                    backgroundColor:
+                                                                        Colors
+                                                                            .blue,
+                                                                  ),
+                                                                  title: Text(
+                                                                    students[
+                                                                            index]
+                                                                        .studentName!,
+                                                                    textAlign:
+                                                                        TextAlign
+                                                                            .right,
+                                                                    style: StylesManager
+                                                                        .medium17Black(),
+                                                                  ),
+                                                                ),
+                                                              ),
+                                                            );
+                                                          },
+                                                          separatorBuilder:
+                                                              (BuildContext
+                                                                      context,
+                                                                  int index) {
+                                                            return const SizedBox(
+                                                                width: 10);
+                                                          },
+                                                        ).build(context);
+                                                      } else {
+                                                        return const CircularProgressIndicator();
+                                                      }
+                                                    });
+                                              }),
+                                            ],
+                                          )
+                                        : Column(
+                                            crossAxisAlignment:
+                                                CrossAxisAlignment.start,
+                                            children: [
+                                              Padding(
+                                                padding:
+                                                    const EdgeInsets.fromLTRB(
+                                                        0, 15, 15, 5),
+                                                child: Text(
+                                                  'المعالجات الحالية',
+                                                  style: StylesManager
+                                                      .medium18Black(),
+                                                ),
+                                              ),
+                                              Consumer<PostController>(builder:
+                                                  (context, postController,
+                                                      child) {
+                                                return FutureBuilder<
+                                                        List<Post>>(
+                                                    future: postController
+                                                        .getPostsList(), // Use the provider here
+                                                    builder:
+                                                        (BuildContext context,
+                                                            AsyncSnapshot<
+                                                                    List<Post>>
+                                                                snapshot) {
+                                                      if (snapshot.hasData) {
+                                                        // Existing code...
+                                                        // List<Post> posts = snapshot.data!;
+                                                        final result = _search(
+                                                            snapshot.data);
+                                                        //
+                                                        return SizedBox(
+                                                          height: 41.h,
+                                                          child: ListView
+                                                              .separated(
+                                                            shrinkWrap: true,
+                                                            padding:
+                                                                const EdgeInsets
+                                                                        .fromLTRB(
+                                                                    15,
+                                                                    10,
+                                                                    10,
+                                                                    10),
+                                                            scrollDirection:
+                                                                Axis.horizontal,
+                                                            reverse: true,
+                                                            itemCount:
+                                                                result.length,
+                                                            itemBuilder:
+                                                                (BuildContext
+                                                                        context,
+                                                                    int index) {
+                                                              return GestureDetector(
+                                                                onTap: () {
+                                                                  print(result[
+                                                                      index]);
+                                                                  Navigator
+                                                                      .push(
+                                                                    context,
+                                                                    MaterialPageRoute(
+                                                                        builder:
+                                                                            (context) =>
+                                                                                PostDetails(result[index])),
+                                                                  );
+                                                                },
+                                                                child: PostCard(
+                                                                    post: result[
+                                                                        index]),
+                                                              );
+                                                            },
+                                                            separatorBuilder:
+                                                                (BuildContext
+                                                                        context,
+                                                                    int index) {
+                                                              return const SizedBox(
+                                                                  width: 10);
+                                                            },
+                                                          ).build(context),
                                                         );
-                                                      },
-                                                      child: PostCard(
-                                                          post: result[index]),
-                                                    );
-                                                  },
-                                                  separatorBuilder:
-                                                      (BuildContext context,
-                                                          int index) {
-                                                    return const SizedBox(
-                                                        width: 10);
-                                                  },
-                                                ).build(context),
-                                              );
-                                            } else {
-                                              return CircularProgressIndicator();
-                                            }
-                                          });
-                                    }),
+                                                      } else {
+                                                        return CircularProgressIndicator();
+                                                      }
+                                                    });
+                                              }),
+                                            ],
+                                          )
+                                    /* PostList(posts: _posts)*/
                                   ],
-                                )
-                          /* PostList(posts: _posts)*/
-                        ],
+                                ),
+                              ),
+                            ],
+                          ),
+                        ),
                       ),
-                    ),
-                  ],
-                ),
-              ),
-            ),
-          );
-        }),
-      ),
-    );
+                    );
+                  }),
+                );
+              } else {
+                return const CircularProgressIndicator();
+              }
+            }));
   }
 }
 
