@@ -8,17 +8,7 @@ import '../resources/constants_manager.dart';
 
 class TreatmentController extends ChangeNotifier {
   List<Treatment> _treatments = [];
-  List<String> images = [
-    ImageAssetsManager.crownsVector,
-    ImageAssetsManager.crownsVector,
-    ImageAssetsManager.crownsVector,
-    ImageAssetsManager.crownsVector,
-    ImageAssetsManager.crownsVector,
-    ImageAssetsManager.crownsVector,
-    ImageAssetsManager.crownsVector,
-    ImageAssetsManager.crownsVector,
-    ImageAssetsManager.crownsVector,
-  ];
+  List<String> images = [];
 
   Future<bool> fetchTreatments() async {
     try {
@@ -32,14 +22,20 @@ class TreatmentController extends ChangeNotifier {
       final data = jsonDecode(response.body) as List<dynamic>;
       print(data);
       final List<Treatment> loadedTreatments = [];
-      for (int j = 0; j < 9; j++) {
+
+      for (int j = 0; j < data.length; j++) {
+        final details = data[j]['details'][0];
+        print('Hererererrerreerer');
+        print(details);
         loadedTreatments.add(Treatment(
-            treatmentId: data[j]['id'],
-            treatmentName: data[j]['name'],
-            treatmentDescription: data[j]['description'],
-            treatmentImage: images[j]));
+            treatmentId: details['id'],
+            treatmentName: details['name'],
+            treatmentDescription: details['description'],
+            treatmentImage: data[j]['photo']));
       }
       _treatments = loadedTreatments;
+      print(_treatments);
+      print('Hererererrerreerer');
       return true;
     } catch (e) {
       print(e);

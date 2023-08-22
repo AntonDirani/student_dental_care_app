@@ -193,7 +193,7 @@ class _AddPostScreenState extends State<AddPostScreen> {
                     child: Padding(
                         padding: const EdgeInsets.fromLTRB(10, 10, 10, 90),
                         child: Column(
-                            crossAxisAlignment: CrossAxisAlignment.end,
+                            crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
                               Padding(
                                 padding: const EdgeInsets.fromLTRB(0, 0, 10, 0),
@@ -372,37 +372,6 @@ class _AddPostScreenState extends State<AddPostScreen> {
                                       suffixIcon:
                                           ImageAssetsManager.calendarImage,
                                       readOnly: true,
-                                      label: 'التاريخ الثاني',
-                                      onTap: () async {
-                                        pickedDate2 = await showDatePicker(
-                                          context: context,
-                                          initialDate: DateTime.now(),
-                                          firstDate: DateTime.now(),
-                                          lastDate: DateTime(2024),
-                                        );
-
-                                        if (pickedDate2 != null) {
-                                          setState(() {
-                                            _isSecondDateSelected = true;
-                                          }); // Trigger a rebuild to display the selected date
-                                        }
-                                      },
-                                      controller: TextEditingController(
-                                        text: pickedDate2
-                                                ?.toIso8601String()
-                                                .split('T')[0] ??
-                                            '',
-                                      ),
-                                    ),
-                                  ),
-                                  SizedBox(
-                                    width: 10,
-                                  ),
-                                  Expanded(
-                                    child: ComponentManager.myTextField(
-                                      suffixIcon:
-                                          ImageAssetsManager.calendarImage,
-                                      readOnly: true,
                                       label: 'التاريخ الاول',
                                       onTap: () async {
                                         pickedDate1 = await showDatePicker(
@@ -420,6 +389,37 @@ class _AddPostScreenState extends State<AddPostScreen> {
                                       },
                                       controller: TextEditingController(
                                         text: pickedDate1
+                                                ?.toIso8601String()
+                                                .split('T')[0] ??
+                                            '',
+                                      ),
+                                    ),
+                                  ),
+                                  SizedBox(
+                                    width: 10,
+                                  ),
+                                  Expanded(
+                                    child: ComponentManager.myTextField(
+                                      suffixIcon:
+                                          ImageAssetsManager.calendarImage,
+                                      readOnly: true,
+                                      label: 'التاريخ الثاني',
+                                      onTap: () async {
+                                        pickedDate2 = await showDatePicker(
+                                          context: context,
+                                          initialDate: DateTime.now(),
+                                          firstDate: DateTime.now(),
+                                          lastDate: DateTime(2024),
+                                        );
+
+                                        if (pickedDate2 != null) {
+                                          setState(() {
+                                            _isSecondDateSelected = true;
+                                          }); // Trigger a rebuild to display the selected date
+                                        }
+                                      },
+                                      controller: TextEditingController(
+                                        text: pickedDate2
                                                 ?.toIso8601String()
                                                 .split('T')[0] ??
                                             '',
@@ -454,6 +454,34 @@ class _AddPostScreenState extends State<AddPostScreen> {
                                     suffixIcon:
                                         ImageAssetsManager.calendarImage,
                                     readOnly: true,
+                                    label: 'الوقت الأول',
+                                    onTap: () async {
+                                      pickedTime1 = await showTimePicker(
+                                        context: context,
+                                        initialTime: TimeOfDay.now(),
+                                      );
+
+                                      if (pickedTime1 != null) {
+                                        setState(() {
+                                          _isFirstTimeSelected = true;
+                                        }); // Trigger a rebuild to display the selected time
+                                      }
+                                    },
+                                    controller: TextEditingController(
+                                      text: pickedTime1 != null
+                                          ? "${pickedTime1!.hour}:${pickedTime1!.minute}"
+                                          : '',
+                                    ),
+                                  ),
+                                ),
+                                SizedBox(
+                                  width: 10,
+                                ),
+                                Expanded(
+                                  child: ComponentManager.myTextField(
+                                    suffixIcon:
+                                        ImageAssetsManager.calendarImage,
+                                    readOnly: true,
                                     label: 'الوقت الثاني',
                                     onTap: () async {
                                       pickedTime2 = await showTimePicker(
@@ -474,34 +502,6 @@ class _AddPostScreenState extends State<AddPostScreen> {
                                     ),
                                   ),
                                 ),
-                                SizedBox(
-                                  width: 10,
-                                ),
-                                Expanded(
-                                  child: ComponentManager.myTextField(
-                                    suffixIcon:
-                                        ImageAssetsManager.calendarImage,
-                                    readOnly: true,
-                                    label: 'الوقت الأول',
-                                    onTap: () async {
-                                      pickedTime1 = await showTimePicker(
-                                        context: context,
-                                        initialTime: TimeOfDay.now(),
-                                      );
-
-                                      if (pickedTime1 != null) {
-                                        setState(() {
-                                          _isFirstTimeSelected = true;
-                                        }); // Trigger a rebuild to display the selected time
-                                      }
-                                    },
-                                    controller: TextEditingController(
-                                      text: pickedTime1 != null
-                                          ? "${pickedTime1!.hour}:${pickedTime1!.minute}"
-                                          : '',
-                                    ),
-                                  ),
-                                )
                               ])
                             ]))))));
   }

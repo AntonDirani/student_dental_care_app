@@ -74,7 +74,7 @@ class _PostDetailsState extends State<PostDetails> {
           ),
           content: Column(
             mainAxisSize: MainAxisSize.min,
-            crossAxisAlignment: CrossAxisAlignment.end,
+            crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               Text(
                 'اختر احد الاسباب',
@@ -362,28 +362,6 @@ class _PostDetailsState extends State<PostDetails> {
                 Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
-                    Padding(
-                      padding: const EdgeInsets.fromLTRB(20, 0, 0, 0),
-                      child: Row(
-                        mainAxisAlignment: MainAxisAlignment.end,
-                        children: [
-                          Icon(
-                            Icons.star,
-                            size: 25,
-                            color: ColorManager.star,
-                          ),
-                          const SizedBox(
-                            width: 3,
-                          ),
-                          Text(
-                            _myPost.postAvgRate!.toString(),
-                            style: StylesManager.bold18Black(),
-                            //textAlign: TextAlign.right,
-                            //  textDirection: TextDirection.rtl,
-                          ),
-                        ],
-                      ),
-                    ),
                     GestureDetector(
                       onTap: () async {
                         await Provider.of<StudentController>(context,
@@ -398,8 +376,16 @@ class _PostDetailsState extends State<PostDetails> {
                       },
                       child: Row(
                         children: [
+                          Padding(
+                            padding: const EdgeInsets.fromLTRB(0, 0, 10, 0),
+                            child: CircleAvatar(
+                              backgroundImage: NetworkImage(
+                                  _myPost.postStudentCreator!.profileImage!),
+                              radius: 25,
+                            ),
+                          ),
                           Column(
-                            crossAxisAlignment: CrossAxisAlignment.end,
+                            crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
                               Padding(
                                 padding: const EdgeInsets.fromLTRB(0, 10, 8, 0),
@@ -415,7 +401,7 @@ class _PostDetailsState extends State<PostDetails> {
                                   padding:
                                       const EdgeInsets.fromLTRB(0, 0, 6, 10),
                                   child: Row(
-                                    mainAxisAlignment: MainAxisAlignment.end,
+                                    mainAxisAlignment: MainAxisAlignment.start,
                                     children: [
                                       Text(
                                         //  values[index].postUniName!,
@@ -436,13 +422,27 @@ class _PostDetailsState extends State<PostDetails> {
                                   )),
                             ],
                           ),
-                          Padding(
-                            padding: const EdgeInsets.fromLTRB(0, 0, 10, 0),
-                            child: CircleAvatar(
-                              backgroundImage: NetworkImage(
-                                  _myPost.postStudentCreator!.profileImage!),
-                              radius: 25,
-                            ),
+                        ],
+                      ),
+                    ),
+                    Padding(
+                      padding: const EdgeInsets.fromLTRB(20, 0, 0, 0),
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.start,
+                        children: [
+                          Icon(
+                            Icons.star,
+                            size: 25,
+                            color: ColorManager.star,
+                          ),
+                          const SizedBox(
+                            width: 3,
+                          ),
+                          Text(
+                            _myPost.postAvgRate!.toString(),
+                            style: StylesManager.bold18Black(),
+                            //textAlign: TextAlign.right,
+                            //  textDirection: TextDirection.rtl,
                           ),
                         ],
                       ),
@@ -457,51 +457,8 @@ class _PostDetailsState extends State<PostDetails> {
                   ),
                 ),
                 Row(
-                  mainAxisAlignment: MainAxisAlignment.end,
+                  mainAxisAlignment: MainAxisAlignment.start,
                   children: [
-                    GestureDetector(
-                      onTap: () {
-                        _showOverlay(context);
-                      },
-                      child: Padding(
-                        padding: const EdgeInsets.fromLTRB(20, 0, 0, 0),
-                        child: Container(
-                          width: 55,
-                          height: 80,
-                          decoration: BoxDecoration(
-                            color: ColorManager.lightGrey,
-                            borderRadius: const BorderRadius.all(
-                              Radius.circular(10),
-                            ),
-                          ),
-                          child: Column(
-                            mainAxisAlignment: MainAxisAlignment.center,
-                            children: [
-                              Expanded(
-                                child: Padding(
-                                  padding: const EdgeInsets.all(5.0),
-                                  child: SvgPicture.asset(
-                                    ImageAssetsManager.treatmentVector,
-                                    color: ColorManager.primary,
-                                  ),
-                                ),
-                              ),
-                              Padding(
-                                padding: const EdgeInsets.fromLTRB(0, 0, 0, 2),
-                                child: Text(
-                                  _myPost.postTreatmentName!,
-                                  style: TextStyle(
-                                      fontFamily: FontConstants.fontFamily,
-                                      fontSize: 14,
-                                      color: ColorManager.costumeBlack),
-                                  textAlign: TextAlign.center,
-                                ),
-                              ),
-                            ],
-                          ),
-                        ),
-                      ),
-                    ),
                     Expanded(
                       child: Column(
                         children: [
@@ -527,6 +484,49 @@ class _PostDetailsState extends State<PostDetails> {
                             ),
                           ),
                         ],
+                      ),
+                    ),
+                    GestureDetector(
+                      onTap: () {
+                        _showOverlay(context);
+                      },
+                      child: Padding(
+                        padding: const EdgeInsets.fromLTRB(20, 0, 0, 0),
+                        child: Container(
+                          width: 55,
+                          height: 80,
+                          decoration: BoxDecoration(
+                            color: ColorManager.lightGrey,
+                            borderRadius: const BorderRadius.all(
+                              Radius.circular(10),
+                            ),
+                          ),
+                          child: Column(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children: [
+                              Expanded(
+                                child: Padding(
+                                  padding: const EdgeInsets.all(4.0),
+                                  child: SvgPicture.asset(
+                                    ImageAssetsManager.treatmentVector,
+                                    color: ColorManager.primary,
+                                  ),
+                                ),
+                              ),
+                              Padding(
+                                padding: const EdgeInsets.fromLTRB(0, 0, 0, 2),
+                                child: Text(
+                                  _myPost.postTreatmentName!,
+                                  style: TextStyle(
+                                      fontFamily: FontConstants.fontFamily,
+                                      fontSize: 14,
+                                      color: ColorManager.costumeBlack),
+                                  textAlign: TextAlign.center,
+                                ),
+                              ),
+                            ],
+                          ),
+                        ),
                       ),
                     ),
                   ],

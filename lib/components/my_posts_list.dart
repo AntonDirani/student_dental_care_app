@@ -194,7 +194,7 @@ class PostCard extends StatelessWidget {
                         Radius.circular(10),
                       )),
                   child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.end,
+                    crossAxisAlignment: CrossAxisAlignment.start,
                     mainAxisAlignment: MainAxisAlignment.start,
                     children: [
                       Expanded(
@@ -208,7 +208,7 @@ class PostCard extends StatelessWidget {
                         ),
                       ),
                       Column(
-                        crossAxisAlignment: CrossAxisAlignment.end,
+                        crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
                           Row(
                             children: [
@@ -221,7 +221,7 @@ class PostCard extends StatelessWidget {
                                           const EdgeInsets.fromLTRB(0, 0, 5, 0),
                                       child: Row(
                                         mainAxisAlignment:
-                                            MainAxisAlignment.end,
+                                            MainAxisAlignment.start,
                                         children: [
                                           Icon(
                                             Icons.star,
@@ -246,7 +246,7 @@ class PostCard extends StatelessWidget {
                               Expanded(
                                 flex: 3,
                                 child: Column(
-                                  crossAxisAlignment: CrossAxisAlignment.end,
+                                  crossAxisAlignment: CrossAxisAlignment.start,
                                   children: [
                                     Padding(
                                       padding:
@@ -263,7 +263,7 @@ class PostCard extends StatelessWidget {
                                           const EdgeInsets.fromLTRB(0, 0, 5, 3),
                                       child: Row(
                                         mainAxisAlignment:
-                                            MainAxisAlignment.end,
+                                            MainAxisAlignment.start,
                                         children: [
                                           Text(
                                             post.postUniName!,
@@ -300,7 +300,7 @@ class PostCard extends StatelessWidget {
                           Padding(
                             padding: const EdgeInsets.fromLTRB(0, 8, 5, 0),
                             child: Row(
-                              mainAxisAlignment: MainAxisAlignment.end,
+                              mainAxisAlignment: MainAxisAlignment.start,
                               children: [
                                 Text(
                                   //  values[index].postUniName!,
@@ -326,7 +326,7 @@ class PostCard extends StatelessWidget {
                               child: Text(
                                 post.postDescription!,
                                 style: StylesManager.regular16Grey(),
-                                textAlign: TextAlign.end,
+                                textAlign: TextAlign.start,
                               )),
                         ],
                       ),

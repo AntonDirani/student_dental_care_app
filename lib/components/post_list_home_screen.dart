@@ -101,7 +101,7 @@ class PostCard extends StatelessWidget {
               Radius.circular(10),
             )),
         child: Column(
-          crossAxisAlignment: CrossAxisAlignment.end,
+          crossAxisAlignment: CrossAxisAlignment.start,
           mainAxisAlignment: MainAxisAlignment.start,
           children: [
             Expanded(
@@ -116,7 +116,7 @@ class PostCard extends StatelessWidget {
               ),
             ),
             Column(
-              crossAxisAlignment: CrossAxisAlignment.end,
+              crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Row(
                   children: [
@@ -226,7 +226,7 @@ class PostCard extends StatelessWidget {
                     child: Text(
                       post.postDescription!,
                       style: StylesManager.regular16Grey(),
-                      textAlign: TextAlign.end,
+                      textAlign: TextAlign.start,
                     )),
               ],
             ),

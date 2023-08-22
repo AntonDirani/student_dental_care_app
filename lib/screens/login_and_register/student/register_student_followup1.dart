@@ -260,6 +260,20 @@ class _StudentRegisterFirstFollowupScreenState
                 child: Row(
                   children: [
                     Expanded(
+                        flex: 1,
+                        child: Padding(
+                          padding: const EdgeInsets.fromLTRB(0, 0, 0, 15),
+                          child: Checkbox(
+                            value: _isChecked,
+                            activeColor: ColorManager.primary,
+                            onChanged: (bool? value) {
+                              setState(() {
+                                _isChecked = value!;
+                              });
+                            },
+                          ),
+                        )),
+                    Expanded(
                       flex: 6,
                       child: RichText(
                           textDirection: TextDirection.rtl,
@@ -278,20 +292,6 @@ class _StudentRegisterFirstFollowupScreenState
                                 style: StylesManager.semiBold16Underlined())
                           ])),
                     ),
-                    Expanded(
-                        flex: 1,
-                        child: Padding(
-                          padding: const EdgeInsets.fromLTRB(0, 0, 0, 15),
-                          child: Checkbox(
-                            value: _isChecked,
-                            activeColor: ColorManager.primary,
-                            onChanged: (bool? value) {
-                              setState(() {
-                                _isChecked = value!;
-                              });
-                            },
-                          ),
-                        )),
                   ],
                 ),
               ),

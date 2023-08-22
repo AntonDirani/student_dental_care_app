@@ -78,7 +78,7 @@ class _MyPostAppointmentsState extends State<MyPostAppointments> {
                       child: SingleChildScrollView(
                         child: Column(
                           mainAxisSize: MainAxisSize.max,
-                          crossAxisAlignment: CrossAxisAlignment.end,
+                          crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
                             MyAppointmentsList(appointments: _myAppointments)
                           ],

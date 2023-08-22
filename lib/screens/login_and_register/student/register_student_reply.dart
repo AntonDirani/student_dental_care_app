@@ -77,17 +77,10 @@ class RegisterStudentReply extends StatelessWidget {
               onPressed: () async {
                 _isStudent = await provider.isStudent();
 
-                if (_isStudent) {
-                  Navigator.pushReplacement(
-                    context,
-                    MaterialPageRoute(builder: (context) => HomeScreen()),
-                  );
-                } else {
-                  Navigator.pushReplacement(
-                    context,
-                    MaterialPageRoute(builder: (context) => HomeScreen()),
-                  );
-                }
+                Navigator.pushReplacement(
+                  context,
+                  MaterialPageRoute(builder: (context) => HomeScreen()),
+                );
               },
               text: AppStrings.continueText,
             ),

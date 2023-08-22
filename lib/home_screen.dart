@@ -1,13 +1,10 @@
-// ignore_for_file: public_member_api_docs, sort_constructors_first
 // ignore_for_file: non_constant_identifier_names
 
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:provider/provider.dart';
 import 'package:responsive_sizer/responsive_sizer.dart';
-
 import 'package:student_care_app/components/home_screen_student_drawer.dart';
-import 'package:student_care_app/controllers/login_controller.dart';
 import 'package:student_care_app/controllers/posts_controller.dart';
 import 'package:student_care_app/controllers/student_controller.dart';
 import 'package:student_care_app/controllers/treatment_controller.dart';
@@ -17,12 +14,13 @@ import 'package:student_care_app/resources/font_manager.dart';
 import 'package:student_care_app/resources/styles_manager.dart';
 import 'package:student_care_app/screens/posts/add_post_screen.dart';
 import 'package:student_care_app/screens/posts/post_details.dart';
-
+import 'package:student_care_app/student_details_take_student.dart';
 import '../../components/search_bar.dart';
 import '../../controllers/location_controller.dart';
 import '../../models/location_model.dart';
 import '../../models/post_model.dart';
 import '../../models/student_model.dart';
+import 'controllers/login_controller.dart';
 
 class HomeScreen extends StatefulWidget {
   String selectedTreatment;
@@ -40,12 +38,13 @@ class HomeScreen extends StatefulWidget {
 late Future<List<Governorate>> _dropDownLocations;
 
 class _HomeScreenState extends State<HomeScreen> {
-  // String _selectedTreatmentName = '';
   late Future<List<Treatment>> _treatments;
   late Future<List<Post>> _posts;
   late Student studentSearch;
   String query = '';
-
+  late Student _studentSearch = Student(
+      profileImage:
+          'https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_1280.png');
   Widget SearchBar() => SearchWidget(
         text: query,
         hintText: 'ابحث عن طالب هنا...',
@@ -84,7 +83,7 @@ class _HomeScreenState extends State<HomeScreen> {
   }
 
   List<Post> _search(List<Post>? post) {
-    if (widget.selectedTreatment!.isNotEmpty == true) {
+    if (widget.selectedTreatment.isNotEmpty == true) {
       //search logic what you want
       return post
               ?.where((element) =>
@@ -102,19 +101,24 @@ class _HomeScreenState extends State<HomeScreen> {
   late Future<List<Governorate>> _dropDownLocations;
   late Governorate _valueLocation;
   late bool isStudent;
+
   /*late final Future<Student> _student;*/
   @override
   void initState() {
     Provider.of<StudentController>(context, listen: false).getStudentProfile();
+    /*  _student =
+        Provider.of<StudentController>(context, listen: false).getStudent();*/
     _dropDownLocations = Provider.of<LocationController>(context, listen: false)
         .getLocationsList();
     _dropDownLocations.then((locations) {
       setState(() {
-        _valueLocation = locations[0];
+        _valueLocation = locations[0]; // Initialize with the first item
       });
     });
     _treatments = Provider.of<TreatmentController>(context, listen: false)
         .getTreatmentsList();
+
+    // Get the initial list of posts, no need to use setState here
     _posts = Provider.of<PostController>(context, listen: false).getPostsList();
     Provider.of<StudentController>(context, listen: false).getMyPosts();
     isStudentFunction();
@@ -135,7 +139,6 @@ class _HomeScreenState extends State<HomeScreen> {
   Widget build(BuildContext context) {
     return SafeArea(
       child: Scaffold(
-        floatingActionButtonLocation: FloatingActionButtonLocation.startFloat,
         floatingActionButton: isStudent
             ? FloatingActionButton.small(
                 child: Icon(Icons.add),
@@ -155,6 +158,8 @@ class _HomeScreenState extends State<HomeScreen> {
             builder: (BuildContext context, AsyncSnapshot snapshot) {
               if (snapshot.hasData) {
                 List<Governorate> _values = snapshot.data;
+                // Remove this line: Governorate? _valueLocation = _values[0];
+                // if data is loaded
                 return DropdownButton(
                   value: _valueLocation,
                   style: StylesManager.medium16Black(),
@@ -170,13 +175,16 @@ class _HomeScreenState extends State<HomeScreen> {
                     },
                   ).toList(),
                   onChanged: (Governorate? value) {
+                    // This is called when the user selects an item.
                     setState(() {
-                      _valueLocation = value!;
+                      _valueLocation = value!; // Update the selected value
+                      print(_valueLocation.governorateId);
                     });
                   },
                 );
               } else {
-                return const CircularProgressIndicator();
+                // if data not loaded yet
+                return CircularProgressIndicator();
               }
             },
           ),
@@ -317,7 +325,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                       padding: const EdgeInsets.fromLTRB(
                                           0, 15, 15, 5),
                                       child: Text(
-                                        'الحالية',
+                                        'اضغط على الحساب لمشاهدة التفاصيل',
                                         style: StylesManager.medium18Black(),
                                       ),
                                     ),
@@ -346,34 +354,35 @@ class _HomeScreenState extends State<HomeScreen> {
                                                     (BuildContext context,
                                                         int index) {
                                                   return GestureDetector(
-                                                    // onTap: () async {
-                                                    //   print(students[index]);
-                                                    //   await Provider.of<
-                                                    //               StudentController>(
-                                                    //           context,
-                                                    //           listen: false)
-                                                    //       .viewStudentProfile(
-                                                    //           students[index]
-                                                    //               .studentId!);
-                                                    //   _studentSearch = Provider.of<
-                                                    //               StudentController>(
-                                                    //           context,
-                                                    //           listen: false)
-                                                    //       .studentSearchProfile;
-                                                    //   Navigator.push(
-                                                    //     context,
-                                                    //     MaterialPageRoute(
-                                                    //         builder: (context) =>
-                                                    //             StudentProfileScreenStudent(
-                                                    //                 _studentSearch)),
-                                                    //   );
-                                                    // },
+                                                    onTap: () async {
+                                                      print(students[index]);
+                                                      await Provider.of<
+                                                                  StudentController>(
+                                                              context,
+                                                              listen: false)
+                                                          .viewStudentProfile(
+                                                              students[index]
+                                                                  .studentId!);
+                                                      _studentSearch = Provider
+                                                              .of<StudentController>(
+                                                                  context,
+                                                                  listen: false)
+                                                          .studentSearchProfile;
+                                                      setState(() {});
+                                                      Navigator.push(
+                                                        context,
+                                                        MaterialPageRoute(
+                                                            builder: (context) =>
+                                                                StudentProfileScreenStudent(
+                                                                    _studentSearch)),
+                                                      );
+                                                    },
                                                     child: Card(
                                                       shape:
                                                           RoundedRectangleBorder(
                                                         borderRadius:
                                                             BorderRadius
-                                                                .circular(25),
+                                                                .circular(10),
                                                       ),
                                                       color: ColorManager
                                                           .lightGrey,
@@ -383,7 +392,11 @@ class _HomeScreenState extends State<HomeScreen> {
                                                           horizontal: 20,
                                                           vertical: 10),
                                                       child: ListTile(
-                                                        trailing: CircleAvatar(
+                                                        leading: CircleAvatar(
+                                                          backgroundImage:
+                                                              NetworkImage(
+                                                                  _studentSearch
+                                                                      .profileImage!),
                                                           backgroundColor:
                                                               Colors.blue,
                                                         ),
@@ -414,7 +427,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                   ],
                                 )
                               : Column(
-                                  // crossAxisAlignment: CrossAxisAlignment.start,
+                                  crossAxisAlignment: CrossAxisAlignment.start,
                                   children: [
                                     Padding(
                                       padding: const EdgeInsets.fromLTRB(
@@ -602,7 +615,7 @@ class PostCard extends StatelessWidget {
             Padding(
               padding: const EdgeInsets.fromLTRB(0, 8, 5, 0),
               child: Row(
-                mainAxisAlignment: MainAxisAlignment.end,
+                mainAxisAlignment: MainAxisAlignment.start,
                 children: [
                   Text(
                     //  values[index].postUniName!,
@@ -623,11 +636,12 @@ class PostCard extends StatelessWidget {
               ),
             ),
             Padding(
-                padding: EdgeInsets.symmetric(horizontal: 10, vertical: 3),
+                padding:
+                    const EdgeInsets.symmetric(horizontal: 10, vertical: 3),
                 child: Text(
                   post.postDescription!,
                   style: StylesManager.regular16Grey(),
-                  textAlign: TextAlign.end,
+                  textAlign: TextAlign.start,
                 )),
           ],
         ),

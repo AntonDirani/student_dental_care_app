@@ -56,7 +56,7 @@ class _HomeScreenStudentDrawerState extends State<HomeScreenStudentDrawer> {
                     } else {
                       Student _theStudent = snapshot.data!;
                       return Column(
-                        crossAxisAlignment: CrossAxisAlignment.end,
+                        crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
                           GestureDetector(
                             onTap: () {

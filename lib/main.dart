@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:provider/provider.dart';
-import 'package:shared_preferences/shared_preferences.dart';
 import 'package:student_care_app/controllers/diagnose_controller.dart';
 import 'package:student_care_app/controllers/location_controller.dart';
 import 'package:student_care_app/controllers/login_controller.dart';

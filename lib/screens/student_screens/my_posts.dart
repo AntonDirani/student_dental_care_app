@@ -66,7 +66,7 @@ class _StudentMyPostsState extends State<StudentMyPosts> {
                   children: [
                     Expanded(
                       child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.end,
+                        crossAxisAlignment: CrossAxisAlignment.start,
                         children: [MyPostList(posts: _myPosts)],
                       ),
                     ),

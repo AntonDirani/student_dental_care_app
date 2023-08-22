@@ -22,7 +22,7 @@ class AppointmentInfoCard extends StatelessWidget {
         children: [
           Text('data'),
           Row(
-            mainAxisAlignment: MainAxisAlignment.end,
+            mainAxisAlignment: MainAxisAlignment.start,
             children: [
               Text(
                 //  values[index].postUniName!,

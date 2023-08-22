@@ -18,7 +18,10 @@ class StudentController extends ChangeNotifier {
   late List<Appointment> _currentPostAppointments;
   List<Student> _studentsFiltered = [];
   Student _student = Student();
+  late Student _studentSearchProfile;
   String _apiResponseDelete = '';
+
+  Student get studentSearchProfile => _studentSearchProfile;
 
   Student get student => _student;
 
@@ -449,13 +452,46 @@ class StudentController extends ChangeNotifier {
         List<Student> tempStudentsList = [];
         for (int i = 0; i < dataStudent.length; i++) {
           tempStudentsList.add(Student(
-            studentId: dataStudent[i]['id'],
-            studentName: dataStudent[i]['name'],
+            profileImage: dataStudent[i]['photo_name'],
+            studentId: dataStudent[i]['student']['id'],
+            studentName: dataStudent[i]['student']['name'],
           ));
         }
 
         _studentsFiltered = tempStudentsList;
       }
+      return true;
+    } catch (e) {
+      return false;
+    }
+  }
+
+  Future<bool> viewStudentProfile(int studentId) async {
+    try {
+      var urlStudent =
+          '${AppConstants.mainUrl}/view_student_profile/$studentId';
+      final responseStudent = await http.get(
+        Uri.parse(urlStudent),
+        headers: {
+          'Content-Type': 'application/json; charset=UTF-8',
+        },
+      );
+
+      final dataStudent = jsonDecode(responseStudent.body);
+      print(dataStudent);
+      final Student tempPostStudent;
+
+      final info0Student = dataStudent['0'] as List<dynamic>;
+      final info1Student = dataStudent['1'] as List<dynamic>;
+      final imageStudentName = dataStudent['profile_photo'];
+      tempPostStudent = Student(
+          studentName: info0Student[0]['name'],
+          profileImage: '${AppConstants.mainUrl}/show_image/$imageStudentName',
+          studentPhoneNumber: info0Student[0]['phone_number'],
+          studentUniversityId: info1Student[0]['university_id'],
+          studentYear: info1Student[0]['studying_year']);
+
+      _studentSearchProfile = tempPostStudent;
       return true;
     } catch (e) {
       return false;
