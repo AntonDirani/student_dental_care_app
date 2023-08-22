@@ -109,6 +109,7 @@ class _AddPostScreenState extends State<AddPostScreen> {
                                   ),
                                 );
                               } else if (studentController.isApiSuccessful) {
+                                _selectedTreatmentId = null;
                                 return Dialog(
                                   child: Padding(
                                     padding: EdgeInsets.all(8.0),
@@ -176,7 +177,7 @@ class _AddPostScreenState extends State<AddPostScreen> {
                               lastDate: finalDate2!);
                       ();
                     })
-                : SizedBox.shrink(),
+                : const SizedBox.shrink(),
             appBar: AppBar(
               centerTitle: true,
               elevation: 0,
@@ -209,19 +210,19 @@ class _AddPostScreenState extends State<AddPostScreen> {
                                     AsyncSnapshot<List<Treatment>> snapshot) {
                                   if (snapshot.connectionState ==
                                       ConnectionState.waiting) {
-                                    return CircularProgressIndicator();
+                                    return const CircularProgressIndicator();
                                   } else if (snapshot.hasError) {
                                     return Text('Error: ${snapshot.error}');
                                   } else if (!snapshot.hasData ||
                                       snapshot.data!.isEmpty) {
-                                    return Text('No data available.');
+                                    return const Text('لا يوجد معلومات للعرض');
                                   } else {
                                     List<Treatment> treatments = snapshot.data!;
                                     return SizedBox(
                                       height: 150,
                                       child: ListView.separated(
                                         reverse: true,
-                                        padding: EdgeInsets.all(8.0),
+                                        padding: const EdgeInsets.all(8.0),
                                         scrollDirection: Axis.horizontal,
                                         itemCount: treatments.length,
                                         itemBuilder:
@@ -254,46 +255,47 @@ class _AddPostScreenState extends State<AddPostScreen> {
                                                 mainAxisAlignment:
                                                     MainAxisAlignment.center,
                                                 children: [
-                                                  Padding(
-                                                    padding:
-                                                        const EdgeInsets.all(
-                                                            8.0),
-                                                    child: SvgPicture.asset(
-                                                      treatment.treatmentImage!,
-                                                      width: 40,
-                                                      color: treatment
-                                                                  .isSelected ??
-                                                              false
-                                                          ? Colors.white
-                                                          : null,
-                                                    ),
-                                                  ),
-                                                  SizedBox(
-                                                    height:
-                                                        MediaQuery.of(context)
-                                                                .size
-                                                                .height /
-                                                            90,
-                                                  ),
-                                                  Padding(
-                                                    padding: const EdgeInsets
-                                                            .symmetric(
-                                                        horizontal: 2),
-                                                    child: Text(
-                                                      treatment.treatmentName!,
-                                                      style: TextStyle(
-                                                        fontFamily:
-                                                            FontConstants
-                                                                .fontFamily,
-                                                        fontSize: 14,
+                                                  Expanded(
+                                                    flex: 2,
+                                                    child: Padding(
+                                                      padding: const EdgeInsets
+                                                              .symmetric(
+                                                          horizontal: 10),
+                                                      child: SvgPicture.asset(
+                                                        treatment
+                                                            .treatmentImage!,
+                                                        // width: 40,
                                                         color: treatment
                                                                     .isSelected ??
                                                                 false
                                                             ? Colors.white
-                                                            : Colors.black,
+                                                            : null,
                                                       ),
-                                                      textAlign:
-                                                          TextAlign.center,
+                                                    ),
+                                                  ),
+                                                  Expanded(
+                                                    flex: 3,
+                                                    child: Padding(
+                                                      padding: const EdgeInsets
+                                                              .symmetric(
+                                                          horizontal: 2),
+                                                      child: Text(
+                                                        treatment
+                                                            .treatmentName!,
+                                                        style: TextStyle(
+                                                          fontFamily:
+                                                              FontConstants
+                                                                  .fontFamily,
+                                                          fontSize: 14,
+                                                          color: treatment
+                                                                      .isSelected ??
+                                                                  false
+                                                              ? Colors.white
+                                                              : Colors.black,
+                                                        ),
+                                                        textAlign:
+                                                            TextAlign.center,
+                                                      ),
                                                     ),
                                                   ),
                                                 ],
@@ -370,7 +372,7 @@ class _AddPostScreenState extends State<AddPostScreen> {
                                       suffixIcon:
                                           ImageAssetsManager.calendarImage,
                                       readOnly: true,
-                                      label: 'التاريخ الاول',
+                                      label: 'التاريخ الثاني',
                                       onTap: () async {
                                         pickedDate2 = await showDatePicker(
                                           context: context,

@@ -237,6 +237,14 @@ class StylesManager {
     );
   }
 
+  static TextStyle regular16White() {
+    return StylesManager.getTextStyle(
+      fontSize: FontSize.s16,
+      fontWeight: FontWeightManager.regular,
+      color: ColorManager.white,
+    );
+  }
+
   static TextStyle light18() {
     return StylesManager.getTextStyle(
       fontSize: FontSize.s18,

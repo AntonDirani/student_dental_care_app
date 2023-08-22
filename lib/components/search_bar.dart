@@ -42,11 +42,11 @@ class _SearchWidgetState extends State<SearchWidget> {
         color: ColorManager.lightGrey,
       ),
       child: TextField(
+        textDirection: TextDirection.rtl,
         textAlignVertical: TextAlignVertical.center,
         // textAlign: TextAlign.end,
         controller: controller,
         decoration: InputDecoration(
-          contentPadding: EdgeInsets.all(0),
           suffixIcon:
               Icon(Icons.search, color: ColorManager.primary.withOpacity(0.8)),
           // prefixIcon: widget.text.isNotEmpty

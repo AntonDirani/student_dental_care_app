@@ -1,6 +1,9 @@
+import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:provider/provider.dart';
+import 'package:student_care_app/home_screen.dart';
+import 'package:student_care_app/screens/diagnose/diagnose.dart';
 import '../../../controllers/treatment_controller.dart';
 import '../../../models/treatment_model.dart';
 import '../../../resources/assets_manager.dart';
@@ -103,26 +106,54 @@ class _ChooseTreatmentState extends State<ChooseTreatment> {
                   ).build(context);
                 } else {
                   // if data not loaded yet
-                  return CircularProgressIndicator();
+                  return const CircularProgressIndicator();
                 }
               },
             ),
-            Padding(
-              padding: const EdgeInsets.fromLTRB(0, 5, 0, 0),
-              child: RichText(
-                  textDirection: TextDirection.rtl,
-                  text: TextSpan(children: [
-                    TextSpan(
-                        text: 'إستخدامك ل', style: StylesManager.light16()),
-                    TextSpan(
-                        text: '  Student Care ', style: StylesManager.bold16()),
-                    TextSpan(
-                        text: 'يعني موافقتك على ',
-                        style: StylesManager.light16()),
-                    TextSpan(
-                        text: 'الشروط و الأحكام ',
-                        style: StylesManager.semiBold16Underlined())
-                  ])),
+            RichText(
+              textAlign: TextAlign.center,
+              text: TextSpan(
+                children: [
+                  TextSpan(
+                    text:
+                        'في حال عدم معرفة المشكلة حاليا يمكنك اللجوء الى نظام ',
+                    style: StylesManager.light16(),
+                  ),
+                  TextSpan(
+                    text: 'التشخيص الذاتي ',
+                    style: StylesManager.semiBold16Underlined()
+                        .copyWith(color: Colors.green),
+                    recognizer: TapGestureRecognizer()
+                      ..onTap = () {
+                        Navigator.pushReplacement(
+                          context,
+                          MaterialPageRoute(
+                            builder: (context) => Diagnose(),
+                          ),
+                        );
+                      },
+                  ),
+                  TextSpan(
+                    text: 'الخاص بنا او ',
+                    style: StylesManager.light16(),
+                  ),
+                  TextSpan(
+                    text: 'التخطي',
+                    style: StylesManager.semiBold16Underlined().copyWith(
+                      color: Colors.red,
+                    ),
+                    recognizer: TapGestureRecognizer()
+                      ..onTap = () {
+                        Navigator.pushReplacement(
+                          context,
+                          MaterialPageRoute(
+                            builder: (context) => const HomeScreen(),
+                          ),
+                        );
+                      },
+                  ),
+                ],
+              ),
             )
           ],
         ),

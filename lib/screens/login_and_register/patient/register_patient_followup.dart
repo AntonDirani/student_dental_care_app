@@ -8,6 +8,7 @@ import 'package:student_care_app/controllers/location_controller.dart';
 import 'package:student_care_app/controllers/patient_controller.dart';
 
 import 'package:intl/intl.dart';
+import 'package:student_care_app/screens/login_and_register/patient/choose_treatment.dart';
 import '../../../home_screen.dart';
 import '../../../models/location_model.dart';
 import '../../../resources/assets_manager.dart';
@@ -176,7 +177,7 @@ class _PatientRegisterScreenFollowUpState
                                           context,
                                           MaterialPageRoute(
                                               builder: (context) =>
-                                                  HomeScreen()),
+                                                  const ChooseTreatment()),
                                         );
                                       } else {
                                         Future.delayed(

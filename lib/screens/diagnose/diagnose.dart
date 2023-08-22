@@ -38,7 +38,6 @@ class _DiagnoseState extends State<Diagnose> {
 
   @override
   void initState() {
-    // TODO: implement initState
     super.initState();
     controller = PageController(initialPage: 0);
   }
@@ -81,7 +80,7 @@ class _DiagnoseState extends State<Diagnose> {
                       Padding(
                         padding: const EdgeInsets.only(right: 20, left: 5),
                         child: Row(
-                          mainAxisAlignment: MainAxisAlignment.end,
+                          mainAxisAlignment: MainAxisAlignment.start,
                           children: [
                             Flexible(
                               child: Text(
@@ -97,16 +96,8 @@ class _DiagnoseState extends State<Diagnose> {
                       Column(
                         children: [
                           Row(
-                            mainAxisAlignment: MainAxisAlignment.end,
+                            mainAxisAlignment: MainAxisAlignment.start,
                             children: [
-                              Text('${currentPageIndex + 1}'),
-                              Container(
-                                width: 48,
-                                height: 48,
-                                child: CachedNetworkImage(
-                                  imageUrl: questions[currentPageIndex].icon!,
-                                ),
-                              ),
                               Container(
                                 width: MediaQuery.sizeOf(context).width * 0.2,
                                 child: RadioListTile(
@@ -139,6 +130,13 @@ class _DiagnoseState extends State<Diagnose> {
                                   },
                                 ),
                               ),
+                              Container(
+                                width: 48,
+                                height: 48,
+                                child: CachedNetworkImage(
+                                  imageUrl: questions[currentPageIndex].icon!,
+                                ),
+                              ),
                             ],
                           ),
                           isNotAnswered
@@ -146,7 +144,7 @@ class _DiagnoseState extends State<Diagnose> {
                                   padding: const EdgeInsets.symmetric(
                                       horizontal: 20),
                                   child: Row(
-                                    mainAxisAlignment: MainAxisAlignment.end,
+                                    mainAxisAlignment: MainAxisAlignment.start,
                                     children: [
                                       Animate(
                                         effects: const [ShakeEffect()],
@@ -165,6 +163,7 @@ class _DiagnoseState extends State<Diagnose> {
                         ],
                       ),
                       Row(
+                        mainAxisAlignment: MainAxisAlignment.end,
                         children: [
                           Padding(
                             padding: const EdgeInsets.only(left: 40),

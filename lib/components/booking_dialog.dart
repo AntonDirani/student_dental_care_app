@@ -1,17 +1,9 @@
-import 'dart:convert';
-
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart'; // Import this for TextEditingController
-import 'package:fluttertoast/fluttertoast.dart';
+
 import 'package:provider/provider.dart';
-import 'package:shared_preferences/shared_preferences.dart';
 import 'package:student_care_app/models/post_model.dart';
 import 'package:student_care_app/resources/styles_manager.dart';
-import 'package:http/http.dart' as http;
-
 import '../controllers/patient_controller.dart';
-import '../controllers/student_controller.dart';
-import '../resources/constants_manager.dart';
 
 class BookingDialog extends StatefulWidget {
   final int postId;
@@ -48,7 +40,12 @@ class _BookingDialogState extends State<BookingDialog> {
         children: [
           TextFormField(
             readOnly: true,
-            decoration: const InputDecoration(labelText: 'Date'),
+            decoration: InputDecoration(
+              label: Align(
+                alignment: Alignment.centerRight,
+                child: Text('تاريخ الموعد', style: StylesManager.medium16()),
+              ),
+            ),
             onTap: () async {
               pickedDate = await showDatePicker(
                 context: context,
@@ -66,10 +63,15 @@ class _BookingDialogState extends State<BookingDialog> {
               text: pickedDate?.toIso8601String().split('T')[0] ?? '',
             ),
           ),
-          SizedBox(height: 10),
+          const SizedBox(height: 10),
           TextFormField(
             readOnly: true,
-            decoration: InputDecoration(labelText: 'Time'),
+            decoration: InputDecoration(
+              label: Align(
+                alignment: Alignment.centerRight,
+                child: Text('الوقت', style: StylesManager.medium16()),
+              ),
+            ),
             onTap: () async {
               pickedTime = await showTimePicker(
                   context: context,
@@ -98,7 +100,7 @@ class _BookingDialogState extends State<BookingDialog> {
 
               // Handle appointment booking logic with the iso8601DateTime
               finalDate = iso8601DateTime;
-              print(iso8601DateTime);
+              //print(iso8601DateTime);
             }
             showDialog(
               context: context,
@@ -121,7 +123,7 @@ class _BookingDialogState extends State<BookingDialog> {
                     } else if (patientController.isApiSuccessful) {
                       return Dialog(
                         child: Padding(
-                          padding: EdgeInsets.all(8.0),
+                          padding: const EdgeInsets.all(8.0),
                           child: Row(
                             mainAxisSize: MainAxisSize.min,
                             mainAxisAlignment: MainAxisAlignment.center,
@@ -164,7 +166,7 @@ class _BookingDialogState extends State<BookingDialog> {
                                 onPressed: () {
                                   Navigator.pop(context);
                                 },
-                                child: Text('Close'),
+                                child: const Text('إغلاق'),
                               ),
                             ],
                           ),

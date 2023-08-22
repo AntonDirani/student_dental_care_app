@@ -35,5 +35,6 @@ class ImageAssetsManager {
   static const String chooseTreatmentVector = "$imagePath/choose.svg";
   static const String treatmentVector = "$imagePath/treatment.svg";
 
+  static const String postIcon = "$imagePath/post.svg";
   static const String defaultImage = "$imagePath/default.jpg";
 }

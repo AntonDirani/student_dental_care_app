@@ -1,8 +1,25 @@
 import 'package:flutter/material.dart';
+import 'package:student_care_app/controllers/university_controller.dart';
 import 'package:student_care_app/resources/color_manager.dart';
 import 'package:student_care_app/resources/styles_manager.dart';
+import 'package:url_launcher/url_launcher.dart';
+import 'package:url_launcher/url_launcher_string.dart';
+import 'models/post_model.dart';
 
 class StudentProfileScreen extends StatelessWidget {
+  StudentProfileScreen(Post post) : _post = post;
+
+  final Post _post;
+  void _launchPhoneDialer() async {
+    final phoneNumber = _post.postStudentCreator!.studentPhoneNumber!;
+    final url = 'tel:$phoneNumber';
+    if (await canLaunchUrlString(url)) {
+      await launchUrlString(url);
+    } else {
+      throw 'Could not launch $url';
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -18,12 +35,13 @@ class StudentProfileScreen extends StatelessWidget {
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
             CircleAvatar(
+              backgroundImage:
+                  NetworkImage(_post.postStudentCreator!.profileImage!),
               radius: 80,
-              backgroundImage: AssetImage('assets/student_picture.jpg'),
             ),
             SizedBox(height: 20),
             Text(
-              'الياس فهد الخير',
+              _post.postStudentName!,
               style: StylesManager.bold20Black(),
             ),
             Text(
@@ -33,15 +51,21 @@ class StudentProfileScreen extends StatelessWidget {
             SizedBox(height: 20),
             ProfileInfoCard(
               icon: Icons.school,
-              text: 'جامعة دمشق',
+              text: _post.postUniName!,
             ),
             ProfileInfoCard(
               icon: Icons.calendar_today,
-              text: 'السنة الرابعة',
+              text: UniversityController.yearString[
+                  int.parse(_post.postStudentCreator!.studentYear!)],
             ),
-            ProfileInfoCard(
-              icon: Icons.phone,
-              text: '+963 935487558',
+            GestureDetector(
+              onTap: () {
+                _launchPhoneDialer();
+              },
+              child: ProfileInfoCard(
+                icon: Icons.phone,
+                text: _post.postStudentCreator!.studentPhoneNumber!,
+              ),
             ),
           ],
         ),
@@ -60,7 +84,7 @@ class ProfileInfoCard extends StatelessWidget {
   Widget build(BuildContext context) {
     return Card(
       shape: RoundedRectangleBorder(
-        borderRadius: BorderRadius.circular(30),
+        borderRadius: BorderRadius.circular(25),
       ),
       color: ColorManager.lightGrey,
       elevation: 0.5,
