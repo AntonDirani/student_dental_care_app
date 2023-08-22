@@ -15,9 +15,11 @@ class Post {
   String? postTreatmentDescription;
   int? postAvgRate;
   Student? postStudentCreator;
+  String? postLocation;
 
   Post(
-      {this.postStudentCreator,
+      {this.postLocation,
+      this.postStudentCreator,
       this.postTreatmentDescription,
       this.postFirstDate,
       this.postFirstTime,

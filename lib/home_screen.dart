@@ -25,6 +25,7 @@ import 'controllers/login_controller.dart';
 
 class HomeScreen extends StatefulWidget {
   String selectedTreatment;
+  String selectedLocation = '';
   int selectedIndex;
   HomeScreen({
     Key? key,
@@ -79,17 +80,48 @@ class _HomeScreenState extends State<HomeScreen> {
   }
 
   List<Post> _search(List<Post>? post) {
-    if (widget.selectedTreatment.isNotEmpty == true) {
-      //search logic what you want
+    if (widget.selectedTreatment.isNotEmpty &&
+        widget.selectedLocation.isNotEmpty) {
+      // Both treatment and location are selected, apply both filters
+      return post
+              ?.where((element) =>
+                  element.postTreatmentName!.contains(widget.selectedTreatment))
+              .where((element) =>
+                  element.postLocation!.contains(widget.selectedLocation))
+              .toList() ??
+          <Post>[];
+    } else if (widget.selectedTreatment.isNotEmpty) {
+      // Only treatment is selected, filter by treatment
       return post
               ?.where((element) =>
                   element.postTreatmentName!.contains(widget.selectedTreatment))
               .toList() ??
           <Post>[];
+    } else if (widget.selectedLocation.isNotEmpty) {
+      // Only location is selected, filter by location
+      return post
+              ?.where((element) =>
+                  element.postLocation!.contains(widget.selectedLocation))
+              .toList() ??
+          <Post>[];
+    } else {
+      // No filters selected, return all posts
+      return post ?? <Post>[];
+    }
+  }
+
+  /* List<Post> _searchLocation(List<Post>? post) {
+    if (widget.selectedTreatment.isNotEmpty == true) {
+      //search logic what you want
+      return post
+              ?.where((element) =>
+                  element.postLocation!.contains(widget.selectedTreatment))
+              .toList() ??
+          <Post>[];
     }
 
     return post ?? <Post>[];
-  }
+  }*/
 
   late final int index;
   late List<Treatment> treatments;
@@ -175,6 +207,8 @@ class _HomeScreenState extends State<HomeScreen> {
                     setState(() {
                       _valueLocation = value!; // Update the selected value
                       print(_valueLocation.governorateId);
+                      print(_valueLocation.governorateName);
+                      widget.selectedLocation = value.governorateName!;
                     });
                   },
                 );
