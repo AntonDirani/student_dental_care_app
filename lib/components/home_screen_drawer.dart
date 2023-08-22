@@ -27,7 +27,8 @@ class HomeScreenDrawer extends StatelessWidget {
                         Navigator.push(
                           context,
                           MaterialPageRoute(
-                              builder: (context) => const ChooseTreatment()),
+                            builder: (context) => const ChooseTreatment(),
+                          ),
                         );
                       },
                       child: CircleAvatar(
@@ -35,12 +36,12 @@ class HomeScreenDrawer extends StatelessWidget {
                         child: Image.asset(ImageAssetsManager.profileImage),
                       ),
                     ),
-                    const SizedBox(
-                      height: 10,
-                    ),
-                    Text(
-                      'شادي حكيمي',
-                      style: StylesManager.medium18White(),
+                    const SizedBox(height: 10),
+                    Flexible(
+                      child: Text(
+                        'شادي حكيمي',
+                        style: StylesManager.medium18White(),
+                      ),
                     )
                   ],
                 ),

@@ -22,14 +22,7 @@ class HomeScreenStudentDrawer extends StatefulWidget {
 
 class _HomeScreenStudentDrawerState extends State<HomeScreenStudentDrawer> {
   _HomeScreenStudentDrawerState(/*Student student*/) /*: _student = student*/;
-  late Future<Student> _student;
-
-  @override
-  void initState() {
-    _student =
-        Provider.of<StudentController>(context, listen: false).getStudent();
-    super.initState();
-  }
+  late Student _student;
 
   @override
   Widget build(BuildContext context) {
@@ -43,16 +36,16 @@ class _HomeScreenStudentDrawerState extends State<HomeScreenStudentDrawer> {
               child: Padding(
                 padding: const EdgeInsets.all(20.0),
                 child: FutureBuilder<Student>(
-                  future:
-                      _student, // Replace with your future method that fetches treatments
+                  future: Provider.of<StudentController>(context, listen: false)
+                      .getStudent(),
                   builder:
                       (BuildContext context, AsyncSnapshot<Student> snapshot) {
                     if (snapshot.connectionState == ConnectionState.waiting) {
-                      return CircularProgressIndicator();
+                      return const CircularProgressIndicator();
                     } else if (snapshot.hasError) {
                       return Text('Error: ${snapshot.error}');
                     } else if (!snapshot.hasData) {
-                      return Text('No data available.');
+                      return const Text('No data available.');
                     } else {
                       Student _theStudent = snapshot.data!;
                       return Column(

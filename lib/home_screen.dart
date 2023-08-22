@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:provider/provider.dart';
 import 'package:responsive_sizer/responsive_sizer.dart';
+import 'package:student_care_app/components/home_screen_drawer.dart';
 import 'package:student_care_app/components/home_screen_student_drawer.dart';
 import 'package:student_care_app/controllers/posts_controller.dart';
 import 'package:student_care_app/controllers/student_controller.dart';
@@ -65,13 +66,8 @@ class _HomeScreenState extends State<HomeScreen> {
         .getStudentProfile();
     final postController = Provider.of<PostController>(context, listen: false);
     Provider.of<StudentController>(context, listen: false).getMyPosts();
-    // Fetch the updated posts
     await postController.getPosts();
-
-    // Now that the posts are updated, trigger a rebuild of the widget
     setState(() {});
-
-    // Show a snack-bar or toast to inform the user that the refresh is complete
     ScaffoldMessenger.of(context).showSnackBar(
       SnackBar(
           backgroundColor: ColorManager.primary,
@@ -183,19 +179,20 @@ class _HomeScreenState extends State<HomeScreen> {
                   },
                 );
               } else {
-                // if data not loaded yet
-                return CircularProgressIndicator();
+                return const CircularProgressIndicator();
               }
             },
           ),
           iconTheme: const IconThemeData(
-            size: 40, //change size on your need
+            size: 40,
             color: Color(0xff242837),
           ),
           backgroundColor: Colors.transparent,
           elevation: 0,
         ),
-        endDrawer: HomeScreenStudentDrawer(/*_student*/),
+        endDrawer: isStudent
+            ? HomeScreenStudentDrawer(/*_student*/)
+            : HomeScreenDrawer(),
         body: Builder(builder: (context) {
           return RefreshIndicator(
             onRefresh: _refreshList,

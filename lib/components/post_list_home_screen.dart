@@ -23,14 +23,12 @@ class PostList extends StatefulWidget {
 
 class _PostListState extends State<PostList> {
   final Future<List<Post>> _posts;
-  //late Future<List<Post>> _loadedPosts; // Initialize it here
 
   _PostListState(Future<List<Post>> posts) : _posts = posts;
 
   @override
   void initState() {
     super.initState();
-    //_loadedPosts = _posts;
   }
 
   @override
