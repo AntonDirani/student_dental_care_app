@@ -17,7 +17,7 @@ class AppStrings {
   static const youDontHaveAnAccountText = 'ليس لديك حساب؟';
   static const registerAsStudentText = 'حساب لطالب طب أسنان';
   static const registerAsPatientText = 'حساب لمريض علاج سني';
-  static const registerText = '!مرحبا بك في منصتنا'
+  static const registerText = '! مرحبا بك في منصتنا'
       '\nرجاءاً قم بتجديد نوع الحساب الذي تريد إنشاءه';
 
   static const enterInfoText = 'الرجاء إدخال البيانات المطلوبة';

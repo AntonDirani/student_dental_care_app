@@ -50,7 +50,7 @@ class _PatientRegisterScreenState extends State<PatientRegisterScreen> {
         child: Padding(
           padding: const EdgeInsets.all(AppPadding.p33),
           child: Column(
-              crossAxisAlignment: CrossAxisAlignment.end,
+              crossAxisAlignment: CrossAxisAlignment.start,
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
                 Flexible(
@@ -74,22 +74,6 @@ class _PatientRegisterScreenState extends State<PatientRegisterScreen> {
                   children: [
                     Expanded(
                       child: Padding(
-                        padding: const EdgeInsets.fromLTRB(0, 0, 6, 0),
-                        child: ComponentManager.myTextFieldNoSuffix(
-                          onChanged: (_) => setState(() {
-                            _secondNameSubmitted = true;
-                          }),
-                          errorText: _secondNameSubmitted
-                              ? ValidationManager.validateName(
-                                  _secondNameController.value.text)
-                              : null,
-                          controller: _secondNameController,
-                          label: AppStrings.enterYourSecondNameText,
-                        ),
-                      ),
-                    ),
-                    Expanded(
-                      child: Padding(
                         padding: const EdgeInsets.fromLTRB(6, 0, 0, 0),
                         child: ComponentManager.myTextFieldNoSuffix(
                           onChanged: (_) => setState(() {
@@ -101,6 +85,22 @@ class _PatientRegisterScreenState extends State<PatientRegisterScreen> {
                               : null,
                           controller: _firstNameController,
                           label: AppStrings.enterYourFirstNameText,
+                        ),
+                      ),
+                    ),
+                    Expanded(
+                      child: Padding(
+                        padding: const EdgeInsets.fromLTRB(0, 0, 6, 0),
+                        child: ComponentManager.myTextFieldNoSuffix(
+                          onChanged: (_) => setState(() {
+                            _secondNameSubmitted = true;
+                          }),
+                          errorText: _secondNameSubmitted
+                              ? ValidationManager.validateName(
+                                  _secondNameController.value.text)
+                              : null,
+                          controller: _secondNameController,
+                          label: AppStrings.enterYourSecondNameText,
                         ),
                       ),
                     ),
@@ -119,55 +119,57 @@ class _PatientRegisterScreenState extends State<PatientRegisterScreen> {
                     label: AppStrings.emailText,
                     suffixIcon: ImageAssetsManager.emailIcon),
                 Padding(
-                    padding: const EdgeInsets.fromLTRB(0, 10, 0, 0),
-                    child: SizedBox(
-                      height: AppSize.s7_5,
-                      child: TextFormField(
-                        onChanged: (_) => setState(() {
-                          _password1Submitted = true;
-                        }),
-                        controller: _password1Controller,
-                        decoration: InputDecoration(
-                          errorStyle: StylesManager.regular14(),
-                          errorText: _password1Submitted
-                              ? ValidationManager.validatePassword(
-                                  _password1Controller.value.text)
-                              : null,
-                          suffixIconConstraints:
-                              const BoxConstraints(maxWidth: 35, maxHeight: 20),
-                          prefixIcon: IconButton(
-                            icon: isPasswordVisible
-                                ? const Icon(
-                                    Icons.visibility_off,
-                                    color: Colors.grey,
-                                  )
-                                : const Icon(
-                                    Icons.visibility,
-                                    color: Colors.grey,
-                                  ),
-                            onPressed: () => setState(
-                                () => isPasswordVisible = !isPasswordVisible),
-                          ),
-                          suffixIcon: Padding(
-                            padding: const EdgeInsets.fromLTRB(0, 0, 15, 0),
-                            child: Image.asset(ImageAssetsManager.passwordIcon),
-                          ),
-                          enabledBorder: OutlineInputBorder(
-                              borderSide:
-                                  BorderSide(color: ColorManager.lightGrey),
-                              borderRadius:
-                                  BorderRadius.circular(AppSize.s3_5)),
-                          label: Align(
-                            alignment: Alignment.centerRight,
-                            child: Text(AppStrings.passwordText,
-                                style: StylesManager.medium16()),
-                          ),
-                          filled: true,
+                  padding: const EdgeInsets.fromLTRB(0, 10, 0, 0),
+                  child: SizedBox(
+                    height: AppSize.s7_5,
+                    child: TextFormField(
+                      onChanged: (_) => setState(() {
+                        _password1Submitted = true;
+                      }),
+                      controller: _password1Controller,
+                      decoration: InputDecoration(
+                        errorStyle: StylesManager.regular14(),
+                        errorText: _password1Submitted
+                            ? ValidationManager.validatePassword(
+                                _password1Controller.value.text)
+                            : null,
+                        prefixIconConstraints:
+                            const BoxConstraints(maxWidth: 35, maxHeight: 20),
+                        suffixIcon: IconButton(
+                          icon: isPasswordVisible
+                              ? const Icon(
+                                  Icons.visibility_off,
+                                  color: Colors.grey,
+                                )
+                              : const Icon(
+                                  Icons.visibility,
+                                  color: Colors.grey,
+                                ),
+                          onPressed: () => setState(
+                              () => isPasswordVisible = !isPasswordVisible),
                         ),
-                        textInputAction: TextInputAction.done,
-                        obscureText: isPasswordVisible,
+                        prefixIcon: Padding(
+                          padding: const EdgeInsets.only(right: 10, left: 5),
+                          child: Image.asset(ImageAssetsManager.passwordIcon),
+                        ),
+                        enabledBorder: OutlineInputBorder(
+                            borderSide:
+                                BorderSide(color: ColorManager.lightGrey),
+                            borderRadius: BorderRadius.circular(AppSize.s3_5)),
+                        label: Align(
+                          alignment: Alignment.centerRight,
+                          child: Text(
+                            AppStrings.passwordText,
+                            style: StylesManager.medium16(),
+                          ),
+                        ),
+                        filled: true,
                       ),
-                    )),
+                      textInputAction: TextInputAction.done,
+                      obscureText: isPasswordVisible,
+                    ),
+                  ),
+                ),
                 Padding(
                     padding: const EdgeInsets.fromLTRB(0, 10, 0, 0),
                     child: SizedBox(
@@ -184,9 +186,9 @@ class _PatientRegisterScreenState extends State<PatientRegisterScreen> {
                                   _password2Controller.value.text,
                                   _password1Controller.value.text)
                               : null,
-                          suffixIconConstraints:
+                          prefixIconConstraints:
                               const BoxConstraints(maxWidth: 35, maxHeight: 20),
-                          prefixIcon: IconButton(
+                          suffixIcon: IconButton(
                             icon: isPasswordVisible
                                 ? const Icon(
                                     Icons.visibility_off,
@@ -199,8 +201,8 @@ class _PatientRegisterScreenState extends State<PatientRegisterScreen> {
                             onPressed: () => setState(
                                 () => isPasswordVisible = !isPasswordVisible),
                           ),
-                          suffixIcon: Padding(
-                            padding: const EdgeInsets.fromLTRB(0, 0, 15, 0),
+                          prefixIcon: Padding(
+                            padding: const EdgeInsets.only(right: 10, left: 5),
                             child: Image.asset(ImageAssetsManager.passwordIcon),
                           ),
                           enabledBorder: OutlineInputBorder(
@@ -210,8 +212,10 @@ class _PatientRegisterScreenState extends State<PatientRegisterScreen> {
                                   BorderRadius.circular(AppSize.s3_5)),
                           label: Align(
                             alignment: Alignment.centerRight,
-                            child: Text(AppStrings.passwordText,
-                                style: StylesManager.medium16()),
+                            child: Text(
+                              AppStrings.passwordText,
+                              style: StylesManager.medium16(),
+                            ),
                           ),
                           filled: true,
                         ),
@@ -277,8 +281,9 @@ class _PatientRegisterScreenState extends State<PatientRegisterScreen> {
                                     Navigator.pushReplacement(
                                       context,
                                       MaterialPageRoute(
-                                          builder: (context) =>
-                                              PatientRegisterScreenFollowUp()),
+                                        builder: (context) =>
+                                            PatientRegisterScreenFollowUp(),
+                                      ),
                                     );
                                   } else {
                                     Future.delayed(const Duration(seconds: 4),

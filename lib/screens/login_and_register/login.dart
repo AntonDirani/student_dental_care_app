@@ -6,9 +6,8 @@ import 'package:provider/provider.dart';
 import 'package:student_care_app/controllers/login_controller.dart';
 import 'package:student_care_app/resources/validation_manager.dart';
 import 'package:student_care_app/resources/components_manager.dart';
-import 'package:student_care_app/home_screen.dart';
 import 'package:student_care_app/resources/values_manager.dart';
-import 'package:student_care_app/screens/home_screen_student.dart';
+import 'package:student_care_app/home_screen.dart';
 import 'package:student_care_app/screens/login_and_register/signup_choose_role.dart';
 import '../../resources/assets_manager.dart';
 import '../../resources/color_manager.dart';
@@ -61,7 +60,7 @@ class _LoginScreenState extends State<LoginScreen> {
                 child: Form(
                   autovalidateMode: AutovalidateMode.onUserInteraction,
                   child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.end,
+                    crossAxisAlignment: CrossAxisAlignment.start,
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
                       Flexible(
@@ -81,16 +80,19 @@ class _LoginScreenState extends State<LoginScreen> {
                         style: StylesManager.light18Black(),
                       ),
                       ComponentManager.myTextField(
-                          onChanged: (_) => setState(() {
-                                _emailSubmitted = true;
-                              }),
-                          errorText: _emailSubmitted
-                              ? ValidationManager.validateEmail(
-                                  _emailController.value.text)
-                              : null,
-                          controller: _emailController,
-                          label: AppStrings.emailText,
-                          suffixIcon: ImageAssetsManager.emailIcon),
+                        onChanged: (_) => setState(() {
+                          _emailSubmitted = true;
+                        }),
+                        errorText: _emailSubmitted
+                            ? ValidationManager.validateEmail(
+                                _emailController.value.text)
+                            : null,
+                        controller: _emailController,
+                        label: AppStrings.emailText,
+                        suffixIcon: ImageAssetsManager.emailIcon,
+                        inputType: TextInputType.emailAddress,
+                        action: TextInputAction.next,
+                      ),
                       Padding(
                           padding: const EdgeInsets.fromLTRB(0, 10, 0, 0),
                           child: TextFormField(
@@ -104,9 +106,9 @@ class _LoginScreenState extends State<LoginScreen> {
                                   ? ValidationManager.validatePassword(
                                       _passwordController.value.text)
                                   : null,
-                              suffixIconConstraints: const BoxConstraints(
+                              prefixIconConstraints: const BoxConstraints(
                                   maxWidth: 35, maxHeight: 20),
-                              prefixIcon: IconButton(
+                              suffixIcon: IconButton(
                                 icon: _isPasswordHidden
                                     ? const Icon(
                                         Icons.visibility_off,
@@ -119,8 +121,9 @@ class _LoginScreenState extends State<LoginScreen> {
                                 onPressed: () => setState(() =>
                                     _isPasswordHidden = !_isPasswordHidden),
                               ),
-                              suffixIcon: Padding(
-                                padding: const EdgeInsets.fromLTRB(0, 0, 15, 0),
+                              prefixIcon: Padding(
+                                padding:
+                                    const EdgeInsets.only(right: 10, left: 5),
                                 child: Image.asset(
                                     ImageAssetsManager.passwordIcon),
                               ),
@@ -142,9 +145,10 @@ class _LoginScreenState extends State<LoginScreen> {
                       _isLoading
                           ? const Center(
                               child: Padding(
-                              padding: EdgeInsets.fromLTRB(0, 15, 0, 0),
-                              child: CircularProgressIndicator(),
-                            ))
+                                padding: EdgeInsets.fromLTRB(0, 15, 0, 0),
+                                child: CircularProgressIndicator(),
+                              ),
+                            )
                           : Padding(
                               padding: const EdgeInsets.fromLTRB(0, 15, 0, 0),
                               child: ComponentManager.mainGradientButton(
@@ -173,7 +177,7 @@ class _LoginScreenState extends State<LoginScreen> {
                                               context,
                                               MaterialPageRoute(
                                                   builder: (context) =>
-                                                      HomeScreenStudent()),
+                                                      HomeScreen()),
                                             );
                                           } else {
                                             Navigator.pushReplacement(
@@ -242,6 +246,10 @@ class _LoginScreenState extends State<LoginScreen> {
                           child: Row(
                             mainAxisAlignment: MainAxisAlignment.center,
                             children: [
+                              Text(
+                                AppStrings.youDontHaveAnAccountText,
+                                style: StylesManager.light18(),
+                              ),
                               GestureDetector(
                                 child: Padding(
                                   padding: const EdgeInsets.all(8.0),
@@ -254,14 +262,11 @@ class _LoginScreenState extends State<LoginScreen> {
                                   Navigator.pushReplacement(
                                     context,
                                     MaterialPageRoute(
-                                        builder: (context) =>
-                                            const SignUpChooseScreen()),
+                                      builder: (context) =>
+                                          const SignUpChooseScreen(),
+                                    ),
                                   );
                                 },
-                              ),
-                              Text(
-                                AppStrings.youDontHaveAnAccountText,
-                                style: StylesManager.light18(),
                               ),
                             ],
                           ),
@@ -273,10 +278,4 @@ class _LoginScreenState extends State<LoginScreen> {
               ))),
     ));
   }
-
-/*
-  void _submit(Future<void> func) {
-    func;
-}
-*/
 }

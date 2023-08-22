@@ -10,7 +10,6 @@ import 'package:student_care_app/screens/login_and_register/patient/choose_treat
 
 import '../../controllers/posts_controller.dart';
 import '../../controllers/university_controller.dart';
-import '../../home_screen.dart';
 import '../../resources/assets_manager.dart';
 import '../../resources/components_manager.dart';
 import '../../resources/string_manager.dart';
@@ -56,15 +55,17 @@ class SplashScreen extends StatelessWidget {
                     Padding(
                       padding: EdgeInsets.fromLTRB(0, 3.h, 0, 1.h),
                       child: ComponentManager.mainGradientButton(
-                          onPressed: () {
-                            Navigator.pushReplacement(
-                              context,
-                              MaterialPageRoute(
-                                  builder: (context) => DoYouHaveAnAccount()),
-                            );
-                          },
-                          text: AppStrings.continueText,
-                          icon: Icons.arrow_back_ios),
+                        onPressed: () {
+                          Navigator.pushReplacement(
+                            context,
+                            MaterialPageRoute(
+                              builder: (context) => const DoYouHaveAnAccount(),
+                            ),
+                          );
+                        },
+                        text: AppStrings.continueText,
+                        icon: Icons.arrow_forward_ios,
+                      ),
                     )
                   ],
                 ),

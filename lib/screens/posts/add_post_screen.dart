@@ -9,7 +9,7 @@ import 'package:provider/provider.dart';
 import 'package:student_care_app/controllers/student_controller.dart';
 import 'package:student_care_app/resources/assets_manager.dart';
 import 'package:student_care_app/resources/color_manager.dart';
-import 'package:student_care_app/screens/home_screen_student.dart';
+import 'package:student_care_app/home_screen.dart';
 import '../../controllers/treatment_controller.dart';
 import '../../models/treatment_model.dart';
 import '../../resources/components_manager.dart';
@@ -67,15 +67,13 @@ class _AddPostScreenState extends State<AddPostScreen> {
   Widget build(BuildContext context) {
     return SafeArea(
         child: Scaffold(
-            floatingActionButtonLocation:
-                FloatingActionButtonLocation.startFloat,
             floatingActionButton: (_selectedTreatmentId != null &&
                     _descriptionSubmitted &&
                     _isFirstDateSelected &&
                     _isSecondDateSelected &&
                     _isFirstTimeSelected &&
                     _isSecondTimeSelected)
-                ? FloatingActionButton.small(
+                ? FloatingActionButton(
                     child: Icon(Icons.done),
                     onPressed: () async {
                       if (pickedDate1 != null &&
@@ -125,7 +123,7 @@ class _AddPostScreenState extends State<AddPostScreen> {
                                                 context,
                                                 MaterialPageRoute(
                                                     builder: (context) =>
-                                                        HomeScreenStudent()),
+                                                        HomeScreen()),
                                               );
                                             },
                                             child: Text(
@@ -192,7 +190,7 @@ class _AddPostScreenState extends State<AddPostScreen> {
                     constraints: BoxConstraints(
                         maxHeight: MediaQuery.of(context).size.height - 80),
                     child: Padding(
-                        padding: const EdgeInsets.fromLTRB(10, 10, 10, 10),
+                        padding: const EdgeInsets.fromLTRB(10, 10, 10, 90),
                         child: Column(
                             crossAxisAlignment: CrossAxisAlignment.end,
                             children: [

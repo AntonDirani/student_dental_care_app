@@ -12,12 +12,15 @@ class ComponentManager {
       height: AppSize.s8,
       width: double.infinity,
       decoration: BoxDecoration(
-          borderRadius: BorderRadius.circular(AppSize.s3_5),
-          gradient: LinearGradient(colors: [
+        borderRadius: BorderRadius.circular(AppSize.s3_5),
+        gradient: LinearGradient(
+          colors: [
             ColorManager.darkPrimary,
             ColorManager.primary,
             ColorManager.lightPrimary
-          ])),
+          ],
+        ),
+      ),
       child: ElevatedButton(
         onPressed: onPressed,
         style: ElevatedButton.styleFrom(
@@ -28,14 +31,16 @@ class ComponentManager {
             backgroundColor: Colors.transparent,
             shadowColor: Colors.transparent),
         child: Row(
+          crossAxisAlignment: CrossAxisAlignment.center,
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
+            Text(text, style: StylesManager.medium18White()),
+            const SizedBox(width: 4),
             Icon(
               icon,
               color: ColorManager.white,
               size: 16,
             ),
-            Text(text, style: StylesManager.medium18White()),
           ],
         ),
       ),
@@ -48,11 +53,14 @@ class ComponentManager {
       height: AppSize.s8,
       width: double.infinity,
       decoration: BoxDecoration(
-          borderRadius: BorderRadius.circular(AppSize.s3_5),
-          gradient: LinearGradient(colors: [
+        borderRadius: BorderRadius.circular(AppSize.s3_5),
+        gradient: LinearGradient(
+          colors: [
             ColorManager.darkSecondary,
-            ColorManager.lightSecondary
-          ])),
+            ColorManager.lightSecondary,
+          ],
+        ),
+      ),
       child: ElevatedButton(
         onPressed: onPressed,
         style: ElevatedButton.styleFrom(
@@ -108,10 +116,12 @@ class ComponentManager {
       Function(String)? onChanged,
       TextInputType? inputType,
       String? errorText,
+      TextInputAction? action,
       void Function()? onTap}) {
     return Padding(
         padding: const EdgeInsets.fromLTRB(0, 10, 0, 0),
         child: TextFormField(
+          textInputAction: action,
           onChanged: onChanged,
           autovalidateMode: AutovalidateMode.onUserInteraction,
           // validator: validatorFunction,
@@ -122,10 +132,10 @@ class ComponentManager {
           decoration: InputDecoration(
             errorText: errorText,
             errorStyle: StylesManager.regular14(),
-            suffixIconConstraints:
+            prefixIconConstraints:
                 const BoxConstraints(maxWidth: 35, maxHeight: 20),
-            suffixIcon: Padding(
-              padding: const EdgeInsets.fromLTRB(0, 0, 15, 0),
+            prefixIcon: Padding(
+              padding: const EdgeInsets.only(right: 10, left: 5),
               child: Image.asset(
                 suffixIcon!,
               ),
@@ -183,14 +193,17 @@ class ComponentManager {
     TextEditingController? controller,
     Function(String)? onChanged,
     String? errorText,
+    TextInputAction? action,
+    TextInputType? type,
   }) {
     return Padding(
         padding: const EdgeInsets.fromLTRB(0, 10, 0, 0),
         child: SizedBox(
           height: AppSize.s7_5,
           child: TextFormField(
+            textInputAction: action,
             onChanged: onChanged,
-            keyboardType: TextInputType.multiline,
+            keyboardType: type,
             textDirection: TextDirection.rtl,
             controller: controller,
             decoration: InputDecoration(

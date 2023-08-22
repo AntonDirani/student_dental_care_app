@@ -15,6 +15,7 @@ import 'controllers/treatment_provider.dart';
 import 'controllers/university_controller.dart';
 import 'resources/color_manager.dart';
 import 'package:responsive_sizer/responsive_sizer.dart';
+import 'package:flutter_localizations/flutter_localizations.dart';
 
 Future<void> main() async {
   /*SharedPreferences prefs = await SharedPreferences.getInstance();
@@ -28,9 +29,11 @@ class MyApp extends StatelessWidget {
   const MyApp({super.key});
 
   Widget build(BuildContext context) {
-    SystemChrome.setSystemUIOverlayStyle(SystemUiOverlayStyle(
-      statusBarColor: ColorManager.primary,
-    ));
+    SystemChrome.setSystemUIOverlayStyle(
+      SystemUiOverlayStyle(
+        statusBarColor: ColorManager.primary,
+      ),
+    );
     return MultiProvider(
       providers: [
         ChangeNotifierProvider<LoginController>(
@@ -62,8 +65,12 @@ class MyApp extends StatelessWidget {
       ],
       child: ResponsiveSizer(builder: (buildContext, orientation, screenType) {
         return const MaterialApp(
-            debugShowCheckedModeBanner: false,
-            home: /*jwt == null ? Home */ SplashScreen());
+          locale: Locale('ar'),
+          localizationsDelegates: GlobalMaterialLocalizations.delegates,
+          supportedLocales: [Locale('ar')],
+          debugShowCheckedModeBanner: false,
+          home: /*jwt == null ? Home */ SplashScreen(),
+        );
       }),
     );
   }
