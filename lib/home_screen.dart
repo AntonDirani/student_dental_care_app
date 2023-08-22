@@ -1,10 +1,12 @@
-// ignore_for_file: non_constant_identifier_names
+// ignore_for_file: public_member_api_docs, sort_constructors_first, use_build_context_synchronously
+// ignore_for_file: non_constant_identifier_names, must_be_immutable
 
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:provider/provider.dart';
 import 'package:responsive_sizer/responsive_sizer.dart';
-import 'package:student_care_app/components/home_screen_drawer.dart';
+
+import 'package:student_care_app/components/home_screen_patient_drawer.dart';
 import 'package:student_care_app/components/home_screen_student_drawer.dart';
 import 'package:student_care_app/controllers/posts_controller.dart';
 import 'package:student_care_app/controllers/student_controller.dart';
@@ -16,6 +18,7 @@ import 'package:student_care_app/resources/styles_manager.dart';
 import 'package:student_care_app/screens/posts/add_post_screen.dart';
 import 'package:student_care_app/screens/posts/post_details.dart';
 import 'package:student_care_app/student_details_take_student.dart';
+
 import '../../components/search_bar.dart';
 import '../../controllers/location_controller.dart';
 import '../../models/location_model.dart';
@@ -25,11 +28,12 @@ import 'controllers/login_controller.dart';
 
 class HomeScreen extends StatefulWidget {
   String selectedTreatment;
-  String selectedLocation = '';
+  String selectedLocation;
   int selectedIndex;
   HomeScreen({
     Key? key,
     this.selectedTreatment = '',
+    this.selectedLocation = '',
     this.selectedIndex = -1,
   }) : super(key: key);
 
@@ -41,7 +45,7 @@ late Future<List<Governorate>> _dropDownLocations;
 
 class _HomeScreenState extends State<HomeScreen> {
   late Future<List<Treatment>> _treatments;
-  late Future<List<Post>> _posts;
+  late Future<List<Post>> posts;
   late Student studentSearch;
   String query = '';
   late Student _studentSearch = Student(
@@ -54,7 +58,6 @@ class _HomeScreenState extends State<HomeScreen> {
       );
 
   Future<void> searchBarFun(String query) async {
-    print('query');
     await Provider.of<StudentController>(context, listen: false)
         .getStudentsByName(query);
     setState(() {
@@ -147,7 +150,7 @@ class _HomeScreenState extends State<HomeScreen> {
         .getTreatmentsList();
 
     // Get the initial list of posts, no need to use setState here
-    _posts = Provider.of<PostController>(context, listen: false).getPostsList();
+    posts = Provider.of<PostController>(context, listen: false).getPostsList();
     Provider.of<StudentController>(context, listen: false).getMyPosts();
     isStudentFunction();
     super.initState();
@@ -161,7 +164,7 @@ class _HomeScreenState extends State<HomeScreen> {
   void filterByLocation() {}
 
   //Governorate? _valueLocation = _values[0];
-  int? _dropDownValue1Location;
+  int? dropDownValue1Location;
 
   @override
   Widget build(BuildContext context) {
@@ -478,7 +481,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                                   snapshot) {
                                             if (snapshot.hasData) {
                                               // Existing code...
-                                              List<Post> posts = snapshot.data!;
+                                              // List<Post> posts = snapshot.data!;
                                               final result =
                                                   _search(snapshot.data);
                                               //

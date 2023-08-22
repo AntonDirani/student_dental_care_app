@@ -1,14 +1,9 @@
-// ignore_for_file: avoid_print
+// ignore_for_file: avoid_print, no_logic_in_create_state
 
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:responsive_sizer/responsive_sizer.dart';
-import 'package:shared_preferences/shared_preferences.dart';
 import 'package:student_care_app/controllers/student_controller.dart';
 import 'package:student_care_app/models/appointment_model.dart';
-import 'package:student_care_app/screens/posts/my_post_appointments.dart';
-import 'package:student_care_app/screens/posts/post_details.dart';
-
 import '../../resources/color_manager.dart';
 import '../../resources/styles_manager.dart';
 
@@ -26,11 +21,10 @@ class MyAppointmentsList extends StatefulWidget {
 }
 
 class _MyAppointmentsListState extends State<MyAppointmentsList> {
-  final Future<List<Appointment>> _appointments;
+  final Future<List<Appointment>> appointments;
   //late Future<List<Post>> _loadedPosts; // Initialize it here
 
-  _MyAppointmentsListState(Future<List<Appointment>> appointments)
-      : _appointments = appointments;
+  _MyAppointmentsListState(this.appointments);
 
   @override
   void initState() {

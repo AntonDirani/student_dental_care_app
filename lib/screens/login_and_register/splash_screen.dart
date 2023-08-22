@@ -2,12 +2,12 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:provider/provider.dart';
 import 'package:responsive_sizer/responsive_sizer.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import 'package:student_care_app/controllers/location_controller.dart';
 import 'package:student_care_app/controllers/report_controller.dart';
 import 'package:student_care_app/controllers/treatment_controller.dart';
+import 'package:student_care_app/home_screen.dart';
 import 'package:student_care_app/screens/login_and_register/do_you_have_an_account.dart';
-import 'package:student_care_app/screens/login_and_register/patient/choose_treatment.dart';
-
 import '../../controllers/posts_controller.dart';
 import '../../controllers/university_controller.dart';
 import '../../resources/assets_manager.dart';
@@ -55,13 +55,24 @@ class SplashScreen extends StatelessWidget {
                     Padding(
                       padding: EdgeInsets.fromLTRB(0, 3.h, 0, 1.h),
                       child: ComponentManager.mainGradientButton(
-                        onPressed: () {
-                          Navigator.pushReplacement(
-                            context,
-                            MaterialPageRoute(
-                              builder: (context) => const DoYouHaveAnAccount(),
-                            ),
-                          );
+                        onPressed: () async {
+                          SharedPreferences prefs =
+                              await SharedPreferences.getInstance();
+                          final auth = prefs.getString('token');
+                          print(prefs.getString('token'));
+                          auth != null
+                              ? Navigator.pushReplacement(
+                                  context,
+                                  MaterialPageRoute(
+                                    builder: (context) => HomeScreen(),
+                                  ))
+                              : Navigator.pushReplacement(
+                                  context,
+                                  MaterialPageRoute(
+                                    builder: (context) =>
+                                        const DoYouHaveAnAccount(),
+                                  ),
+                                );
                         },
                         text: AppStrings.continueText,
                         icon: Icons.arrow_forward_ios,

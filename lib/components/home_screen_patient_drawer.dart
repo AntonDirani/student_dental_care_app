@@ -39,7 +39,7 @@ class HomeScreenDrawer extends StatelessWidget {
                     const SizedBox(height: 10),
                     Flexible(
                       child: Text(
-                        'شادي حكيمي',
+                        '',
                         style: StylesManager.medium18White(),
                       ),
                     )

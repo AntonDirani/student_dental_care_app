@@ -2,9 +2,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:student_care_app/models/appointment_model.dart';
-
 import '../../controllers/student_controller.dart';
-import '../../models/post_model.dart';
 import '../../resources/color_manager.dart';
 import '../../resources/styles_manager.dart';
 import 'my_appointments_list.dart';

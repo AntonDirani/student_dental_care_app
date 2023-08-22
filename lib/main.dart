@@ -18,16 +18,13 @@ import 'package:responsive_sizer/responsive_sizer.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 
 Future<void> main() async {
-  /*SharedPreferences prefs = await SharedPreferences.getInstance();
-  auth = await prefs.getString('token');
-  print(prefs.getString('token'));*/
-
-  runApp(MyApp());
+  runApp(const MyApp());
 }
 
 class MyApp extends StatelessWidget {
   const MyApp({super.key});
 
+  @override
   Widget build(BuildContext context) {
     SystemChrome.setSystemUIOverlayStyle(
       SystemUiOverlayStyle(
@@ -70,15 +67,17 @@ class MyApp extends StatelessWidget {
           create: (context) => DiagnoseController(),
         ),
       ],
-      child: ResponsiveSizer(builder: (buildContext, orientation, screenType) {
-        return const MaterialApp(
-          locale: Locale('ar'),
-          localizationsDelegates: GlobalMaterialLocalizations.delegates,
-          supportedLocales: [Locale('ar')],
-          debugShowCheckedModeBanner: false,
-          home: /*jwt == null ? Home */ SplashScreen(),
-        );
-      }),
+      child: ResponsiveSizer(
+        builder: (buildContext, orientation, screenType) {
+          return const MaterialApp(
+            locale: Locale('ar'),
+            localizationsDelegates: GlobalMaterialLocalizations.delegates,
+            supportedLocales: [Locale('ar')],
+            debugShowCheckedModeBanner: false,
+            home: /*jwt == null ? Home */ SplashScreen(),
+          );
+        },
+      ),
     );
   }
 }

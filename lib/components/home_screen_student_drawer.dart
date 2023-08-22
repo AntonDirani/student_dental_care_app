@@ -12,6 +12,8 @@ import '../models/student_model.dart';
 import '../screens/student_screens/my_posts.dart';
 
 class HomeScreenStudentDrawer extends StatefulWidget {
+  const HomeScreenStudentDrawer({super.key});
+
   /* HomeScreenStudentDrawer(Student student) : _student = student;
 
   Student _student;*/
@@ -22,7 +24,7 @@ class HomeScreenStudentDrawer extends StatefulWidget {
 
 class _HomeScreenStudentDrawerState extends State<HomeScreenStudentDrawer> {
   _HomeScreenStudentDrawerState(/*Student student*/) /*: _student = student*/;
-  late Student _student;
+  late Student student;
 
   @override
   Widget build(BuildContext context) {
@@ -47,7 +49,7 @@ class _HomeScreenStudentDrawerState extends State<HomeScreenStudentDrawer> {
                     } else if (!snapshot.hasData) {
                       return const Text('No data available.');
                     } else {
-                      Student _theStudent = snapshot.data!;
+                      Student theStudent = snapshot.data!;
                       return Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
@@ -63,15 +65,17 @@ class _HomeScreenStudentDrawerState extends State<HomeScreenStudentDrawer> {
                             child: CircleAvatar(
                               radius: 4.5.h,
                               backgroundImage:
-                                  NetworkImage(_theStudent.profileImage!),
+                                  NetworkImage(theStudent.profileImage!),
+                            ),
+                          ),
+                          Flexible(
+                            child: Text(
+                              theStudent.studentName!,
+                              style: StylesManager.medium18White(),
                             ),
                           ),
                           Text(
-                            _theStudent.studentName!,
-                            style: StylesManager.medium18White(),
-                          ),
-                          Text(
-                            _theStudent.studentEmail!,
+                            theStudent.studentEmail!,
                             style: StylesManager.regular16White(),
                           )
                         ],

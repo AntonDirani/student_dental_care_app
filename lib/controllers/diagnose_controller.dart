@@ -62,5 +62,6 @@ class DiagnoseController extends ChangeNotifier {
     } catch (e) {
       print(e);
     }
+    return null;
   }
 }

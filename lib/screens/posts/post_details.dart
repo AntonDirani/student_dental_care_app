@@ -203,8 +203,8 @@ class _PostDetailsState extends State<PostDetails> {
     print('object');
     OverlayState? overlayState = Overlay.of(context);
     OverlayEntry overlay1;
-    OverlayEntry overlay2;
-    OverlayEntry overlay3;
+    // OverlayEntry overlay2;
+    // OverlayEntry overlay3;
     overlay1 = OverlayEntry(builder: (context) {
       return Positioned(
         top: MediaQuery.of(context).size.height * 0.5,

@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:student_care_app/controllers/university_controller.dart';
 import 'package:student_care_app/resources/color_manager.dart';
 import 'package:student_care_app/resources/styles_manager.dart';
-import 'package:url_launcher/url_launcher.dart';
 import 'package:url_launcher/url_launcher_string.dart';
 import 'models/post_model.dart';
 

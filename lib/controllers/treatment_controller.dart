@@ -2,7 +2,6 @@ import 'dart:convert';
 
 import 'package:flutter/cupertino.dart';
 import 'package:http/http.dart' as http;
-import 'package:student_care_app/resources/assets_manager.dart';
 import '../models/treatment_model.dart';
 import '../resources/constants_manager.dart';
 

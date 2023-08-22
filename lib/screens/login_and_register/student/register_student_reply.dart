@@ -1,10 +1,9 @@
+// ignore_for_file: must_be_immutable
+
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
-import 'package:provider/provider.dart';
 import 'package:responsive_sizer/responsive_sizer.dart';
-import 'package:student_care_app/controllers/register_controller.dart';
 import 'package:student_care_app/home_screen.dart';
-import 'package:student_care_app/screens/login_and_register/signup_choose_role.dart';
 import '../../../resources/assets_manager.dart';
 import '../../../resources/color_manager.dart';
 import '../../../resources/components_manager.dart';
@@ -15,11 +14,11 @@ import '../../../resources/values_manager.dart';
 class RegisterStudentReply extends StatelessWidget {
   RegisterStudentReply({super.key});
 
-  bool _isStudent = false;
+  // bool isStudent = false;
 
   @override
   Widget build(BuildContext context) {
-    var provider = Provider.of<RegisterController>(context, listen: false);
+    // var provider = Provider.of<RegisterController>(context, listen: false);
     return Scaffold(
         body: SafeArea(
       child: Padding(
@@ -75,7 +74,7 @@ class RegisterStudentReply extends StatelessWidget {
             padding: EdgeInsets.fromLTRB(0, 3.h, 0, 1.h),
             child: ComponentManager.mainGradientButton(
               onPressed: () async {
-                _isStudent = await provider.isStudent();
+                // isStudent = await provider.isStudent();
 
                 Navigator.pushReplacement(
                   context,

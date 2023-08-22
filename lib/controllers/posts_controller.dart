@@ -26,9 +26,9 @@ class PostController extends ChangeNotifier {
       final data = jsonDecode(response.body) as List<dynamic>;
       print(data);
 
-      final List<String> loadedImages = [];
+      // final List<String> loadedImages = [];
 
-      List<String> ourImageArray = [];
+      // List<String> ourImageArray = [];
 
       final List<Post> loadedPosts = [];
 

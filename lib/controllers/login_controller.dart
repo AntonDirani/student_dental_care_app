@@ -1,13 +1,10 @@
 // ignore_for_file: avoid_print, depend_on_referenced_packages
 
 import 'dart:convert';
-
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:student_care_app/resources/constants_manager.dart';
-
-import '../models/student_model.dart';
 import '../models/user_model.dart';
 
 class LoginController extends ChangeNotifier {

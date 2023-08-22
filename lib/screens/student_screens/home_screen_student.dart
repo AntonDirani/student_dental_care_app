@@ -3,8 +3,6 @@ import 'package:flutter_svg/flutter_svg.dart';
 
 import 'package:provider/provider.dart';
 import 'package:responsive_sizer/responsive_sizer.dart';
-import 'package:shared_preferences/shared_preferences.dart';
-import 'package:student_care_app/components/home_screen_drawer.dart';
 import 'package:student_care_app/components/home_screen_student_drawer.dart';
 import 'package:student_care_app/controllers/posts_controller.dart';
 import 'package:student_care_app/controllers/student_controller.dart';
@@ -16,7 +14,6 @@ import 'package:student_care_app/resources/font_manager.dart';
 import 'package:student_care_app/resources/styles_manager.dart';
 import 'package:student_care_app/screens/posts/add_post_screen.dart';
 
-import '../../components/post_list_home_screen.dart';
 import '../../components/search_bar.dart';
 import '../../controllers/location_controller.dart';
 import '../../models/location_model.dart';
@@ -56,7 +53,7 @@ class _HomeScreenStudentState extends State<HomeScreenStudent> {
   void filterByLocation() {}
 
   //Governorate? _valueLocation = _values[0];
-  int? _dropDownValue1Location;
+  int? dropDownValue1Location;
 
   @override
   Widget build(BuildContext context) {
@@ -133,7 +130,7 @@ class HomeScreenBody extends StatefulWidget {
 
 class _HomeScreenBodyState extends State<HomeScreenBody> {
   late Future<List<Treatment>> _treatments;
-  late Future<List<Post>> _posts;
+  late Future<List<Post>> posts;
 
   String query = '';
 
@@ -172,7 +169,7 @@ class _HomeScreenBodyState extends State<HomeScreenBody> {
         .getTreatmentsList();
 
     // Get the initial list of posts, no need to use setState here
-    _posts = Provider.of<PostController>(context, listen: false).getPostsList();
+    posts = Provider.of<PostController>(context, listen: false).getPostsList();
     Provider.of<StudentController>(context, listen: false).getMyPosts();
 
     super.initState();
@@ -435,7 +432,7 @@ class _HomeScreenBodyState extends State<HomeScreenBody> {
                                           AsyncSnapshot<List<Post>> snapshot) {
                                         if (snapshot.hasData) {
                                           // Existing code...
-                                          List<Post> posts = snapshot.data!;
+                                          // List<Post> posts = snapshot.data!;
                                           final result = _search(snapshot.data);
                                           //
                                           return SizedBox(
