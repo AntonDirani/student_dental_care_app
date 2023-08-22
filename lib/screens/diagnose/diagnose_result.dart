@@ -44,15 +44,15 @@ class DiagnoseResult extends StatelessWidget {
                             mainAxisAlignment: MainAxisAlignment.spaceBetween,
                             children: [
                               Text(
-                                r.patientName!,
-                                style: StylesManager.medium18Grey()
-                                    .copyWith(color: Colors.white),
-                              ),
-                              Text(
                                 'الاسم',
                                 style: StylesManager.medium18Grey().copyWith(
                                   color: Colors.white,
                                 ),
+                              ),
+                              Text(
+                                r.patientName!,
+                                style: StylesManager.medium18Grey()
+                                    .copyWith(color: Colors.white),
                               ),
                             ],
                           ),
@@ -70,15 +70,15 @@ class DiagnoseResult extends StatelessWidget {
                             mainAxisAlignment: MainAxisAlignment.spaceBetween,
                             children: [
                               Text(
-                                r.treatmentName!,
-                                style: StylesManager.medium18Grey()
-                                    .copyWith(color: Colors.white),
-                              ),
-                              Text(
                                 'الحالة',
                                 style: StylesManager.medium18Grey().copyWith(
                                   color: Colors.white,
                                 ),
+                              ),
+                              Text(
+                                r.questionName!,
+                                style: StylesManager.medium18Grey()
+                                    .copyWith(color: Colors.white),
                               ),
                             ],
                           ),
@@ -124,11 +124,14 @@ class DiagnoseResult extends StatelessWidget {
                   children: [
                     GestureDetector(
                       onTap: () {
-                        Navigator.pushReplacement(
-                            context,
-                            MaterialPageRoute(
-                              builder: (context) => HomeScreen(),
-                            ));
+                        Navigator.of(context).pushAndRemoveUntil(
+                          MaterialPageRoute(
+                              builder: (context) => HomeScreen(
+                                    selectedTreatment: r.treatmentName!,
+                                    selectedIndex: r.treatmentId!,
+                                  )),
+                          (route) => false,
+                        );
                       },
                       child: Container(
                         width: 100,

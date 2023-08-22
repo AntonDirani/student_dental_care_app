@@ -5,6 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_animate/flutter_animate.dart';
 import 'package:provider/provider.dart';
 import 'package:student_care_app/controllers/diagnose_controller.dart';
+import 'package:student_care_app/home_screen.dart';
 import 'package:student_care_app/models/questions_model.dart';
 import 'package:student_care_app/models/result_model.dart';
 import 'package:student_care_app/resources/color_manager.dart';
@@ -184,6 +185,18 @@ class _DiagnoseState extends State<Diagnose> {
                                         questions[currentPageIndex]
                                                 .rightChild! -
                                             1;
+                                  }
+                                  if (questions[currentPageIndex].rightChild! ==
+                                      18) {
+                                    ScaffoldMessenger.of(context).showSnackBar(
+                                      SnackBar(
+                                          backgroundColor: ColorManager.red,
+                                          content: Text(
+                                            'عليك مراجعة أخصائي لكشف الحالة',
+                                            style:
+                                                StylesManager.medium16White(),
+                                          )),
+                                    );
                                   } else {
                                     showDialog(
                                       context: context,
@@ -215,6 +228,24 @@ class _DiagnoseState extends State<Diagnose> {
                                     currentPageIndex =
                                         questions[currentPageIndex].leftChild! -
                                             1;
+                                  }
+                                  if (questions[currentPageIndex].leftChild! ==
+                                      18) {
+                                    ScaffoldMessenger.of(context).showSnackBar(
+                                      SnackBar(
+                                          backgroundColor: ColorManager.red,
+                                          content: Text(
+                                            'عليك مراجعة أخصائي لكشف الحالة',
+                                            style:
+                                                StylesManager.medium16White(),
+                                          )),
+                                    );
+                                    Navigator.of(context).pushAndRemoveUntil(
+                                      MaterialPageRoute(
+                                          builder: (context) => HomeScreen()),
+                                      (route) => false,
+                                    );
+                                    return;
                                   } else {
                                     showDialog(
                                       context: context,

@@ -56,15 +56,20 @@ class MyApp extends StatelessWidget {
           create: (context) => LocationController(),
         ),
         ChangeNotifierProvider<TreatmentController>(
-            create: (context) => TreatmentController()),
+          create: (context) => TreatmentController(),
+        ),
         ChangeNotifierProvider<PostController>(
-            create: (context) => PostController()),
+          create: (context) => PostController(),
+        ),
         ChangeNotifierProvider<TreatmentSelectionState>(
-            create: (context) => TreatmentSelectionState()),
+          create: (context) => TreatmentSelectionState(),
+        ),
         ChangeNotifierProvider<ReportController>(
-            create: (context) => ReportController()),
+          create: (context) => ReportController(),
+        ),
         ChangeNotifierProvider<DiagnoseController>(
-            create: (context) => DiagnoseController()),
+          create: (context) => DiagnoseController(),
+        ),
       ],
       child: ResponsiveSizer(builder: (buildContext, orientation, screenType) {
         return const MaterialApp(

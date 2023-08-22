@@ -1,10 +1,13 @@
+// ignore_for_file: public_member_api_docs, sort_constructors_first
 // ignore_for_file: non_constant_identifier_names
 
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:provider/provider.dart';
 import 'package:responsive_sizer/responsive_sizer.dart';
+
 import 'package:student_care_app/components/home_screen_student_drawer.dart';
+import 'package:student_care_app/controllers/login_controller.dart';
 import 'package:student_care_app/controllers/posts_controller.dart';
 import 'package:student_care_app/controllers/student_controller.dart';
 import 'package:student_care_app/controllers/treatment_controller.dart';
@@ -14,6 +17,7 @@ import 'package:student_care_app/resources/font_manager.dart';
 import 'package:student_care_app/resources/styles_manager.dart';
 import 'package:student_care_app/screens/posts/add_post_screen.dart';
 import 'package:student_care_app/screens/posts/post_details.dart';
+
 import '../../components/search_bar.dart';
 import '../../controllers/location_controller.dart';
 import '../../models/location_model.dart';
@@ -21,7 +25,13 @@ import '../../models/post_model.dart';
 import '../../models/student_model.dart';
 
 class HomeScreen extends StatefulWidget {
-  const HomeScreen({super.key});
+  String selectedTreatment;
+  int selectedIndex;
+  HomeScreen({
+    Key? key,
+    this.selectedTreatment = '',
+    this.selectedIndex = -1,
+  }) : super(key: key);
 
   @override
   State<HomeScreen> createState() => _HomeScreenState();
@@ -30,6 +40,7 @@ class HomeScreen extends StatefulWidget {
 late Future<List<Governorate>> _dropDownLocations;
 
 class _HomeScreenState extends State<HomeScreen> {
+  // String _selectedTreatmentName = '';
   late Future<List<Treatment>> _treatments;
   late Future<List<Post>> _posts;
   late Student studentSearch;
@@ -73,11 +84,11 @@ class _HomeScreenState extends State<HomeScreen> {
   }
 
   List<Post> _search(List<Post>? post) {
-    if (_selectedTreatmentName.isNotEmpty == true) {
+    if (widget.selectedTreatment!.isNotEmpty == true) {
       //search logic what you want
       return post
               ?.where((element) =>
-                  element.postTreatmentName!.contains(_selectedTreatmentName))
+                  element.postTreatmentName!.contains(widget.selectedTreatment))
               .toList() ??
           <Post>[];
     }
@@ -85,32 +96,34 @@ class _HomeScreenState extends State<HomeScreen> {
     return post ?? <Post>[];
   }
 
-  String _selectedTreatmentName = '';
   late final int index;
   late List<Treatment> treatments;
   late final Treatment treatment;
   late Future<List<Governorate>> _dropDownLocations;
   late Governorate _valueLocation;
+  late bool isStudent;
   /*late final Future<Student> _student;*/
   @override
   void initState() {
     Provider.of<StudentController>(context, listen: false).getStudentProfile();
-    /*  _student =
-        Provider.of<StudentController>(context, listen: false).getStudent();*/
     _dropDownLocations = Provider.of<LocationController>(context, listen: false)
         .getLocationsList();
     _dropDownLocations.then((locations) {
       setState(() {
-        _valueLocation = locations[0]; // Initialize with the first item
+        _valueLocation = locations[0];
       });
     });
     _treatments = Provider.of<TreatmentController>(context, listen: false)
         .getTreatmentsList();
-
-    // Get the initial list of posts, no need to use setState here
     _posts = Provider.of<PostController>(context, listen: false).getPostsList();
     Provider.of<StudentController>(context, listen: false).getMyPosts();
+    isStudentFunction();
     super.initState();
+  }
+
+  isStudentFunction() async {
+    isStudent =
+        await Provider.of<LoginController>(context, listen: false).isStudent();
   }
 
   void filterByLocation() {}
@@ -123,54 +136,49 @@ class _HomeScreenState extends State<HomeScreen> {
     return SafeArea(
       child: Scaffold(
         floatingActionButtonLocation: FloatingActionButtonLocation.startFloat,
-        floatingActionButton: FloatingActionButton.small(
-          child: Icon(Icons.add),
-          onPressed: () {
-            Navigator.push(
-              context,
-              MaterialPageRoute(builder: (context) => const AddPostScreen()),
-            );
-          },
-        ),
+        floatingActionButton: isStudent
+            ? FloatingActionButton.small(
+                child: Icon(Icons.add),
+                onPressed: () {
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                        builder: (context) => const AddPostScreen()),
+                  );
+                },
+              )
+            : Container(),
         appBar: AppBar(
           centerTitle: true,
-          title: Directionality(
-            textDirection: TextDirection.rtl,
-            child: FutureBuilder<List<Governorate>>(
-              future: _dropDownLocations,
-              builder: (BuildContext context, AsyncSnapshot snapshot) {
-                if (snapshot.hasData) {
-                  List<Governorate> _values = snapshot.data;
-                  // Remove this line: Governorate? _valueLocation = _values[0];
-                  // if data is loaded
-                  return DropdownButton(
-                    value: _valueLocation,
-                    style: StylesManager.medium16Black(),
-                    underline: const SizedBox(),
-                    dropdownColor: ColorManager.lightGrey,
-                    iconEnabledColor: ColorManager.costumeBlack,
-                    items: _values.map<DropdownMenuItem<Governorate>>(
-                      (Governorate location) {
-                        return DropdownMenuItem<Governorate>(
-                          value: location,
-                          child: Text(location.governorateName.toString()),
-                        );
-                      },
-                    ).toList(),
-                    onChanged: (Governorate? value) {
-                      // This is called when the user selects an item.
-                      setState(() {
-                        _valueLocation = value!; // Update the selected value
-                        print(_valueLocation.governorateId);
-                      });
+          title: FutureBuilder<List<Governorate>>(
+            future: _dropDownLocations,
+            builder: (BuildContext context, AsyncSnapshot snapshot) {
+              if (snapshot.hasData) {
+                List<Governorate> _values = snapshot.data;
+                return DropdownButton(
+                  value: _valueLocation,
+                  style: StylesManager.medium16Black(),
+                  underline: const SizedBox(),
+                  dropdownColor: ColorManager.lightGrey,
+                  iconEnabledColor: ColorManager.costumeBlack,
+                  items: _values.map<DropdownMenuItem<Governorate>>(
+                    (Governorate location) {
+                      return DropdownMenuItem<Governorate>(
+                        value: location,
+                        child: Text(location.governorateName.toString()),
+                      );
                     },
-                  );
-                } else {
-                  // if data not loaded yet
-                  return CircularProgressIndicator();
-                }
-              },
-            ),
+                  ).toList(),
+                  onChanged: (Governorate? value) {
+                    setState(() {
+                      _valueLocation = value!;
+                    });
+                  },
+                );
+              } else {
+                return const CircularProgressIndicator();
+              }
+            },
           ),
           iconTheme: const IconThemeData(
             size: 40, //change size on your need
@@ -228,20 +236,21 @@ class _HomeScreenState extends State<HomeScreen> {
                                       return GestureDetector(
                                         onTap: () async {
                                           // Store the selected treatment name using SharedPreferences
-                                          _selectedTreatmentName =
-                                              treatment.treatmentName!;
                                           setState(() {
-                                            treatments.forEach((treatment) {
-                                              treatment.isSelected = false;
-                                            });
-                                            treatment.isSelected = true;
+                                            widget.selectedTreatment =
+                                                treatment.treatmentName!;
+                                            widget.selectedIndex = index;
+                                            // treatments.forEach((treatment) {
+                                            //   treatment.isSelected = false;
+                                            // });
+                                            // treatment.isSelected = true;
                                           });
                                         },
                                         child: Container(
                                           width: 70,
                                           decoration: BoxDecoration(
-                                            color: treatment.isSelected ?? false
-                                                ? Colors.blue
+                                            color: widget.selectedIndex == index
+                                                ? ColorManager.primary
                                                 : ColorManager.lightGrey,
                                             borderRadius:
                                                 const BorderRadius.all(
@@ -259,8 +268,8 @@ class _HomeScreenState extends State<HomeScreen> {
                                                   child: SvgPicture.network(
                                                     treatment.treatmentImage!,
                                                     color:
-                                                        treatment.isSelected ??
-                                                                false
+                                                        widget.selectedIndex ==
+                                                                index
                                                             ? Colors.white
                                                             : null,
                                                   ),
@@ -277,8 +286,8 @@ class _HomeScreenState extends State<HomeScreen> {
                                                         .fontFamily,
                                                     fontSize: 14,
                                                     color:
-                                                        treatment.isSelected ??
-                                                                false
+                                                        widget.selectedIndex ==
+                                                                index
                                                             ? Colors.white
                                                             : Colors.black,
                                                   ),

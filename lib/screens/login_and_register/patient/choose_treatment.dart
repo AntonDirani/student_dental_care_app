@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:provider/provider.dart';
 import 'package:student_care_app/home_screen.dart';
+import 'package:student_care_app/resources/components_manager.dart';
 import 'package:student_care_app/screens/diagnose/diagnose.dart';
 import '../../../controllers/treatment_controller.dart';
 import '../../../models/treatment_model.dart';
@@ -21,6 +22,7 @@ class ChooseTreatment extends StatefulWidget {
 
 class _ChooseTreatmentState extends State<ChooseTreatment> {
   late Future<List<Treatment>> _treatments;
+  int selectedIndex = -1;
 
   @override
   void initState() {
@@ -54,58 +56,84 @@ class _ChooseTreatmentState extends State<ChooseTreatment> {
               ),
             ),
             FutureBuilder<List>(
-              future: _treatments, // your async method that returns a future
+              future: _treatments,
               builder: (BuildContext context, AsyncSnapshot snapshot) {
                 if (snapshot.hasData) {
                   List<Treatment> values = snapshot.data;
-                  // if data is loaded
-                  return GridView.builder(
-                    shrinkWrap: true,
-
-                    physics: NeverScrollableScrollPhysics(),
-                    gridDelegate:
-                        const SliverGridDelegateWithFixedCrossAxisCount(
-                      crossAxisCount: 3,
-                      childAspectRatio: 1,
-                      crossAxisSpacing: 5,
-                      mainAxisSpacing: 5,
-                    ),
-                    itemCount: 9,
-
-                    //  scrollDirection: Axis.horizontal,
-                    itemBuilder: (BuildContext context, int index) {
-                      return Container(
-                        decoration: BoxDecoration(
-                            color: ColorManager.lightGrey,
-                            //border: Border.all(color: ColorManager.grey),
-                            borderRadius: const BorderRadius.all(
-                              Radius.circular(10),
-                            )),
-                        child: Column(
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          children: [
-                            Padding(
-                              padding: const EdgeInsets.all(8.0),
-                              child: SvgPicture.asset(
-                                  values[index].treatmentImage!,
-                                  //height: 45,
-                                  width: 35),
-                            ),
-                            SizedBox(
-                              height: MediaQuery.of(context).size.height / 95,
-                            ),
-                            Text(
-                              values[index].treatmentName!,
-                              style: StylesManager.regular14Black(),
-                              textAlign: TextAlign.center,
-                            )
-                          ],
+                  return Column(
+                    children: [
+                      GridView.builder(
+                        shrinkWrap: true,
+                        physics: const NeverScrollableScrollPhysics(),
+                        gridDelegate:
+                            const SliverGridDelegateWithFixedCrossAxisCount(
+                          crossAxisCount: 3,
+                          childAspectRatio: 1,
+                          crossAxisSpacing: 5,
+                          mainAxisSpacing: 5,
                         ),
-                      );
-                    },
-                  ).build(context);
+                        itemCount: values.length,
+                        itemBuilder: (BuildContext context, int index) {
+                          return GestureDetector(
+                            onTap: () {
+                              setState(() {
+                                selectedIndex = index;
+                              });
+                            },
+                            child: Container(
+                              decoration: BoxDecoration(
+                                  color: selectedIndex == index
+                                      ? ColorManager.primary
+                                      : ColorManager.lightGrey,
+                                  borderRadius: const BorderRadius.all(
+                                    Radius.circular(10),
+                                  )),
+                              child: Column(
+                                mainAxisAlignment: MainAxisAlignment.center,
+                                children: [
+                                  Padding(
+                                    padding: const EdgeInsets.all(8.0),
+                                    child: SvgPicture.asset(
+                                      values[index].treatmentImage!,
+                                      width: 35,
+                                    ),
+                                  ),
+                                  SizedBox(
+                                    height:
+                                        MediaQuery.of(context).size.height / 95,
+                                  ),
+                                  Text(
+                                    values[index].treatmentName!,
+                                    style: StylesManager.regular14Black(),
+                                    textAlign: TextAlign.center,
+                                  ),
+                                ],
+                              ),
+                            ),
+                          );
+                        },
+                      ).build(context),
+                      selectedIndex != -1
+                          ? Padding(
+                              padding: const EdgeInsets.symmetric(vertical: 10),
+                              child: ComponentManager.mainGradientButton(
+                                text: 'متابعة',
+                                onPressed: () => Navigator.pushReplacement(
+                                  context,
+                                  MaterialPageRoute(
+                                    builder: (context) => HomeScreen(
+                                      selectedTreatment:
+                                          values[selectedIndex].treatmentName!,
+                                      selectedIndex: selectedIndex,
+                                    ),
+                                  ),
+                                ),
+                              ),
+                            )
+                          : Container(),
+                    ],
+                  );
                 } else {
-                  // if data not loaded yet
                   return const CircularProgressIndicator();
                 }
               },
@@ -128,7 +156,7 @@ class _ChooseTreatmentState extends State<ChooseTreatment> {
                         Navigator.pushReplacement(
                           context,
                           MaterialPageRoute(
-                            builder: (context) => Diagnose(),
+                            builder: (context) => const Diagnose(),
                           ),
                         );
                       },
@@ -147,7 +175,7 @@ class _ChooseTreatmentState extends State<ChooseTreatment> {
                         Navigator.pushReplacement(
                           context,
                           MaterialPageRoute(
-                            builder: (context) => const HomeScreen(),
+                            builder: (context) => HomeScreen(),
                           ),
                         );
                       },
