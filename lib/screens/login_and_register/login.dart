@@ -94,54 +94,55 @@ class _LoginScreenState extends State<LoginScreen> {
                         action: TextInputAction.next,
                       ),
                       Padding(
-                          padding: const EdgeInsets.fromLTRB(0, 10, 0, 0),
-                          child: TextFormField(
-                            onChanged: (_) => setState(() {
-                              _passwordSubmitted = true;
-                            }),
-                            controller: _passwordController,
-                            decoration: InputDecoration(
-                              errorStyle: StylesManager.regular14(),
-                              errorText: _passwordSubmitted
-                                  ? ValidationManager.validatePassword(
-                                      _passwordController.value.text)
-                                  : null,
-                              prefixIconConstraints: const BoxConstraints(
-                                  maxWidth: 35, maxHeight: 20),
-                              suffixIcon: IconButton(
-                                icon: _isPasswordHidden
-                                    ? const Icon(
-                                        Icons.visibility_off,
-                                        color: Colors.grey,
-                                      )
-                                    : const Icon(
-                                        Icons.visibility,
-                                        color: Colors.grey,
-                                      ),
-                                onPressed: () => setState(() =>
-                                    _isPasswordHidden = !_isPasswordHidden),
-                              ),
-                              prefixIcon: Padding(
-                                padding:
-                                    const EdgeInsets.only(right: 10, left: 5),
-                                child: Image.asset(
-                                    ImageAssetsManager.passwordIcon),
-                              ),
-                              enabledBorder: OutlineInputBorder(
-                                  borderSide:
-                                      BorderSide(color: ColorManager.lightGrey),
-                                  borderRadius:
-                                      BorderRadius.circular(AppSize.s3_5)),
-                              label: Align(
-                                alignment: Alignment.centerRight,
-                                child: Text(AppStrings.passwordText,
-                                    style: StylesManager.medium16()),
-                              ),
-                              filled: true,
+                        padding: const EdgeInsets.fromLTRB(0, 10, 0, 0),
+                        child: TextFormField(
+                          onChanged: (_) => setState(() {
+                            _passwordSubmitted = true;
+                          }),
+                          controller: _passwordController,
+                          decoration: InputDecoration(
+                            errorStyle: StylesManager.regular14(),
+                            errorText: _passwordSubmitted
+                                ? ValidationManager.validatePassword(
+                                    _passwordController.value.text)
+                                : null,
+                            prefixIconConstraints: const BoxConstraints(
+                                maxWidth: 35, maxHeight: 20),
+                            suffixIcon: IconButton(
+                              icon: _isPasswordHidden
+                                  ? const Icon(
+                                      Icons.visibility_off,
+                                      color: Colors.grey,
+                                    )
+                                  : const Icon(
+                                      Icons.visibility,
+                                      color: Colors.grey,
+                                    ),
+                              onPressed: () => setState(
+                                  () => _isPasswordHidden = !_isPasswordHidden),
                             ),
-                            textInputAction: TextInputAction.done,
-                            obscureText: _isPasswordHidden,
-                          )),
+                            prefixIcon: Padding(
+                              padding:
+                                  const EdgeInsets.only(right: 10, left: 5),
+                              child:
+                                  Image.asset(ImageAssetsManager.passwordIcon),
+                            ),
+                            enabledBorder: OutlineInputBorder(
+                                borderSide:
+                                    BorderSide(color: ColorManager.lightGrey),
+                                borderRadius:
+                                    BorderRadius.circular(AppSize.s3_5)),
+                            label: Align(
+                              alignment: Alignment.centerRight,
+                              child: Text(AppStrings.passwordText,
+                                  style: StylesManager.medium16()),
+                            ),
+                            filled: true,
+                          ),
+                          textInputAction: TextInputAction.done,
+                          obscureText: _isPasswordHidden,
+                        ),
+                      ),
                       _isLoading
                           ? const Center(
                               child: Padding(

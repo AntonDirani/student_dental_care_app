@@ -93,7 +93,7 @@ class _ChooseTreatmentState extends State<ChooseTreatment> {
                                 children: [
                                   Padding(
                                     padding: const EdgeInsets.all(8.0),
-                                    child: SvgPicture.asset(
+                                    child: SvgPicture.network(
                                       values[index].treatmentImage!,
                                       width: 35,
                                     ),
@@ -117,18 +117,20 @@ class _ChooseTreatmentState extends State<ChooseTreatment> {
                           ? Padding(
                               padding: const EdgeInsets.symmetric(vertical: 10),
                               child: ComponentManager.mainGradientButton(
-                                text: 'متابعة',
-                                onPressed: () => Navigator.pushReplacement(
-                                  context,
-                                  MaterialPageRoute(
-                                    builder: (context) => HomeScreen(
-                                      selectedTreatment:
-                                          values[selectedIndex].treatmentName!,
-                                      selectedIndex: selectedIndex,
-                                    ),
-                                  ),
-                                ),
-                              ),
+                                  text: 'متابعة',
+                                  onPressed: () {
+                                    Navigator.pushReplacement(
+                                      context,
+                                      MaterialPageRoute(
+                                        builder: (context) => HomeScreen(
+                                          selectedTreatment:
+                                              values[selectedIndex]
+                                                  .treatmentName!,
+                                          selectedIndex: selectedIndex,
+                                        ),
+                                      ),
+                                    );
+                                  }),
                             )
                           : Container(),
                     ],

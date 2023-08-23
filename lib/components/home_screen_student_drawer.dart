@@ -51,6 +51,7 @@ class _HomeScreenStudentDrawerState extends State<HomeScreenStudentDrawer> {
                     } else {
                       Student theStudent = snapshot.data!;
                       return Column(
+                        mainAxisAlignment: MainAxisAlignment.end,
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
                           GestureDetector(
@@ -62,21 +63,18 @@ class _HomeScreenStudentDrawerState extends State<HomeScreenStudentDrawer> {
                                         const ChooseTreatment()),
                               );
                             },
-                            child: CircleAvatar(
-                              radius: 4.5.h,
-                              backgroundImage:
-                                  NetworkImage(theStudent.profileImage!),
+                            child: Expanded(
+                              child: CircleAvatar(
+                                backgroundImage:
+                                    NetworkImage(theStudent.profileImage!),
+                              ),
                             ),
                           ),
                           Flexible(
                             child: Text(
-                              theStudent.studentName!,
-                              style: StylesManager.medium18White(),
+                              theStudent.studentEmail!,
+                              style: StylesManager.regular16White(),
                             ),
-                          ),
-                          Text(
-                            theStudent.studentEmail!,
-                            style: StylesManager.regular16White(),
                           )
                         ],
                       );
@@ -89,16 +87,14 @@ class _HomeScreenStudentDrawerState extends State<HomeScreenStudentDrawer> {
           subtitle: Text(
             'رؤية الحالات الطبية التى قمت بنشرها',
             style: StylesManager.regular14Grey(),
-            textAlign: TextAlign.end,
           ),
-          trailing: Icon(
+          leading: Icon(
             Icons.table_rows,
             color: ColorManager.primary,
             size: 4.5.h,
           ),
           title: Text(
             'منشوراتي',
-            textAlign: TextAlign.end,
             style: StylesManager.bold17Black(),
           ),
           onTap: () async {
@@ -112,16 +108,14 @@ class _HomeScreenStudentDrawerState extends State<HomeScreenStudentDrawer> {
           subtitle: Text(
             'تسجيل الخروج من التطبيق',
             style: StylesManager.regular14Grey(),
-            textAlign: TextAlign.end,
           ),
-          trailing: Icon(
+          leading: Icon(
             Icons.logout,
             color: ColorManager.primary,
             size: 4.5.h,
           ),
           title: Text(
             'تسجيل الخروج',
-            textAlign: TextAlign.end,
             style: StylesManager.bold17Black(),
           ),
           onTap: () async {

@@ -4,6 +4,7 @@ import 'package:shared_preferences/shared_preferences.dart';
 import 'package:student_care_app/resources/assets_manager.dart';
 import 'package:student_care_app/resources/color_manager.dart';
 import 'package:student_care_app/resources/styles_manager.dart';
+import 'package:student_care_app/screens/diagnose/diagnose.dart';
 import 'package:student_care_app/screens/login_and_register/login.dart';
 import 'package:student_care_app/screens/login_and_register/patient/choose_treatment.dart';
 
@@ -11,9 +12,9 @@ class HomeScreenDrawer extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Drawer(
-        child: ListView(
-      children: [
-        DrawerHeader(
+      child: ListView(
+        children: [
+          DrawerHeader(
             padding: const EdgeInsets.all(0),
             child: Container(
               color: ColorManager.primary,
@@ -42,12 +43,13 @@ class HomeScreenDrawer extends StatelessWidget {
                         '',
                         style: StylesManager.medium18White(),
                       ),
-                    )
+                    ),
                   ],
                 ),
               ),
-            )),
-        /* ListTile(
+            ),
+          ),
+          /* ListTile(
           subtitle: Text(
             'رؤية الحالات الطبية التى قمت بنشرها',
             style: StylesManager.regular14Grey(),
@@ -73,33 +75,59 @@ class HomeScreenDrawer extends StatelessWidget {
             );
           },
         ),*/
-        ListTile(
-          subtitle: Text(
-            'تسجيل الخروج من التطبيق',
-            style: StylesManager.regular14Grey(),
-            textAlign: TextAlign.end,
+          ListTile(
+            subtitle: Text(
+              'تسجيل الخروج من التطبيق',
+              style: StylesManager.regular14Grey(),
+              textAlign: TextAlign.end,
+            ),
+            trailing: Icon(
+              Icons.logout,
+              color: ColorManager.primary,
+              size: 4.5.h,
+            ),
+            title: Text(
+              'تسجيل الخروج',
+              textAlign: TextAlign.end,
+              style: StylesManager.bold17Black(),
+            ),
+            onTap: () async {
+              SharedPreferences preferences =
+                  await SharedPreferences.getInstance();
+              await preferences.clear();
+              Navigator.pushReplacement(
+                context,
+                MaterialPageRoute(builder: (context) => LoginScreen()),
+              );
+            },
           ),
-          trailing: Icon(
-            Icons.logout,
-            color: ColorManager.primary,
-            size: 4.5.h,
+          ListTile(
+            subtitle: Text(
+              'الاجابة عن اسئلة التشخيص الذاتي',
+              style: StylesManager.regular14Grey(),
+              textAlign: TextAlign.end,
+            ),
+            trailing: Icon(
+              Icons.healing,
+              color: ColorManager.primary,
+              size: 4.5.h,
+            ),
+            title: Text(
+              'التشخيص الذاتي',
+              textAlign: TextAlign.end,
+              style: StylesManager.bold17Black(),
+            ),
+            onTap: () {
+              Navigator.pushReplacement(
+                context,
+                MaterialPageRoute(
+                  builder: (context) => const Diagnose(),
+                ),
+              );
+            },
           ),
-          title: Text(
-            'تسجيل الخروج',
-            textAlign: TextAlign.end,
-            style: StylesManager.bold17Black(),
-          ),
-          onTap: () async {
-            SharedPreferences preferences =
-                await SharedPreferences.getInstance();
-            await preferences.clear();
-            Navigator.pushReplacement(
-              context,
-              MaterialPageRoute(builder: (context) => LoginScreen()),
-            );
-          },
-        ),
-      ],
-    ));
+        ],
+      ),
+    );
   }
 }

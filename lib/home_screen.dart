@@ -142,9 +142,9 @@ class _HomeScreenState extends State<HomeScreen> {
     _dropDownLocations = Provider.of<LocationController>(context, listen: false)
         .getLocationsList();
     _dropDownLocations.then((locations) {
-      setState(() {
-        _valueLocation = locations[0]; // Initialize with the first item
-      });
+      // setState(() {
+      _valueLocation = locations[0]; // Initialize with the first item
+      // });
     });
     _treatments = Provider.of<TreatmentController>(context, listen: false)
         .getTreatmentsList();
@@ -177,7 +177,7 @@ class _HomeScreenState extends State<HomeScreen> {
                 return Scaffold(
                   floatingActionButton: isStudent
                       ? FloatingActionButton.small(
-                          child: Icon(Icons.add),
+                          child: const Icon(Icons.add),
                           onPressed: () {
                             Navigator.push(
                               context,
@@ -235,7 +235,7 @@ class _HomeScreenState extends State<HomeScreen> {
                     backgroundColor: Colors.transparent,
                     elevation: 0,
                   ),
-                  endDrawer: isStudent
+                  drawer: isStudent
                       ? HomeScreenStudentDrawer(/*_student*/)
                       : HomeScreenDrawer(),
                   body: Builder(builder: (context) {

@@ -179,15 +179,18 @@ class _DiagnoseState extends State<Diagnose> {
                                 }
                                 //? if Answer is Yes
                                 if (answers == Answers.yes) {
+                                  print('Yes pressed');
                                   if (questions[currentPageIndex].rightChild! <
                                       12) {
+                                    print("Yes1");
                                     currentPageIndex =
                                         questions[currentPageIndex]
                                                 .rightChild! -
                                             1;
-                                  }
-                                  if (questions[currentPageIndex].rightChild! ==
+                                  } else if (questions[currentPageIndex]
+                                          .rightChild! ==
                                       18) {
+                                    print("Yes2");
                                     ScaffoldMessenger.of(context).showSnackBar(
                                       SnackBar(
                                           backgroundColor: ColorManager.red,
@@ -198,6 +201,7 @@ class _DiagnoseState extends State<Diagnose> {
                                           )),
                                     );
                                   } else {
+                                    print("Yes3");
                                     showDialog(
                                       context: context,
                                       builder: (context) => const Center(
@@ -210,6 +214,7 @@ class _DiagnoseState extends State<Diagnose> {
                                             .getResult(
                                                 questions[currentPageIndex]
                                                     .rightChild!);
+                                    print("RRRR ${r.toString()}");
                                     Navigator.pop(context);
                                     showDialog(
                                         barrierDismissible: true,
@@ -228,8 +233,8 @@ class _DiagnoseState extends State<Diagnose> {
                                     currentPageIndex =
                                         questions[currentPageIndex].leftChild! -
                                             1;
-                                  }
-                                  if (questions[currentPageIndex].leftChild! ==
+                                  } else if (questions[currentPageIndex]
+                                          .leftChild! ==
                                       18) {
                                     ScaffoldMessenger.of(context).showSnackBar(
                                       SnackBar(

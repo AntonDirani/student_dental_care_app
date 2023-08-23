@@ -85,6 +85,7 @@ class _PatientRegisterScreenState extends State<PatientRegisterScreen> {
                               : null,
                           controller: _firstNameController,
                           label: AppStrings.enterYourFirstNameText,
+                          action: TextInputAction.next,
                         ),
                       ),
                     ),
@@ -101,128 +102,120 @@ class _PatientRegisterScreenState extends State<PatientRegisterScreen> {
                               : null,
                           controller: _secondNameController,
                           label: AppStrings.enterYourSecondNameText,
+                          action: TextInputAction.next,
                         ),
                       ),
                     ),
                   ],
                 ),
                 ComponentManager.myTextField(
-                    onChanged: (_) => setState(() {
-                          _emailSubmitted = true;
-                        }),
-                    errorText: _emailSubmitted
-                        ? ValidationManager.validateEmail(
-                            _emailController.value.text)
-                        : null,
-                    controller: _emailController,
-                    inputType: TextInputType.emailAddress,
-                    label: AppStrings.emailText,
-                    suffixIcon: ImageAssetsManager.emailIcon),
+                  onChanged: (_) => setState(() {
+                    _emailSubmitted = true;
+                  }),
+                  errorText: _emailSubmitted
+                      ? ValidationManager.validateEmail(
+                          _emailController.value.text)
+                      : null,
+                  controller: _emailController,
+                  inputType: TextInputType.emailAddress,
+                  label: AppStrings.emailText,
+                  suffixIcon: ImageAssetsManager.emailIcon,
+                  action: TextInputAction.next,
+                ),
                 Padding(
                   padding: const EdgeInsets.fromLTRB(0, 10, 0, 0),
-                  child: SizedBox(
-                    height: AppSize.s7_5,
-                    child: TextFormField(
-                      onChanged: (_) => setState(() {
-                        _password1Submitted = true;
-                      }),
-                      controller: _password1Controller,
-                      decoration: InputDecoration(
-                        errorStyle: StylesManager.regular14(),
-                        errorText: _password1Submitted
-                            ? ValidationManager.validatePassword(
-                                _password1Controller.value.text)
-                            : null,
-                        prefixIconConstraints:
-                            const BoxConstraints(maxWidth: 35, maxHeight: 20),
-                        suffixIcon: IconButton(
-                          icon: isPasswordVisible
-                              ? const Icon(
-                                  Icons.visibility_off,
-                                  color: Colors.grey,
-                                )
-                              : const Icon(
-                                  Icons.visibility,
-                                  color: Colors.grey,
-                                ),
-                          onPressed: () => setState(
-                              () => isPasswordVisible = !isPasswordVisible),
+                  child: TextFormField(
+                    onChanged: (_) => setState(() {
+                      _password1Submitted = true;
+                    }),
+                    controller: _password1Controller,
+                    decoration: InputDecoration(
+                      errorStyle: StylesManager.regular14(),
+                      errorText: _password1Submitted
+                          ? ValidationManager.validatePassword(
+                              _password1Controller.value.text)
+                          : null,
+                      prefixIconConstraints:
+                          const BoxConstraints(maxWidth: 35, maxHeight: 20),
+                      suffixIcon: IconButton(
+                        icon: isPasswordVisible
+                            ? const Icon(
+                                Icons.visibility_off,
+                                color: Colors.grey,
+                              )
+                            : const Icon(
+                                Icons.visibility,
+                                color: Colors.grey,
+                              ),
+                        onPressed: () => setState(
+                          () => isPasswordVisible = !isPasswordVisible,
                         ),
-                        prefixIcon: Padding(
-                          padding: const EdgeInsets.only(right: 10, left: 5),
-                          child: Image.asset(ImageAssetsManager.passwordIcon),
-                        ),
-                        enabledBorder: OutlineInputBorder(
-                            borderSide:
-                                BorderSide(color: ColorManager.lightGrey),
-                            borderRadius: BorderRadius.circular(AppSize.s3_5)),
-                        label: Align(
-                          alignment: Alignment.centerRight,
-                          child: Text(
-                            AppStrings.passwordText,
-                            style: StylesManager.medium16(),
-                          ),
-                        ),
-                        filled: true,
                       ),
-                      textInputAction: TextInputAction.done,
-                      obscureText: isPasswordVisible,
+                      prefixIcon: Padding(
+                        padding: const EdgeInsets.only(right: 10, left: 5),
+                        child: Image.asset(ImageAssetsManager.passwordIcon),
+                      ),
+                      enabledBorder: OutlineInputBorder(
+                          borderSide: BorderSide(color: ColorManager.lightGrey),
+                          borderRadius: BorderRadius.circular(AppSize.s3_5)),
+                      label: Align(
+                        alignment: Alignment.centerRight,
+                        child: Text(AppStrings.passwordText,
+                            style: StylesManager.medium16()),
+                      ),
+                      filled: true,
                     ),
+                    textInputAction: TextInputAction.next,
+                    obscureText: isPasswordVisible,
                   ),
                 ),
                 Padding(
-                    padding: const EdgeInsets.fromLTRB(0, 10, 0, 0),
-                    child: SizedBox(
-                      height: AppSize.s7_5,
-                      child: TextFormField(
-                        onChanged: (_) => setState(() {
-                          _password2Submitted = true;
-                        }),
-                        controller: _password2Controller,
-                        decoration: InputDecoration(
-                          errorStyle: StylesManager.regular14(),
-                          errorText: _password2Submitted
-                              ? ValidationManager.validatePasswordMatch(
-                                  _password2Controller.value.text,
-                                  _password1Controller.value.text)
-                              : null,
-                          prefixIconConstraints:
-                              const BoxConstraints(maxWidth: 35, maxHeight: 20),
-                          suffixIcon: IconButton(
-                            icon: isPasswordVisible
-                                ? const Icon(
-                                    Icons.visibility_off,
-                                    color: Colors.grey,
-                                  )
-                                : const Icon(
-                                    Icons.visibility,
-                                    color: Colors.grey,
-                                  ),
-                            onPressed: () => setState(
-                                () => isPasswordVisible = !isPasswordVisible),
-                          ),
-                          prefixIcon: Padding(
-                            padding: const EdgeInsets.only(right: 10, left: 5),
-                            child: Image.asset(ImageAssetsManager.passwordIcon),
-                          ),
-                          enabledBorder: OutlineInputBorder(
-                              borderSide:
-                                  BorderSide(color: ColorManager.lightGrey),
-                              borderRadius:
-                                  BorderRadius.circular(AppSize.s3_5)),
-                          label: Align(
-                            alignment: Alignment.centerRight,
-                            child: Text(
-                              AppStrings.passwordText,
-                              style: StylesManager.medium16(),
-                            ),
-                          ),
-                          filled: true,
+                  padding: const EdgeInsets.fromLTRB(0, 10, 0, 0),
+                  child: TextFormField(
+                    onChanged: (_) => setState(() {
+                      _password2Submitted = true;
+                    }),
+                    controller: _password2Controller,
+                    decoration: InputDecoration(
+                      errorStyle: StylesManager.regular14(),
+                      errorText: _password2Submitted
+                          ? ValidationManager.validatePassword(
+                              _password2Controller.value.text)
+                          : null,
+                      prefixIconConstraints:
+                          const BoxConstraints(maxWidth: 35, maxHeight: 20),
+                      suffixIcon: IconButton(
+                        icon: isPasswordVisible
+                            ? const Icon(
+                                Icons.visibility_off,
+                                color: Colors.grey,
+                              )
+                            : const Icon(
+                                Icons.visibility,
+                                color: Colors.grey,
+                              ),
+                        onPressed: () => setState(
+                          () => isPasswordVisible = !isPasswordVisible,
                         ),
-                        textInputAction: TextInputAction.done,
-                        obscureText: isPasswordVisible,
                       ),
-                    )),
+                      prefixIcon: Padding(
+                        padding: const EdgeInsets.only(right: 10, left: 5),
+                        child: Image.asset(ImageAssetsManager.passwordIcon),
+                      ),
+                      enabledBorder: OutlineInputBorder(
+                          borderSide: BorderSide(color: ColorManager.lightGrey),
+                          borderRadius: BorderRadius.circular(AppSize.s3_5)),
+                      label: Align(
+                        alignment: Alignment.centerRight,
+                        child: Text(AppStrings.passwordText,
+                            style: StylesManager.medium16()),
+                      ),
+                      filled: true,
+                    ),
+                    textInputAction: TextInputAction.next,
+                    obscureText: isPasswordVisible,
+                  ),
+                ),
                 ComponentManager.myTextField(
                   onChanged: (_) => setState(() {
                     _phoneSubmitted = true;

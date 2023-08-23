@@ -41,7 +41,6 @@ class DiagnoseController extends ChangeNotifier {
     try {
       SharedPreferences prefs = await SharedPreferences.getInstance();
       token = prefs.getString('token');
-      print("TOKEN: $token");
       var url = '${AppConstants.mainUrl}/select_treatment_from_questions';
       final response = await http.post(Uri.parse(url),
           headers: {
@@ -55,12 +54,13 @@ class DiagnoseController extends ChangeNotifier {
       if (response.statusCode == 200) {
         final res = jsonDecode(response.body);
         final result = Result.fromJson(res);
+        print(result);
         return result;
       } else {
         print('Failed to load result');
       }
     } catch (e) {
-      print(e);
+      print('EEEEEEEEEEEEEE $e');
     }
     return null;
   }

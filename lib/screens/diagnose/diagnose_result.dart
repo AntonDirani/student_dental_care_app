@@ -126,10 +126,11 @@ class DiagnoseResult extends StatelessWidget {
                       onTap: () {
                         Navigator.of(context).pushAndRemoveUntil(
                           MaterialPageRoute(
-                              builder: (context) => HomeScreen(
-                                    selectedTreatment: r.treatmentName!,
-                                    selectedIndex: r.treatmentId!,
-                                  )),
+                            builder: (context) => HomeScreen(
+                              selectedTreatment: r.treatmentName!,
+                              selectedIndex: r.treatmentId! - 1,
+                            ),
+                          ),
                           (route) => false,
                         );
                       },
