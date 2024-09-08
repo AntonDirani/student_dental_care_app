@@ -42,7 +42,9 @@ So the app does the job!
 - Patient can report a post
 - Patient can add treatment posts to his favorite list
 
-  
+##Screenshots
+[![screen2.jpg](https://i.postimg.cc/kgKvPPgw/screen2.jpg)](https://postimg.cc/CRMqbtDf)
+[![screen.jpg](https://i.postimg.cc/X7TkPY4p/screen.jpg)](https://postimg.cc/ZCxNBZ9S)
 
 
   
