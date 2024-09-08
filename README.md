@@ -43,8 +43,8 @@ So the app does the job!
 - Patient can add treatment posts to his favorite list
 
 ##Screenshots
-[![screen2.jpg](https://imgbox.com/wcdKb0Ax)
-[![screen.jpg](https://imgbox.com/2ym8CLUs)
+[screen2.jpg](https://imgbox.com/wcdKb0Ax)
+[screen.jpg](https://imgbox.com/2ym8CLUs)
 
 
   
